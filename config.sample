@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Datatables default configurations
@@ -78,6 +77,18 @@ return [
     |
     */
     'data' => [
-        
+        'users-table' => [
+            'filters' => [
+                [ 'column' => 'name', 'type' => 'input' ],
+                [ 'column' => 'gender', 'type' => 'select' ],
+            ],
+            'sorting' => [
+                [ 'column' => 'name', 'order' => 'desc' ],
+            ],
+            'custom' => [
+                'message_top' => 'Users',
+                'message_bottom' => 'Users'
+            ]
+        ]
     ] 
 ];

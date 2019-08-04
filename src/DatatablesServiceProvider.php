@@ -39,12 +39,12 @@ class DatatablesServiceProvider extends ServiceProvider
         //  Allow the config files to be published.
         $this->publishes( [
             __DIR__.'/../config/datatables.php' => config_path('datatables.php') 
-        ]);
+        ], 'datatables-config');
 
         //  Allow public assets to be published
         $this->publishes([
             __DIR__.'/../public' => public_path('vendor/'.config('package.name')),
-        ], 'public');
+        ], 'datatables-assets');
 
         //  Register custom package commands
         if ($this->app->runningInConsole()) {
