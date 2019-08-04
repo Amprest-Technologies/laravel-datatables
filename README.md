@@ -1,12 +1,5 @@
 <p align="center"><a href="https://amprest.co.ke" target="_blank"><img src="https://amprest.co.ke/wp-content/uploads/2018/04/logo1-1.png"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
-
 ## About Amprest Laravel Datatables
 
 > **Note:** This repository contains the core code of the Amprest Laravel Datatables Package.
