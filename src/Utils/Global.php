@@ -1,6 +1,6 @@
 <?php
 
-use Amprest\Datatables\Utils\Datatables;
+use Amprest\LaravelDatatables\Datatables;
 
 /**
  * Generate a path to the published assets folder.
@@ -48,5 +48,5 @@ function package_resource($path)
  */
 function datatables_payload($tableID, $identifier = null)
 {
-    return Datatables::payload($tableID, $identifier = null);
+    return Datatables::payload($tableID, $identifier);
 }

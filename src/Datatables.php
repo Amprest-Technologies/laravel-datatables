@@ -1,6 +1,6 @@
 <?php
 
-namespace Amprest\Datatables\Utils;
+namespace Amprest\LaravelDatatables;
 
 class Datatables
 {
@@ -13,7 +13,7 @@ class Datatables
      * @return Array
      */
     public static function payload($tableID, $identifier = null)
-    {
+    {        
         // 	Define defaults, and fetch configurations
         $identifier = $identifier ?: $tableID;
         $data = Self::data($identifier);

@@ -28,6 +28,8 @@
 
         <!-- Styles -->
         <link href="{{ package_asset('css/app.css') }}" rel="stylesheet">
+
+        <!-- Styles -->
         @yield('css')
     </head>
     <body>          

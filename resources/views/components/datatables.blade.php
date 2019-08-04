@@ -1,3 +1,8 @@
+{{-- Include the style that will be used to manage the datatables functionality --}}
+@section('datatables-css')
+	<link href="{{ package_asset('css/app.css') }}" rel="stylesheet">
+@endsection
+
 {{-- Get all datatables payload, and extract them into usable variables --}}
 @php extract(datatables_payload($id, $identifier ?? null)); @endphp
 
@@ -11,9 +16,17 @@
 > {{ $slot }} </table>
 
 {{-- Include the js that will be used to manage the datatables functionality --}}
+@section('datatables-js')
+	<script src="{{ package_asset('js/manifest.js') }}"></script>
+	<script src="{{ package_asset('js/vendor.js') }}"></script>
+	<script src="{{ package_asset('js/app.js') }}"></script>
+	<script src="{{ package_asset('js/master.js') }}"></script>
+@endsection
+
+{{-- Include the datatables scripts --}}
 @section('js')
 	@parent
-	<script defer>
+	<script>
 		$(document).ready( function() {
 			const tableID = `#{{ $id }}`
 
@@ -53,9 +66,7 @@
 			@if(isset($exports['csv']) && $exports['csv']['enabled'])
 				buttons.push( { ...(JSON.parse('@json($exports['csv']['options'])')), ...{ 
 					extend : 'csvHtml5',
-					customize: function ( win ) {
-				
-					},
+					customize: function ( win ) {},
 				} })
 			@endif
 
@@ -63,9 +74,7 @@
 			@if(isset($exports['pdf']) && $exports['pdf']['enabled'])
 				buttons.push( { ...(JSON.parse('@json($exports['pdf']['options'])')), ...{ 
 					extend : 'pdfHtml5',
-					customize: function ( win ) {
-						// 
-					},
+					customize: function ( win ) {},
 				} })
 			@endif
 
