@@ -1,4 +1,4 @@
-<p align="center"><a href="https://amprest.co.ke" target="_blank"><img src=""></a></p>
+<p align="center"><a href="https://amprest.co.ke" target="_blank"><img src="https://amprest.co.ke/wp-content/uploads/2018/04/logo1-1.png"></a></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
@@ -9,7 +9,7 @@
 
 ## About Amprest Laravel Datatables
 
-> **Note:** This repository contains the core code of the Laravel framework. If you want to build an application using Laravel 5, visit the main [Laravel repository](https://github.com/laravel/laravel).
+> **Note:** This repository contains the core code of the Amprest Laravel Datatables Package.
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
 
