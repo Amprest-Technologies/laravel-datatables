@@ -12,7 +12,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Title -->
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('package.name', 'Laravel') }}</title>
 
         <meta property="og:title" content="{{ config('app.name') }}">
         <meta property="og:type" content="website">
@@ -24,11 +24,11 @@
         <link rel="canonical" href="{{ url('/') }}/">
 
         <!-- Favicons -->
-        @include('partials.favicons')
+        @include(package_resource('partials.favicons'))
 
         <!-- Styles -->
         <link href="{{ package_asset('css/app.css') }}" rel="stylesheet">
-        @yield('app.css')
+        @yield('css')
     </head>
     <body>          
         @yield('content')

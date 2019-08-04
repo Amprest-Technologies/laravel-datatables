@@ -12,6 +12,6 @@
 
 Route::name('datatables.')->prefix('datatables')->middleware(['web'])->group(function(){
     Route::get('/', function(){
-        return view('laravel-datatables::index');
+        return package_view('index');
     })->name('index');
 });

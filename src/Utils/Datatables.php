@@ -35,7 +35,7 @@ class Datatables
     public static function data($identifier)
     {
         // Get the customized data as defined by the identifier
-        return config('contact.data.'.$identifier);
+        return config('datatables.data.'.$identifier);
     }
 
     /**
@@ -50,7 +50,7 @@ class Datatables
     {
         //  Get the general defaults from the config and append a 
         //  key named exports and id with the defined export values.
-        return array_merge(config('contact.defaults'),[
+        return array_merge(config('datatables.defaults'),[
             'id' => $tableID,
             'exports' => Self::exports($identifier),
         ]);
@@ -71,7 +71,7 @@ class Datatables
 
         //  Determine the default export values, for each export value append a 
         //  default option array merged with values that the user has defined.
-        $exports = config('contact.exports');
+        $exports = config('datatables.exports');
         foreach($exports as $key => $export) {
             $export = array_merge($export, $data['custom']['exports'][$key] ?? []);
             //  Define the top and bottom messsage
@@ -93,6 +93,6 @@ class Datatables
      */
     public static function options()
     {
-        return config('contact.options');
+        return config('datatables.options');
     }
 }

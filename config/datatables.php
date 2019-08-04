@@ -78,25 +78,17 @@ return [
     |
     */
     'data' => [
-        'settings-table' => [
+        'users-table' => [
             'filters' => [
-                [ 'column' => 'setting_name', 'type' => 'input' ],
-                [ 'column' => 'setting_category', 'type' => 'select' ],
+                [ 'column' => 'name', 'type' => 'input' ],
+                [ 'column' => 'gender', 'type' => 'select' ],
             ],
             'sorting' => [
-                [ 'column' => 'setting_category', 'order' => 'desc' ],
+                [ 'column' => 'name', 'order' => 'desc' ],
             ],
             'custom' => [
-                'message_top' => 'Settings',
-                'message_bottom' => 'Settings',
-                'exports' => [
-                    'print' => [
-                        'enabled' => false,
-                        'options' => [
-                            'header' => true,
-                        ],
-                    ],
-                ]
+                'message_top' => 'Users',
+                'message_bottom' => 'Users'
             ]
         ]
     ] 
