@@ -24,6 +24,9 @@ class DatatablesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        //  Register dependent service providers.
+        $this->app->register('Amprest\LaravelDatatables\Providers\BladeServiceProvider');
+        
         //  Load package file dependancies
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-datatables');

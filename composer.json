@@ -19,7 +19,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Amprest\\LaravelDatatables\\DatatablesServiceProvider"
+                "Amprest\\LaravelDatatables\\DatatablesServiceProvider",                "Amprest\\LaravelDatatables\\Providers\\BladeServiceProvider"
             ]
         }
     }

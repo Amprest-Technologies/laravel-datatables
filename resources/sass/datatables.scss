@@ -1,0 +1,38 @@
+table.dataTable {
+	margin: 0 !important;
+}
+
+tfoot {
+    display: table-header-group;
+}
+
+.dataTables_wrapper label {
+    margin: 0;
+}
+
+div.dt-buttons {
+	float: left;
+	margin: 0;
+
+	&.btn-group button {
+		font-size: 10pt;
+		background-color: rgb(52, 144, 220);
+	    border: 1px solid #fff !important;
+	    padding: 4px 10px 4px 10px;
+	    border-radius: 0;
+	}
+}
+
+.title-input input {
+	float: left;
+    margin: 0;
+    
+	&.form-control-sm {
+	    height: calc(1.5em + 0.5rem + 3px);
+	}
+}
+
+.range-input.form-control[readonly] {
+    background-color: #fff;
+    opacity: 1;
+}
