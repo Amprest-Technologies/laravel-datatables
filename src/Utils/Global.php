@@ -7,7 +7,7 @@
  * @param String $path
  * @return String
  */
-function contact_asset($path)
+function package_asset($path)
 {
     return asset('vendor/contact'.'/'.$path);
 }

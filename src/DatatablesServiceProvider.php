@@ -28,7 +28,7 @@ class DatatablesServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-datatables');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->mergeConfigFrom(__DIR__.'/../config/laravel-datatables.php', 'laravel-datatables');
+        $this->mergeConfigFrom(__DIR__.'/../config/datatables.php', 'datatables');
 
         //  Allow the config files to be published.
         $this->publishes( [

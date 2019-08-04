@@ -1,6 +1,6 @@
 <?php
 
-namespace Amprest\Datatables\Console\Commands;
+namespace Amprest\LaravelDatatables\Console\Commands;
 
 use Illuminate\Console\Command;
 
