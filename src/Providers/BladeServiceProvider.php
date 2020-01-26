@@ -25,6 +25,6 @@ class BladeServiceProvider extends ServiceProvider
     public function boot()
     {
         //  Include a customized alias for the datatables component
-        Blade::component(package_resource('components.datatables'), 'datatables');
+        Blade::component(package_resource('components.datatables'), 'datatable');
     }
 }
