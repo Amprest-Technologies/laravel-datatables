@@ -1,5 +1,4 @@
 @extends(package_resource('layouts.app'))
-
 @section('content')
     <div class="container-fluid">
         <div class="row">

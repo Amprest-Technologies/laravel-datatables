@@ -16097,7 +16097,7 @@ __webpack_require__(/*! ./datatables */ "./resources/js/datatables/index.js");
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Dev\datatables-package\package\resources\js\master.js */"./resources/js/master.js");
+module.exports = __webpack_require__(/*! D:\Dev\packages\laravel-datatables\resources\js\master.js */"./resources/js/master.js");
 
 
 /***/ })
