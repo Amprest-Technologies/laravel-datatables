@@ -12,15 +12,13 @@ return [
     |
     */
     'defaults' => [
-        'copy' => true,
         'info' => true,
-        'filters' => [],
         'paging' => true,
         'ordering' => true,
         'searching' => true,
         'rowIndexes' => true,
-        'custom_title' => true,
-        'column_visibility' => true,
+        'customTitle' => true,
+        'columnVisibility' => true,
         'classes' => 'table table-hover table-bordered',
     ],
 
@@ -36,36 +34,103 @@ return [
     'exports' => [
         'print' => [
             'enabled' => true,
-            'options' => [],
+            'options' => [
+                'extend' => 'print',
+                'header' => true,
+                'footer' => true,
+                'autoPrint' => true,
+                'pageSize' => 'A4',
+                'orientation' => 'landscape',
+                'text' => 'Print',
+                'title' => 'This is a title',
+                'messageTop' => 'Lorem',
+                'messageBottom' => 'Lorem Bottom',
+                'logo' => '',
+                'exportOptions' => [
+                    'column_selector' => ':visible',
+                ]
+            ],
         ],
         'csv' => [
             'enabled' => true,
-            'options' => [],
+            'options' => [
+                'extend' => 'csvHtml5',
+                'header' => true,
+                'footer' => false,
+                'text' => 'CSV',
+                'filename' => 'Random',
+                'extension' => '.csv',
+                'exportOptions' => [
+                    'column_selector' => ':visible',
+                ]
+            ],
         ],
         'pdf' => [
             'enabled' => true,
-            'options' => [],
+            'options' => [
+                'extend' => 'pdfHtml5',
+                'header' => true,
+                'footer' => true,
+                'auto_download' => true,
+                'pageSize' => 'A4',
+                'orientation' => 'landscape',
+                'text' => 'PDF',
+                'filename' => 'Random',
+                'extension' => '.pdf',
+                'title' => 'This is a title',
+                'messageTop' => 'Lorem',
+                'messageBottom' => 'Lorem Bottom',
+                'logo' => '',
+                'exportOptions' => [
+                    'column_selector' => ':visible',
+                ]
+            ],
         ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Datatables export option configurations
-    |--------------------------------------------------------------------------
-    |
-    | These values are the default export options function configurations for all  
-    | datatables components in this application.
-    |
-    */
-    'options' => [
-        'header' => false,
-        'footer' => true,
-        'pageSize' => 'A4',
-        'orientation' => 'landscape',
-        'title' => config('app.name'),
-        'exportOptions' => [
-            'columns' => ':visible'
+        'excel' => [
+            'enabled' => true,
+            'options' => [
+                'extend' => 'excelHtml5',
+                'header' => true,
+                'footer' => true,
+                'text' => 'Excel',
+                'filename' => 'Random',
+                'extension' => '.xlsx',
+                'title' => 'This is a title',
+                'messageTop' => 'Lorem',
+                'messageBottom' => 'Lorem Bottom',
+                'logo' => '',
+                'exportOptions' => [
+                    'column_selector' => ':visible',
+                ]
+            ],
         ],
+        'copy' => [
+            'enabled' => true,
+            'options' => [
+                'extend' => 'copyHtml5',
+                'header' => true,
+                'footer' => false,
+                'text' => 'Copy',
+                'title' => 'This is a title',
+                'messageTop' => 'Lorem',
+                'messageBottom' => 'Lorem Bottom',
+                'exportOptions' => [
+                    'column_selector' => ':visible',
+                ]
+            ],
+        ],
+        'json' => [
+            'enabled' => true,
+            'options' => [
+                'header' => true,
+                'footer' => true,
+                'text' => 'JSON',
+                'filename' => 'Random',
+                'extension' => '.json',
+                'exportOptions' => [
+                ]
+            ],
+        ]
     ],
 
     /*
@@ -78,6 +143,15 @@ return [
     |
     */
     'data' => [
-        
+        'users-table' => [
+            'filters' => [
+                [ 'column' => 'name', 'type' => 'input' ],
+                [ 'column' => 'gender', 'type' => 'select' ],
+            ],
+            'sorting' => [
+                [ 'column' => 'name', 'order' => 'asc' ],
+                [ 'column' => 'gender', 'order' => 'desc' ],
+            ],
+        ]
     ] 
 ];

@@ -396,3 +396,17 @@ window.addRangeSearchOptions = ( column, id ) => {
         }
     );
 }
+
+/* --------------------------------------------------------------
+ *  Add an input form to declare a custom input
+ * --------------------------------------------------------------
+ */
+window.initializeCustomTitle = () => {
+    $('div.title-input').html(`
+        <input 
+            type="text" 
+            class="form-control form-control-sm" 
+            placeholder="Insert table heading" 
+        />
+    `)
+}

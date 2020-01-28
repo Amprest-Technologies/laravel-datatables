@@ -63,6 +63,9 @@ class DatatablesInstall extends Command
         //  Advance the progress bar
         $bar->advance();
 
+        //  Migrate the database
+        $this->call('migrate:fresh');
+
         //  Finish the progress bar
         $bar->finish();
 

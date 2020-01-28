@@ -17,7 +17,7 @@
                         </tr>
                         <tr>
                             <td>Alvin Kaburu</td>
-                            <td>Male</td>
+                            <td>Female</td>
                         </tr>
                         <tr>
                             <td>Alvin Kaburu</td>

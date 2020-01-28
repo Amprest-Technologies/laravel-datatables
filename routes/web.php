@@ -10,8 +10,4 @@
 |
 */
 
-Route::name('datatables.')->prefix('datatables')->middleware(['web'])->group(function(){
-    Route::get('/', function(){
-        return package_view('index');
-    })->name('index');
-});
+Route::get('/', 'ConfigurationController@index')->name('index');

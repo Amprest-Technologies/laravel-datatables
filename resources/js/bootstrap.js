@@ -10,7 +10,7 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
-    window.jszip = require('jszip');
+    window.JSZip = require('jszip');
     window.pdfMake = require('pdfmake/build/pdfmake.js');
     window.pdfFonts = require('pdfmake/build/vfs_fonts.js');
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
