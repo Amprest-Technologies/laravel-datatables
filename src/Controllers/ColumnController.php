@@ -2,6 +2,7 @@
 
 namespace Amprest\LaravelDatatables\Controllers;
 
+use Str;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -48,9 +49,26 @@ class ColumnController extends Controller
         $configuration = Configuration::withTrashed()->identifier($configuration)
             ->firstOrFail();
 
-        //  Remove a column 
+        //  Get the payload
+        $payload = $configuration->payload;
+
+        //  Remove any occurrence of the column in the filters
+        $payload['filters'] = collect($payload['filters'])->filter(function($option) use ($column){
+            return $option['column'] != Str::slug(strtolower($column), '_');
+        })->toArray();
+
+        //  Remove any occurrence of the column in the sorting array
+        $payload['sorting'] = collect($payload['sorting'])->filter(function($option) use ($column){
+            return $option['column'] != Str::slug(strtolower($column), '_');
+        })->toArray();
+
+        //  Remove any occurrence of the column in the hidden columns array
+        $payload['hiddenColumns'] = array_diff( $payload['hiddenColumns'], [ Str::slug(strtolower($column), '_') ] );
+
+        //  Finally remove the column 
         $configuration->update([
-            'columns' => array_diff( $configuration->columns, [ $column ] )
+            'columns' => array_diff( $configuration->columns, [ $column ] ),
+            'payload' => $payload,
         ]);
 
         //  Redirect to the configuration index page

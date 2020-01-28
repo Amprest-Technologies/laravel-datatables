@@ -230,7 +230,7 @@
                                         </td>
                                         <td>
                                             <select name="columns[{{ $column }}][sorting]" class="form-control form-control-sm">
-                                                <option  {{ collect($configurations['sorting'])
+                                                <option {{ collect($configurations['sorting'])
                                                             ->where('column', Str::slug(strtolower($column), '_'))
                                                             ->where('order', '!=', 'asc')
                                                             ->where('order', '!=', 'desc')

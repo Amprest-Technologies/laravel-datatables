@@ -16,8 +16,16 @@ class Datatables
     public static function payload($tableID)
     {        
         // 	Define defaults, and fetch configurations
-        return Configuration::where('identifier', $tableID)
-            ->firstOrFail()->payload;
+        $configuration = Configuration::where('identifier', $tableID)
+            ->first();
+        
+        //  Check if a configuration was drawn
+        if($configuration) {
+            return $configuration->payload;
+        }
+
+        //  Throw a 404 error otherwise
+        abort('404', 'The table\'s identifier cannot be found or has been deactivated.');
 
         return array_merge([
             'id' => 'users-table'
