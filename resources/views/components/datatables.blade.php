@@ -42,6 +42,7 @@
 			@if(isset($exports['print']) && $exports['print']['enabled'])
 				var options = JSON.parse('@json($exports['print']['options'])')
 				buttons.push({ ...options , ...{ 
+					extend: 'print',
 					messageTop: function() {
 						let organization = options.organization
 						let messageTop = $(`${tableID}-title-input input`).val() ||  options.messageTop
@@ -56,14 +57,16 @@
 
 			// 	Excel Options
 			@if(isset($exports['excel']) && $exports['excel']['enabled'])
-				buttons.push( { ...(JSON.parse('@json($exports['excel']['options'])')), ...{ 
+				buttons.push( { ...(JSON.parse('@json($exports['excel']['options'])')), ...{
+					extend: 'excelHtml5', 
 					customize: function ( win ) {},
 				} })
 			@endif
 
 			// 	CSV Options
 			@if(isset($exports['csv']) && $exports['csv']['enabled'])
-				buttons.push( { ...(JSON.parse('@json($exports['csv']['options'])')), ...{ 
+				buttons.push( { ...(JSON.parse('@json($exports['csv']['options'])')), ...{
+					extend: 'csvHtml5', 
 					customize: function ( win ) {},
 				} })
 			@endif
@@ -71,6 +74,7 @@
 			// 	PDF Options
 			@if(isset($exports['pdf']) && $exports['pdf']['enabled'])
 				buttons.push( { ...(JSON.parse('@json($exports['pdf']['options'])')), ...{ 
+					extend: 'pdfHtml5',
 					customize: function ( win ) {},
 				} })
 			@endif
@@ -78,6 +82,7 @@
 			// 	Copy Options
 			@if(isset($exports['copy']) && $exports['copy']['enabled'])
 				buttons.push( { ...(JSON.parse('@json($exports['copy']['options'])')), ...{ 
+					extend: 'copyHtml5',
 					customize: function ( win ) {},
 				} })
 			@endif

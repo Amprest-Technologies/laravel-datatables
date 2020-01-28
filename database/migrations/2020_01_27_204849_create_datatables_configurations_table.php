@@ -19,6 +19,7 @@ class CreateDatatablesConfigurationsTable extends Migration
             $table->json('columns')->nullable();
             $table->json('payload');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

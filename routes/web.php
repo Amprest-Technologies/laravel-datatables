@@ -15,3 +15,13 @@ Route::get('/', 'AppController@home')->name('home');
 
 //  Manage the datatable configurations
 Route::resource('configurations', 'ConfigurationController');
+Route::name('configurations.')->prefix('configurations')->group(function(){
+    Route::delete('/{configuration}/trash', 'ConfigurationController@trash')->name('trash');
+    Route::put('/{configuration}/restore', 'ConfigurationController@restore')->name('restore');
+});
+
+//  Manage columns
+Route::name('columns.')->prefix('columns')->group(function(){
+    Route::put('/{configuration}', 'ColumnController@update')->name('update');
+    Route::delete('/{configuration}/{column}', 'ColumnController@destroy')->name('destroy');
+});

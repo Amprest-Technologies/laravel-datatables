@@ -33,7 +33,7 @@
         @yield('css')
     </head>
     <body>     
-        <div class="container mt-4">
+        <div class="container mt-4 mb-5">
             <div class="row mt-3">
                 <div class="col-lg-12 text-center">
                     <h3 class="font-weight-bold">Amprest Laravel Datatables</h3>

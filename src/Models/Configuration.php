@@ -3,9 +3,13 @@
 namespace Amprest\LaravelDatatables\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Configuration extends Model
 {
+    //  Use soft deletes in this model
+    use SoftDeletes;
+
     //  Define the table name
     protected $table = 'datatables_configurations';
 

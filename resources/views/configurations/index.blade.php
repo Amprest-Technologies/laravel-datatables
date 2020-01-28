@@ -39,12 +39,45 @@
                                 <a href="{{ route('datatables.configurations.edit', [
                                     'configuration' => $configuration
                                 ]) }}" class="btn btn-primary btn-sm" href="">Edit</a>
-                                <a href="{{ route('datatables.configurations.edit', [
-                                    'configuration' => $configuration
-                                ]) }}" class="btn btn-info btn-sm" href="">Disable</a>
-                                <a href="{{ route('datatables.configurations.edit', [
-                                    'configuration' => $configuration
-                                ]) }}" class="btn btn-danger btn-sm" href="">Delete</a>
+                                @if($configuration->trashed())
+                                    <form class="d-inline" method="post" action="{{ route('datatables.configurations.restore', [ 'configuration' => $configuration ]) }}">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-success btn-sm">Activate</button>
+                                    </form>
+                                @else
+                                    <form class="d-inline" method="post" action="{{ route('datatables.configurations.trash', [ 'configuration' => $configuration ]) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-info btn-sm">Disable</button>
+                                    </form>
+                                @endif
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal-{{ $configuration->id }}">
+                                    Delete
+                                </button>
+                                <div class="modal fade" id="delete-modal-{{ $configuration->id }}" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="delete-modal-label">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body text-left">
+                                                Are you sure you want to delete this table listing? The process is irreversible.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-success" data-dismiss="modal">No, Do not delete</button>
+                                                <form class="d-inline" method="post" action="{{ route('datatables.configurations.destroy', [ 'configuration' => $configuration ]) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
