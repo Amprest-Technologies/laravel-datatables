@@ -16116,7 +16116,7 @@ window.addRangeSearchOptions = function (column, id) {
 
 
 window.initializeCustomTitle = function () {
-  $('div.title-input').html("\n        <input \n            type=\"text\" \n            class=\"form-control form-control-sm\" \n            placeholder=\"Insert table heading\" \n        />\n    ");
+  $('div.title-input').html("\n        <input \n            style=\"width: 300px;\"\n            type=\"text\" \n            class=\"form-control form-control-sm\" \n            placeholder=\"Insert table heading\" \n        />\n    ");
 };
 
 /***/ }),

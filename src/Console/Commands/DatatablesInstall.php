@@ -39,20 +39,11 @@ class DatatablesInstall extends Command
     {
         $this->info('Installing Laravel Datatables Package By Amprest');
 
-        // Create a progress bar of n actions
-        $bar = $this->output->createProgressBar(2);
-
-        //  Start the progress bar
-        $bar->start();
-
         //  Publish all public asset files
         $this->call('vendor:publish', [
             '--tag' => 'datatables-assets',
             '--force' => true,
         ]);
-
-        //  Advance the progress bar
-        $bar->advance();
 
         //  Publish all publishable config files
         $this->call('vendor:publish', [
@@ -60,14 +51,10 @@ class DatatablesInstall extends Command
             '--force' => false,
         ]);
 
-        //  Advance the progress bar
-        $bar->advance();
-
         //  Migrate the database
-        $this->call('migrate:fresh');
-
-        //  Finish the progress bar
-        $bar->finish();
+        $this->call('migrate:fresh', [
+            '--seed' => true
+        ]);
 
         //  Completed 
         $this->info('Success! Completed Installation. Enjoy.');

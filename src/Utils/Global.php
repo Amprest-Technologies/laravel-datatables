@@ -21,9 +21,9 @@ function package_asset($path)
  * @param String $view
  * @return String
  */
-function package_view($view)
+function package_view($view, $payload = array())
 {
-    return view(config('package.name').'::'.$view);
+    return view(config('package.name').'::'.$view, $payload);
 }
 
 /**
@@ -46,7 +46,7 @@ function package_resource($path)
  * @param String $identifier
  * @return Array 
  */
-function datatables_payload($tableID, $identifier = null)
+function datatables_payload($tableID)
 {
-    return Datatables::payload($tableID, $identifier);
+    return Datatables::payload($tableID);
 }

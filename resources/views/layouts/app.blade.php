@@ -32,8 +32,27 @@
         <!-- Styles -->
         @yield('css')
     </head>
-    <body>          
-        @yield('content')
+    <body>     
+        <div class="container mt-4">
+            <div class="row mt-3">
+                <div class="col-lg-12 text-center">
+                    <h3 class="font-weight-bold">Amprest Laravel Datatables</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    @include(config('package.name').'::layouts.alerts')
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-left my-3">
+                    <h4 class="font-weight-bold">@yield('title')</h4>
+                </div>
+                <div class="col-lg-12">
+                    @yield('content')
+                </div>
+            </div>
+        </div>     
         <script src="{{ package_asset('js/manifest.js') }}"></script>
         <script src="{{ package_asset('js/vendor.js') }}"></script>
         <script src="{{ package_asset('js/app.js') }}"></script>

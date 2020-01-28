@@ -4,7 +4,7 @@
 @endsection
 
 {{-- Get all datatables payload, and extract them into usable variables --}}
-@php extract(datatables_payload($id, $identifier ?? null)); @endphp
+@php extract(datatables_payload($id)); @endphp
 
 {{-- Include the actual table that will be converted to a datatable --}}
 <table 
@@ -31,9 +31,6 @@
 			@if(!isset($rowIndexes) || ( isset($rowIndexes) && $rowIndexes) )
 				insertEmptyColumn(tableID, 1)
 			@endif
-
-			// 	Clone the header values into the footer
-			cloneHeader(tableID)
 
 			// 	Define default parameters
 			var buttons = []
@@ -109,12 +106,18 @@
 				customTitleId = `${tableID}-title-input`
 			@endif
 
-			// 	Determine the date formats defined
-			@foreach($filters as $filter)
-				@isset($filter['js_format'])
-					$.fn.dataTable.moment('{{ $filter['js_format'] }}');
-				@endisset
-			@endforeach
+			// 	Determine if filters have been defined
+			@if(isset($filters) &&count($filters)) 
+				// 	Clone the header values into the footer
+				cloneHeader(tableID)
+
+				// 	Define date formats
+				@foreach($filters as $filter)
+					@isset($filter['js_format'])
+						$.fn.dataTable.moment('{{ $filter['js_format'] }}');
+					@endisset
+				@endforeach
+			@endif
 
 			// 	Determine sorting options
 			@if(isset($sorting) && $sorting)
@@ -141,13 +144,23 @@
 						addRowIndexes(this.api())
 					@endif
 
-					// 	Define filters in the table
-					var newArguments = Array.prototype.slice.call(arguments)
-					newArguments.push(JSON.parse('@json($filters ?? [])'))
-					addColumnSearching.apply(this, newArguments)
+					// 	Determine if filters have been defined
+					@if(isset($filters) && count($filters)) 
+						var newArguments = Array.prototype.slice.call(arguments)
+						newArguments.push(JSON.parse('@json($filters ?? [])'))
+						addColumnSearching.apply(this, newArguments)
+					@endif
+
+					// 	Check if any hidden columns have been defined
+					@if(isset($hiddenColumns))
+						@foreach($hiddenColumns as $column)
+							var key = this.api().column( `{{ $column }}:name` ).index()
+							var column = this.api().column(key).visible( false )
+						@endforeach
+					@endif
 
 					// 	Initialize a custom title input if its defined 
-					@if(isset($customtitle) && $customtitle)
+					@if(isset($customTitle) && $customTitle)
 						initializeCustomTitle()
 					@endif
 				}

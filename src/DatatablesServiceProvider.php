@@ -42,7 +42,7 @@ class DatatablesServiceProvider extends ServiceProvider
 
         //  Load other package file dependancies
         $this->loadViewsFrom(__DIR__.'/../resources/views', config('package.name'));
-        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->mergeConfigFrom(__DIR__.'/../config/datatables.php', 'datatables');
 
         //  Allow the config files to be published.

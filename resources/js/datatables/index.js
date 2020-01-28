@@ -404,6 +404,7 @@ window.addRangeSearchOptions = ( column, id ) => {
 window.initializeCustomTitle = () => {
     $('div.title-input').html(`
         <input 
+            style="width: 300px;"
             type="text" 
             class="form-control form-control-sm" 
             placeholder="Insert table heading" 

@@ -15,6 +15,10 @@ class CreateDatatablesConfigurationsTable extends Migration
     {
         Schema::create('datatables_configurations', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('identifier')->unique();
+            $table->json('columns')->nullable();
+            $table->json('payload');
+
             $table->timestamps();
         });
     }

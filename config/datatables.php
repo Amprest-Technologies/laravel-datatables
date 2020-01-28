@@ -1,39 +1,53 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| Datatables default configurations
+|--------------------------------------------------------------------------
+|
+| These are the default configurations for all datatables components in your 
+| application.
+|
+*/
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | General table configurations
+    |--------------------------------------------------------------------------
+    |
+    | These values are the default general configurations for all datatables 
+    | components in the application.
+    |
+    */
+    'info' => true,
+    'paging' => true,
+    'ordering' => true,
+    'searching' => true,
+    'rowIndexes' => true,
+    'customTitle' => false,
+    'columnVisibility' => false,
+    'classes' => 'table table-hover table-bordered',
 
     /*
     |--------------------------------------------------------------------------
-    | Datatables default configurations
+    | Export configurations
     |--------------------------------------------------------------------------
     |
-    | These values are the default configurations for all datatables components
+    | These are the default export configurations for all datatables components 
     | in the application.
     |
     */
-    'defaults' => [
-        'info' => true,
-        'paging' => true,
-        'ordering' => true,
-        'searching' => true,
-        'rowIndexes' => true,
-        'customTitle' => true,
-        'columnVisibility' => true,
-        'classes' => 'table table-hover table-bordered',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Datatables export configurations
-    |--------------------------------------------------------------------------
-    |
-    | These values are the default export function configurations for all datatables 
-    | components in this application.
-    |
-    */
     'exports' => [
+        /*
+        |--------------------------------------------------------------------------
+        | Print Configurations
+        |--------------------------------------------------------------------------
+        |
+        | These are the configurations that enable printing of datatables
+        |
+        */
         'print' => [
-            'enabled' => true,
+            'enabled' => false,
             'options' => [
                 'extend' => 'print',
                 'header' => true,
@@ -47,12 +61,21 @@ return [
                 'messageBottom' => 'Lorem Bottom',
                 'logo' => '',
                 'exportOptions' => [
-                    'column_selector' => ':visible',
+                    'column_selector' => ':visible'
                 ]
-            ],
+            ]
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | CSV Configurations
+        |--------------------------------------------------------------------------
+        |
+        | These are the configurations that enable csv datatable exports
+        |
+        */
         'csv' => [
-            'enabled' => true,
+            'enabled' => false,
             'options' => [
                 'extend' => 'csvHtml5',
                 'header' => true,
@@ -61,12 +84,21 @@ return [
                 'filename' => 'Random',
                 'extension' => '.csv',
                 'exportOptions' => [
-                    'column_selector' => ':visible',
+                    'column_selector' => ':visible'
                 ]
-            ],
+            ]
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | PDF Configurations
+        |--------------------------------------------------------------------------
+        |
+        | These are the configurations that enable PDF datatable exports
+        |
+        */
         'pdf' => [
-            'enabled' => true,
+            'enabled' => false,
             'options' => [
                 'extend' => 'pdfHtml5',
                 'header' => true,
@@ -82,12 +114,21 @@ return [
                 'messageBottom' => 'Lorem Bottom',
                 'logo' => '',
                 'exportOptions' => [
-                    'column_selector' => ':visible',
+                    'column_selector' => ':visible'
                 ]
-            ],
+            ]
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Excel Configurations
+        |--------------------------------------------------------------------------
+        |
+        | These are the configurations that enable Excel datatable exports
+        |
+        */
         'excel' => [
-            'enabled' => true,
+            'enabled' => false,
             'options' => [
                 'extend' => 'excelHtml5',
                 'header' => true,
@@ -100,12 +141,22 @@ return [
                 'messageBottom' => 'Lorem Bottom',
                 'logo' => '',
                 'exportOptions' => [
-                    'column_selector' => ':visible',
+                    'column_selector' => ':visible'
                 ]
-            ],
+            ]
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Copy Configurations
+        |--------------------------------------------------------------------------
+        |
+        | These are the configurations that enable copying of datatable items into 
+        | the clipboard
+        |
+        */
         'copy' => [
-            'enabled' => true,
+            'enabled' => false,
             'options' => [
                 'extend' => 'copyHtml5',
                 'header' => true,
@@ -115,12 +166,21 @@ return [
                 'messageTop' => 'Lorem',
                 'messageBottom' => 'Lorem Bottom',
                 'exportOptions' => [
-                    'column_selector' => ':visible',
+                    'column_selector' => ':visible'
                 ]
-            ],
+            ]
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Json Configurations
+        |--------------------------------------------------------------------------
+        |
+        | These are the configurations that enable json exportations of datatables
+        |
+        */
         'json' => [
-            'enabled' => true,
+            'enabled' => false,
             'options' => [
                 'header' => true,
                 'footer' => true,
@@ -128,30 +188,43 @@ return [
                 'filename' => 'Random',
                 'extension' => '.json',
                 'exportOptions' => [
+                    'columns' => ':visible'
                 ]
-            ],
+            ]
         ]
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Datatables data configurations
+    | Filters setup
     |--------------------------------------------------------------------------
     |
-    | These values return table specific configurations. The values are fetched
-    | on a table to table basis.
+    | These are the configurations that enable application of datatables filters.
+    | Input is an array of searchable column properties eg
+    | [ 'column' => 'column_name', 'type' => 'input|select' ]
     |
     */
-    'data' => [
-        'users-table' => [
-            'filters' => [
-                [ 'column' => 'name', 'type' => 'input' ],
-                [ 'column' => 'gender', 'type' => 'select' ],
-            ],
-            'sorting' => [
-                [ 'column' => 'name', 'order' => 'asc' ],
-                [ 'column' => 'gender', 'order' => 'desc' ],
-            ],
-        ]
-    ] 
+    'filters' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sorting Configurations
+    |--------------------------------------------------------------------------
+    |
+    | These are the configurations for the default sorting of datatable columns
+    | [ 'column' => 'column_name', 'order' => 'asc|desc' ]
+    |
+    */
+    'sorting' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hidden Column Configurations
+    |--------------------------------------------------------------------------
+    |
+    | These are the configurations that determine which columns are hidden by 
+    | default. Provide an array of column names
+    |
+    */
+    'hiddenColumns' => []
 ];

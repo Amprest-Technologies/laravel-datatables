@@ -1,6 +1,7 @@
 <?php
 
 namespace Amprest\LaravelDatatables;
+use Amprest\LaravelDatatables\Models\Configuration;
 
 class Datatables
 {
@@ -12,12 +13,25 @@ class Datatables
      * @param String $identifier
      * @return Array
      */
-    public static function payload($tableID, $identifier = null)
+    public static function payload($tableID)
     {        
+        // 	Define defaults, and fetch configurations
+        return Configuration::where('identifier', $tableID)
+            ->firstOrFail()->payload;
+
+        return array_merge([
+            'id' => 'users-table'
+        ], config('datatables'));
+
         // 	Define defaults, and fetch configurations
         $identifier = $identifier ?: $tableID;
         $data = Self::data($identifier);
         $defaults = Self::defaults($tableID);
+
+        // //  Merge the defaults with the determined payload, remove any extra keys
+        // return dd(json_encode((
+        //     collect(array_merge($defaults, $data))->forget('custom')
+        // )->toArray()));
 
         //  Merge the defaults with the determined payload, remove any extra keys
         return (

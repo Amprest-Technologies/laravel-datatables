@@ -10,4 +10,8 @@
 |
 */
 
-Route::get('/', 'ConfigurationController@index')->name('index');
+//  Display a sample datatable
+Route::get('/', 'AppController@home')->name('home');
+
+//  Manage the datatable configurations
+Route::resource('configurations', 'ConfigurationController');
