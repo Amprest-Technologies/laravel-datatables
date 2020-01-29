@@ -20,12 +20,10 @@ class Datatables
             ->first();
         
         //  Check if a configuration was drawn
-        if($configuration) {
-            return $configuration->payload;
-        }
+        if($configuration) return $configuration->payload;
 
         //  Throw a 404 error otherwise
-        abort('404', 'The table\'s identifier cannot be found or has been deactivated.');
+        abort('404', "The table's identifier, $tableID cannot be found or has been deactivated.");
 
         return array_merge([
             'id' => 'users-table'
