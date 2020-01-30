@@ -1,10 +1,26 @@
 <?php
 
 namespace Amprest\LaravelDatatables;
+
+use Illuminate\Http\Request;
 use Amprest\LaravelDatatables\Models\Configuration;
+use Amprest\LaravelDatatables\Traits\HandlesAjaxRequests;
 
 class Datatables
 {
+    //  Include trait to manage ajax requests
+    use HandlesAjaxRequests;
+
+    /**
+     *  Initialize the class instance
+     *  @author Alvin Gichira Kaburu
+     *  @param \Illuminate\Http\Request $request
+     */
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     /**
      * Generate datatables payload.
      *
@@ -13,7 +29,7 @@ class Datatables
      * @param String $identifier
      * @return Array
      */
-    public static function payload($tableID)
+    public function payload($tableID)
     {        
         // 	Define defaults, and fetch configurations
         $configuration = Configuration::identifier($tableID)->first();

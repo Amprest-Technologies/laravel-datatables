@@ -18,15 +18,25 @@ class ColumnController extends Controller
      * @param string $configuration
      * @return \Illuminate\Support\Facades\View
      */
-    public function update(Request $request, $configuration)
+    public function store(Request $request, $configuration)
     {
         //  Find the configuration
         $configuration = Configuration::withTrashed()->identifier($configuration)
             ->firstOrFail();
 
+        //  Update the payload object
+        $payload = $configuration->payload;
+        array_push($payload['filters'], [
+            'type' => '',
+            'title' => ucwords(strtolower($request->name)),
+            'server' => $name = Str::slug( strtolower($request->name), '_' ),
+            'column' => $name,
+        ]);
+
         //  Update the columns for the table
         $configuration->update([
-            'columns' => array_unique(array_merge($configuration->columns, [ $request->name ]))
+            'columns' => array_unique(array_merge($configuration->columns, [ $request->name ])),
+            'payload' => $payload,
         ]);
 
         //  Redirect to the previous page

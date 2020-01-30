@@ -37,19 +37,22 @@
 			var order = []
 			var customTitleId = ''
 			var filters = JSON.parse('@json($filters ?? [])')
+			var rowIndexes = ajax = false
+
+			// 	Row indexes
+			@if(!isset($rowIndexes) || ( isset($rowIndexes) && $rowIndexes) )
+				rowIndexes = true
+			@endif
 
 			// 	Set the headers variable
 			@if(isset($ajax) && $ajax['enabled'])
-				var headers = getHeadersFromFilters(filters)
+				var ajax = true
+				var headers = getHeadersFromFilters(filters, rowIndexes)
+				prepareTableForAjax(tableID, headers)
 			@else
 				var headers = getHeadersFromHtml(tableID)
 			@endif
-
-			// 	Prepare the table for an ajax request
-			@if(isset($ajax) && $ajax['enabled'])
-				prepareTableForAjax(tableID, headers)
-			@endif
-
+			
 			// 	Printable options
 			@if(isset($exports['print']) && $exports['print']['enabled'])
 				var options = JSON.parse('@json($exports['print']['options'])')
@@ -140,10 +143,13 @@
 			@if(isset($sorting) && $sorting)
 				@foreach($sorting as $option)
 					var column = headers.map( ( column ) => column.data ).indexOf(`{{ $option['column'] }}`)
-					order.push([ column, `{{ $option['order'] }}` ])
+					// 	Push if column exists
+					if(column > 0) {
+						order.push([ column, `{{ $option['order'] }}` ])
+					}
 				@endforeach
 			@endif
-			
+
 			// 	Define the datatables object
 			const table = $(tableID).DataTable({
 				dom: `<"row"<"col-lg-9"<"${customTitleId}.title-input d-inline-block"><"d-inline-block"B>><"col-lg-3 text-right"l>>rt<"row"<"col-lg-4"i><"col-lg-8"p>>`,
@@ -165,18 +171,18 @@
 						data: {
 							_token : `{{ csrf_token() }}`,
 							filters : headers, 
-
+							row_indexes : rowIndexes,
 						}
 					},
 				@endif
 				initComplete: function () {	
 					// 	Add table numberings on the first column
-					@if(!isset($rowIndexes) || ( isset($rowIndexes) && $rowIndexes) )
+					if (rowIndexes && !ajax) {
 						addRowIndexes(this.api())
-					@endif
+					}
 
 					// 	Determine if filters have been defined
-					@if(isset($filters) && count($filters)) 
+					@if(isset($filters) && count($filters))
 						var newArguments = Array.prototype.slice.call(arguments)
 						newArguments.push(filters)
 						addColumnSearching.apply(this, newArguments)
@@ -185,15 +191,15 @@
 					// 	Check if any hidden columns have been defined
 					@if(isset($hiddenColumns))
 						@foreach($hiddenColumns as $column)
-							var key = this.api().column( `{{ $column }}:name` ).index()
-							var column = this.api().column(key).visible( false )
+							var key = this.api().column(`{{ $column }}:name`).index()
+							var column = this.api().column(key).visible(false)
 						@endforeach
 					@endif
 
 					// 	Initialize a custom title input if its defined 
 					@if(isset($customTitle) && $customTitle)
 						initializeCustomTitle()
-					@endif
+					@endif					
 				}
 			});
 		})

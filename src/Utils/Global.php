@@ -1,6 +1,6 @@
 <?php
 
-use Amprest\LaravelDatatables\Datatables;
+use Amprest\LaravelDatatables\Facades\Datatables;
 
 /**
  * Generate a path to the published assets folder.

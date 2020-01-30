@@ -137,7 +137,7 @@ window.addColumnSearching = function(type, row, data, start, end, display) {
                         appendRangePicker(table, column)
                         break
 
-                    default:
+                    case 'input':
                         appendInputFilter(column)
                         break
                 }   
@@ -348,8 +348,21 @@ window.getHeadersFromHtml = (tableID) => {
  * option
  * --------------------------------------------------------------
  */
-window.getHeadersFromFilters = (filters = []) => {
+window.getHeadersFromFilters = (filters = [], index = false) => {
     let headers = []
+
+     //  If row indexing is allowed
+     if (index) {
+        headers.push({
+             'data': 'dt_row_index',
+             'name': 'dt_row_index',
+             'server': '',
+             'title': '',
+             'type': '',
+         })
+     }
+
+    //  Map through the filters
     filters.map( (filter) => {
         let data = filter.column
         headers.push({
@@ -360,6 +373,8 @@ window.getHeadersFromFilters = (filters = []) => {
             'type' : filter.type,
         })
     })
+
+    //  Return the headers array
     return headers
 }
 

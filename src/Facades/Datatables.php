@@ -2,7 +2,7 @@
 
 namespace Amprest\LaravelDatatables\Facades;
 
-class DatatablesAjax
+class Datatables
 {
     /**
      *  This function resolves the facade from the app container
@@ -24,7 +24,7 @@ class DatatablesAjax
      */
     public static function __callStatic($method, $arguments)
     {
-        return ( self::resolveFacade('DatatablesAjax') )
+        return ( self::resolveFacade('Datatables') )
             ->$method(...$arguments);
     }
 }

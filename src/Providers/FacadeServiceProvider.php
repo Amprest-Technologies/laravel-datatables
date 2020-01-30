@@ -4,7 +4,7 @@ namespace Amprest\LaravelDatatables\Providers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
-use Amprest\LaravelDatatables\DatatablesAjax;
+use Amprest\LaravelDatatables\Datatables;
 
 class FacadeServiceProvider extends ServiceProvider
 {
@@ -25,8 +25,8 @@ class FacadeServiceProvider extends ServiceProvider
      */
     public function boot(Request $request)
     {
-        $this->app->singleton( 'DatatablesAjax', function($app) use ($request) {
-            return new DatatablesAjax($request);
+        $this->app->singleton( 'Datatables', function($app) use ($request) {
+            return new Datatables($request);
         });
     }
 }

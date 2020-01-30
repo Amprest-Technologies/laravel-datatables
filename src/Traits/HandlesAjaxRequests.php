@@ -1,21 +1,11 @@
 <?php
 
-namespace Amprest\LaravelDatatables;
+namespace Amprest\LaravelDatatables\Traits;
 
 use Illuminate\Http\Request;
 
-class DatatablesAjax
+trait HandlesAjaxRequests
 {
-    /**
-     *  Initialize the class instance
-     *  @author Alvin Gichira Kaburu
-     *  @param \Illuminate\Http\Request $request
-     */
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
     /**
      *  Process a datatables request and return JSON payload
      *  @author Alvin Gichira Kaburu
@@ -23,7 +13,7 @@ class DatatablesAjax
      *  @param Class $model
      *  @return \Illuminate\Http\Response
      */
-    public function render($model)
+    public function renderAjax($model)
     {
         //  Get the request 
         $request = $this->request;
@@ -39,7 +29,7 @@ class DatatablesAjax
 
         //  Get the number of items per page, the index to start with 
         //  then finally launch a query builder
-        $builder = $model->offset($request->start)
+        $builder = $model->offset($start = $request->start)
             ->limit($request->length);
 
         //  Handle ordering of columns
@@ -53,7 +43,7 @@ class DatatablesAjax
             'draw' => $request->draw,  
             'recordsTotal' => $total,  
             'recordsFiltered' => $filtered->count(), 
-            'data' => $this->processBuilderData($request, $builder),  
+            'data' => $this->processBuilderData($request, $builder, $start),  
         ]);
     }
 
@@ -163,7 +153,7 @@ class DatatablesAjax
      *  @param $builder
      *  @return array
      */
-    public function processBuilderData(Request $request, $builder)
+    public function processBuilderData(Request $request, $builder, $start)
     {
         //  Create a data countainer
         $data = [];
@@ -174,8 +164,13 @@ class DatatablesAjax
         //  Check if the result is empty  
         if($results->isNotEmpty()) {
             //  Loop through the builder results
-            foreach ($results as $result) {
+            foreach ($results as $key => $result) {
                 $container = [];
+                //  Handle row indexes
+                if($request->row_indexes) {
+                    $container['dt_row_index'] = $key + 1 + $start;
+                }
+
                 foreach($request->filters as $column) {
                     if($column['server']) {
                         $container[ $column['data'] ] = $result->{ $column['server'] };

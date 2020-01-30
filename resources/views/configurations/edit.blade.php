@@ -3,9 +3,8 @@
 @section('content')
     <section class="row mb-3">
         <div class="col-lg-12">
-            <form action="{{ route('datatables.columns.update', [ 'configuration' => $configuration ]) }}" method="post">
+            <form action="{{ route('datatables.columns.store', [ 'configuration' => $configuration ]) }}" method="post">
                 @csrf
-                @method('PUT')
                 <label class="mb-0 font-weight-bold" for="">List a new column</label>
                 <div class="input-group mb-1 mt-0">
                     <input 
@@ -274,6 +273,10 @@
                                         </td>
                                         <td>
                                             <select name="columns[{{ $column }}][type]" class="form-control form-control-sm">
+                                                <option {{ collect($configurations['filters'])
+                                                    ->where('column', Str::slug(strtolower($column), '_'))
+                                                    ->where('type', null)
+                                                    ->first() ? 'selected' : ''}} value="">None</option>
                                                 <option {{ collect($configurations['filters'])
                                                     ->where('column', Str::slug(strtolower($column), '_'))
                                                     ->where('type', 'input')

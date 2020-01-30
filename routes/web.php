@@ -24,6 +24,6 @@ Route::name('configurations.')->prefix('configurations')->group(function(){
 
 //  Manage columns
 Route::name('columns.')->prefix('columns')->group(function(){
-    Route::put('/{configuration}', 'ColumnController@update')->name('update');
+    Route::post('/{configuration}', 'ColumnController@store')->name('store');
     Route::delete('/{configuration}/{column}', 'ColumnController@destroy')->name('destroy');
 });

@@ -15905,7 +15905,7 @@ window.addColumnSearching = function (type, row, data, start, end, display) {
         appendRangePicker(table, column);
         break;
 
-      default:
+      case 'input':
         appendInputFilter(column);
         break;
     }
@@ -16057,7 +16057,20 @@ window.getHeadersFromHtml = function (tableID) {
 
 window.getHeadersFromFilters = function () {
   var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  var headers = [];
+  var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var headers = []; //  If row indexing is allowed
+
+  if (index) {
+    headers.push({
+      'data': 'dt_row_index',
+      'name': 'dt_row_index',
+      'server': '',
+      'title': '',
+      'type': ''
+    });
+  } //  Map through the filters
+
+
   filters.map(function (filter) {
     var data = filter.column;
     headers.push({
@@ -16067,7 +16080,8 @@ window.getHeadersFromFilters = function () {
       'title': filter.title ? filter.title : data,
       'type': filter.type
     });
-  });
+  }); //  Return the headers array
+
   return headers;
 };
 /* --------------------------------------------------------------
