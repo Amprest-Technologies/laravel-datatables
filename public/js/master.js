@@ -15920,8 +15920,7 @@ window.addColumnSearching = function (type, row, data, start, end, display) {
 var appendSelectFilter = function appendSelectFilter(column) {
   //  Append the select boxes on the specified columns
   var select = $("<select class=\"form-control text-center w-100\">\n            <option class=\"text-center\" value=\"\">Show All</option>\n        </select>").appendTo($(column.footer()).empty()).on('change', function () {
-    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-    column.search(val ? "^" + val + "$" : "", true, false).draw();
+    column.search($(this).val(), true, false).draw();
   }); //  For each column append options specified by the unique values of the column
 
   column.data().unique().sort().each(function (d, j) {
@@ -16011,16 +16010,62 @@ window.cloneHeader = function (tableID) {
   $("".concat(tableID, " tfoot th")).addClass('p-1').html('');
 };
 /* --------------------------------------------------------------
- * This function creates an array of table headers
+ * This function appends a thead and tr if the request is an 
+ * ajax request
  * --------------------------------------------------------------
  */
 
 
-window.getHeadersAsArray = function (tableID) {
+window.prepareTableForAjax = function (tableID) {
+  var headers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  // 	Get the table element
+  var table = $("table".concat(tableID)); // 	Clean the table up
+
+  table.html(''); // 	Append thead and tr tags
+
+  table.append('<thead><tr></tr></thead>'); // 	Get the thead row
+
+  var row = table.find('tr');
+  headers.map(function () {
+    row.append('<th></th>');
+  });
+};
+/* --------------------------------------------------------------
+ * This function creates an array of table headers from the thead
+ * tag
+ * --------------------------------------------------------------
+ */
+
+
+window.getHeadersFromHtml = function (tableID) {
   var headers = [];
   $("".concat(tableID, " thead tr th")).each(function () {
+    var data = $(this).html().replace(/\s+/g, '_').toLowerCase();
     headers.push({
-      'name': $(this).html().replace(/\s+/g, '_').toLowerCase()
+      'data': data,
+      'name': data
+    });
+  });
+  return headers;
+};
+/* --------------------------------------------------------------
+ * This function creates an array of table headers from the filters
+ * option
+ * --------------------------------------------------------------
+ */
+
+
+window.getHeadersFromFilters = function () {
+  var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var headers = [];
+  filters.map(function (filter) {
+    var data = filter.column;
+    headers.push({
+      'data': data,
+      'name': data,
+      'server': filter.server ? filter.server : data,
+      'title': filter.title ? filter.title : data,
+      'type': filter.type
     });
   });
   return headers;

@@ -9,6 +9,7 @@
 | application.
 |
 */
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -49,7 +50,6 @@ return [
         'print' => [
             'enabled' => false,
             'options' => [
-                'extend' => 'print',
                 'header' => true,
                 'footer' => true,
                 'autoPrint' => true,
@@ -61,7 +61,7 @@ return [
                 'messageBottom' => 'Lorem Bottom',
                 'logo' => '',
                 'exportOptions' => [
-                    'column_selector' => ':visible'
+                    'columns' => ':visible'
                 ]
             ]
         ],
@@ -77,14 +77,13 @@ return [
         'csv' => [
             'enabled' => false,
             'options' => [
-                'extend' => 'csvHtml5',
                 'header' => true,
                 'footer' => false,
                 'text' => 'CSV',
                 'filename' => 'Random',
                 'extension' => '.csv',
                 'exportOptions' => [
-                    'column_selector' => ':visible'
+                    'columns' => ':visible'
                 ]
             ]
         ],
@@ -100,10 +99,9 @@ return [
         'pdf' => [
             'enabled' => false,
             'options' => [
-                'extend' => 'pdfHtml5',
                 'header' => true,
                 'footer' => true,
-                'auto_download' => true,
+                'autoDownload' => true,
                 'pageSize' => 'A4',
                 'orientation' => 'landscape',
                 'text' => 'PDF',
@@ -114,7 +112,7 @@ return [
                 'messageBottom' => 'Lorem Bottom',
                 'logo' => '',
                 'exportOptions' => [
-                    'column_selector' => ':visible'
+                    'columns' => ':visible'
                 ]
             ]
         ],
@@ -130,7 +128,6 @@ return [
         'excel' => [
             'enabled' => false,
             'options' => [
-                'extend' => 'excelHtml5',
                 'header' => true,
                 'footer' => true,
                 'text' => 'Excel',
@@ -141,7 +138,7 @@ return [
                 'messageBottom' => 'Lorem Bottom',
                 'logo' => '',
                 'exportOptions' => [
-                    'column_selector' => ':visible'
+                    'columns' => ':visible'
                 ]
             ]
         ],
@@ -158,7 +155,6 @@ return [
         'copy' => [
             'enabled' => false,
             'options' => [
-                'extend' => 'copyHtml5',
                 'header' => true,
                 'footer' => false,
                 'text' => 'Copy',
@@ -166,7 +162,7 @@ return [
                 'messageTop' => 'Lorem',
                 'messageBottom' => 'Lorem Bottom',
                 'exportOptions' => [
-                    'column_selector' => ':visible'
+                    'columns' => ':visible'
                 ]
             ]
         ],
@@ -226,5 +222,20 @@ return [
     | default. Provide an array of column names
     |
     */
-    'hiddenColumns' => []
+    'hiddenColumns' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ajax Configurations
+    |--------------------------------------------------------------------------
+    |
+    | These are the configurations that manage ajax operations
+    |
+    */
+    'ajax' => [
+        'enabled' => true,
+        'options' => [
+            'route' => '',
+        ]
+    ]
 ];

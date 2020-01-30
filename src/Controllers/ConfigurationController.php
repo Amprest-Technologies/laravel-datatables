@@ -98,6 +98,8 @@ class ConfigurationController extends Controller
                 array_push($filters, [
                     'column' => $column = Str::slug(strtolower($column), '_'),
                     'type' => $options['type'],
+                    'title' => $options['title'],
+                    'server' => $options['server'],
                 ]);
     
                 //  Push filters into the sorting array

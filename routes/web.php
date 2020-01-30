@@ -12,6 +12,8 @@
 
 //  Display a sample datatable
 Route::get('/', 'AppController@home')->name('home');
+Route::get('/ajax', 'AppController@ajax')->name('ajax');
+Route::post('/users', 'AppController@users')->name('users');
 
 //  Manage the datatable configurations
 Route::resource('configurations', 'ConfigurationController');

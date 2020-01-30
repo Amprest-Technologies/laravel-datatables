@@ -195,6 +195,39 @@
                     </div>
                 </div>
 
+                <div class="form-row mt-4">
+                    <div class="form-group col-lg-12">
+                        <h5 class="font-weight-bold">Ajax Configurations</h5>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="font-weight-bold">Enabled</label>
+                        @php $enabled = old('configurations.ajax.enabled') ?: ( $configurations['ajax']['enabled'] ?: '' ) @endphp
+                        <select name="configurations[ajax][enabled]" class="form-control @error('configurations.ajax.enabled') is-invalid @enderror">
+                            <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
+                            <option {{ !$enabled ? 'selected' : '' }} value="0">False</option>
+                        </select>
+                        @error('configurations.ajax.enabled')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="font-weight-bold">End Point Route Name</label>
+                        <input 
+                            name="configurations[ajax][options][route]" 
+                            type="text" 
+                            class="form-control @error('configurations.ajax.options.route') is-invalid @enderror" 
+                            value="{{ old('configurations.ajax.options.route') ?: $configurations['ajax']['options']['route'] }}"
+                        >
+                        @error('configurations.ajax.options.route')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
                 {{-- The Column filtering, sorting, display section --}}
                 <div class="form-row mt-4">
                     <div class="form-group col-lg-12">
@@ -206,6 +239,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Column</th>
+                                    <th>Title</th>
+                                    <th>Server Name</th>
                                     <th>Type</th>
                                     <th>Sorting</th>
                                     <th>Hidden</th>
@@ -217,32 +252,53 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $column }}</td>
                                         <td>
+                                            @php 
+                                                $value = collect($configurations['filters'])
+                                                    ->where('column', Str::slug(strtolower($column), '_'))
+                                                    ->first();
+                                            @endphp
+                                            <input 
+                                                name="columns[{{ $column }}][title]" 
+                                                type="text" 
+                                                class="form-control form-control-sm"
+                                                value="{{ $value['title'] ?? null }}"
+                                            >
+                                        </td>
+                                        <td>
+                                            <input 
+                                                name="columns[{{ $column }}][server]" 
+                                                type="text" 
+                                                class="form-control form-control-sm"
+                                                value="{{ $value['server'] ?? null }}"
+                                            >
+                                        </td>
+                                        <td>
                                             <select name="columns[{{ $column }}][type]" class="form-control form-control-sm">
                                                 <option {{ collect($configurations['filters'])
-                                                            ->where('column', Str::slug(strtolower($column), '_'))
-                                                            ->where('type', 'input')
-                                                            ->first() ? 'selected' : ''}} value="input">Input</option>
+                                                    ->where('column', Str::slug(strtolower($column), '_'))
+                                                    ->where('type', 'input')
+                                                    ->first() ? 'selected' : ''}} value="input">Input</option>
                                                 <option {{ collect($configurations['filters'])
-                                                            ->where('column', Str::slug(strtolower($column), '_'))
-                                                            ->where('type', 'select')
-                                                            ->first() ? 'selected' : ''}} value="select">Select</option>
+                                                    ->where('column', Str::slug(strtolower($column), '_'))
+                                                    ->where('type', 'select')
+                                                    ->first() ? 'selected' : ''}} value="select">Select</option>
                                             </select>
                                         </td>
                                         <td>
                                             <select name="columns[{{ $column }}][sorting]" class="form-control form-control-sm">
                                                 <option {{ collect($configurations['sorting'])
-                                                            ->where('column', Str::slug(strtolower($column), '_'))
-                                                            ->where('order', '!=', 'asc')
-                                                            ->where('order', '!=', 'desc')
-                                                            ->first() ? 'selected' : ''}} value="">None</option>
+                                                    ->where('column', Str::slug(strtolower($column), '_'))
+                                                    ->where('order', '!=', 'asc')
+                                                    ->where('order', '!=', 'desc')
+                                                    ->first() ? 'selected' : ''}} value="">None</option>
                                                 <option {{ collect($configurations['sorting'])
-                                                            ->where('column', Str::slug(strtolower($column), '_'))
-                                                            ->where('order', 'asc')
-                                                            ->first() ? 'selected' : ''}} value="asc">Ascending</option>
+                                                    ->where('column', Str::slug(strtolower($column), '_'))
+                                                    ->where('order', 'asc')
+                                                    ->first() ? 'selected' : ''}} value="asc">Ascending</option>
                                                 <option {{ collect($configurations['sorting'])
-                                                            ->where('column', Str::slug(strtolower($column), '_'))
-                                                            ->where('order', 'desc')
-                                                            ->first() ? 'selected' : ''}} value="desc">Descending</option>
+                                                    ->where('column', Str::slug(strtolower($column), '_'))
+                                                    ->where('order', 'desc')
+                                                    ->first() ? 'selected' : ''}} value="desc">Descending</option>
                                             </select>
                                         </td>
                                         <td>

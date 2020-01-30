@@ -29,6 +29,7 @@ class DatatablesServiceProvider extends ServiceProvider
 
         //  Register dependent service providers.
         $this->app->register('Amprest\LaravelDatatables\Providers\BladeServiceProvider');
+        $this->app->register('Amprest\LaravelDatatables\Providers\FacadeServiceProvider');
         
         //  Load route file dependancies
         $this->app['router']

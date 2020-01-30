@@ -36,7 +36,19 @@
 			var buttons = []
 			var order = []
 			var customTitleId = ''
-			var headers = getHeadersAsArray(tableID)
+			var filters = JSON.parse('@json($filters ?? [])')
+
+			// 	Set the headers variable
+			@if(isset($ajax) && $ajax['enabled'])
+				var headers = getHeadersFromFilters(filters)
+			@else
+				var headers = getHeadersFromHtml(tableID)
+			@endif
+
+			// 	Prepare the table for an ajax request
+			@if(isset($ajax) && $ajax['enabled'])
+				prepareTableForAjax(tableID, headers)
+			@endif
 
 			// 	Printable options
 			@if(isset($exports['print']) && $exports['print']['enabled'])
@@ -115,7 +127,7 @@
 			@if(isset($filters) &&count($filters)) 
 				// 	Clone the header values into the footer
 				cloneHeader(tableID)
-
+				
 				// 	Define date formats
 				@foreach($filters as $filter)
 					@isset($filter['js_format'])
@@ -127,11 +139,11 @@
 			// 	Determine sorting options
 			@if(isset($sorting) && $sorting)
 				@foreach($sorting as $option)
-					var column = headers.map( ( column ) => column.name ).indexOf(`{{ $option['column'] }}`)
+					var column = headers.map( ( column ) => column.data ).indexOf(`{{ $option['column'] }}`)
 					order.push([ column, `{{ $option['order'] }}` ])
 				@endforeach
 			@endif
-
+			
 			// 	Define the datatables object
 			const table = $(tableID).DataTable({
 				dom: `<"row"<"col-lg-9"<"${customTitleId}.title-input d-inline-block"><"d-inline-block"B>><"col-lg-3 text-right"l>>rt<"row"<"col-lg-4"i><"col-lg-8"p>>`,
@@ -143,6 +155,20 @@
 				columns: headers,
 				responsive: true,
 				buttons: buttons,
+				@if(isset($ajax) && $ajax['enabled'])
+					processing: true,
+					serverSide: true,
+					ajax: {
+						url: `{{ route($ajax['options']['route']) }}`,
+						dataType: 'json',
+						type: 'POST',
+						data: {
+							_token : `{{ csrf_token() }}`,
+							filters : headers, 
+
+						}
+					},
+				@endif
 				initComplete: function () {	
 					// 	Add table numberings on the first column
 					@if(!isset($rowIndexes) || ( isset($rowIndexes) && $rowIndexes) )
@@ -152,7 +178,7 @@
 					// 	Determine if filters have been defined
 					@if(isset($filters) && count($filters)) 
 						var newArguments = Array.prototype.slice.call(arguments)
-						newArguments.push(JSON.parse('@json($filters ?? [])'))
+						newArguments.push(filters)
 						addColumnSearching.apply(this, newArguments)
 					@endif
 

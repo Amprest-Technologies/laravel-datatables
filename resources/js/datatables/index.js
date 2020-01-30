@@ -158,9 +158,8 @@ const appendSelectFilter = ( column ) => {
     )
         .appendTo( $(column.footer()).empty() )
         .on('change', function() {
-            var val =  $.fn.dataTable.util.escapeRegex($(this).val());
             column
-                .search(val ? "^" + val + "$" : "", true, false)
+                .search($(this).val(), true, false)
                 .draw();
         });
 
@@ -306,14 +305,59 @@ window.cloneHeader = ( tableID ) => {
 }
 
 /* --------------------------------------------------------------
- * This function creates an array of table headers
+ * This function appends a thead and tr if the request is an 
+ * ajax request
  * --------------------------------------------------------------
  */
-window.getHeadersAsArray = ( tableID ) => {
+window.prepareTableForAjax = (tableID, headers = []) => {
+    // 	Get the table element
+    const table = $(`table${tableID}`)
+
+    // 	Clean the table up
+    table.html('');
+
+    // 	Append thead and tr tags
+    table.append('<thead><tr></tr></thead>')
+
+    // 	Get the thead row
+    const row = table.find('tr')
+    headers.map(() => {
+        row.append('<th></th>')
+    })
+}
+
+/* --------------------------------------------------------------
+ * This function creates an array of table headers from the thead
+ * tag
+ * --------------------------------------------------------------
+ */
+window.getHeadersFromHtml = (tableID) => {
     let headers = []
     $(`${ tableID } thead tr th`).each( function(){
+        let data = $(this).html().replace(/\s+/g, '_').toLowerCase()
         headers.push({
-            'name': $(this).html().replace(/\s+/g, '_').toLowerCase()
+            'data': data,
+            'name': data,
+        })
+    })
+    return headers
+}
+
+/* --------------------------------------------------------------
+ * This function creates an array of table headers from the filters
+ * option
+ * --------------------------------------------------------------
+ */
+window.getHeadersFromFilters = (filters = []) => {
+    let headers = []
+    filters.map( (filter) => {
+        let data = filter.column
+        headers.push({
+            'data': data,
+            'name': data,
+            'server': filter.server ? filter.server : data,
+            'title': filter.title ? filter.title : data,
+            'type' : filter.type,
         })
     })
     return headers
