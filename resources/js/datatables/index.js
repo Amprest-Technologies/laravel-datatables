@@ -106,8 +106,8 @@ window.addColumnSearching = function(type, row, data, start, end, display) {
     // Get columns by index name
     const filtersObj = {}
     const columns = options.map(( item , index ) => {
-        let key = this.api().column( `${item.column}:name` ).index()
-        filtersObj[key] = { type: item.type, format: item.js_format }
+        let key = this.api().column( `${item.name}:name` ).index()
+        filtersObj[key] = { type: item.type, format: item.js_format, options: item.options }
         return key
     }).filter(function (el) {
         return el != null;
@@ -122,11 +122,12 @@ window.addColumnSearching = function(type, row, data, start, end, display) {
             function() {
                 let column = this;
                 let columnIndex = column.index()
+                let filter = filtersObj[columnIndex];
 
                 //  Check what kind of filter is defined for a column
-                switch ( filtersObj[columnIndex].type ) {
+                switch ( filter.type ) {
                     case 'select':
-                        appendSelectFilter(column)
+                        appendSelectFilter(column, filter.options)
                         break
 
                     case 'date':
@@ -149,7 +150,7 @@ window.addColumnSearching = function(type, row, data, start, end, display) {
  * Hadle appending of select filters to the datatables filter row
  * --------------------------------------------------------------
  */
-const appendSelectFilter = ( column ) => {
+const appendSelectFilter = ( column, options = null ) => {
     //  Append the select boxes on the specified columns
     var select = $(
         `<select class="form-control text-center w-100">
@@ -164,13 +165,12 @@ const appendSelectFilter = ( column ) => {
         });
 
     //  For each column append options specified by the unique values of the column
-    column
-        .data().unique().sort()
-        .each(function(d, j) {
-            select.append(
-                '<option value="' + d + '">' + d + "</option>"
-            );
-        });
+    options = options ? options : column.data().unique().sort().toArray()
+    options.map( ( option ) => {
+        select.append(
+            `<option value="${option}">${option}</option>`
+        );
+    })
 }
 
 /* --------------------------------------------------------------
@@ -364,7 +364,7 @@ window.getHeadersFromFilters = (filters = [], index = false) => {
 
     //  Map through the filters
     filters.map( (filter) => {
-        let data = filter.column
+        let data = filter.name
         headers.push({
             'data': data,
             'name': data,

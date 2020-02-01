@@ -16,16 +16,13 @@ trait HandlesAjaxRequests
     public function renderAjax($model)
     {
         //  Get the request 
-        $request = $this->request;
+        $request = request();
 
-        //  Get the model
-        $model = app($model); 
-        
         //  Get the total number of model instances
         $total = $model->count();
 
         //  Create a builder query
-        $filtered = $model->query();
+        $filtered = $model;
 
         //  Get the number of items per page, the index to start with 
         //  then finally launch a query builder
@@ -44,6 +41,7 @@ trait HandlesAjaxRequests
             'recordsTotal' => $total,  
             'recordsFiltered' => $filtered->count(), 
             'data' => $this->processBuilderData($request, $builder, $start),  
+            'filters' => $this->processFilters($request, $model),
         ]);
     }
 
@@ -180,5 +178,31 @@ trait HandlesAjaxRequests
             }
         }
         return $data;
+    }
+
+    /**
+     *  Handle processing of column search results
+     *  @author Alvin Gichira Kaburu
+     *  @param \Illuminate\Http\Request $request
+     *  @param class $model
+     *  @return array
+     */
+    public function processFilters(Request $request, $model)
+    {
+        //  Get the filters
+        $filters = $request->filters;
+        foreach($filters as $index => $column) {
+            $options = [];
+            if($column['type'] == 'select') {
+                $options = $model->get($column['server'])
+                    ->pluck($column['server'])
+                    ->toArray();
+            }
+            //  Get the options
+            $filters[$index]['options'] = $options;
+        }
+        
+        //  Return the filters
+        return $filters;
     }
 }

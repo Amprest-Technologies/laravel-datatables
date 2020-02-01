@@ -2,7 +2,6 @@
 
 namespace Amprest\LaravelDatatables\Providers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Amprest\LaravelDatatables\Datatables;
 
@@ -23,10 +22,10 @@ class FacadeServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Request $request)
+    public function boot()
     {
-        $this->app->singleton( 'Datatables', function($app) use ($request) {
-            return new Datatables($request);
+        $this->app->singleton( 'Datatables', function($app) {
+            return new Datatables;
         });
     }
 }

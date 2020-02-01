@@ -96,7 +96,7 @@ class ConfigurationController extends Controller
             foreach($request->columns as $column => $options) {
                 //  Push options into the filters array
                 array_push($filters, [
-                    'column' => $column = Str::slug(strtolower($column), '_'),
+                    'name' => $column = Str::slug(strtolower($column), '_'),
                     'type' => $options['type'],
                     'title' => $options['title'],
                     'server' => $options['server'],

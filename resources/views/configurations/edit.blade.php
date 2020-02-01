@@ -253,8 +253,9 @@
                                         <td>
                                             @php 
                                                 $value = collect($configurations['filters'])
-                                                    ->where('column', Str::slug(strtolower($column), '_'))
+                                                    ->where('name', Str::slug(strtolower($column), '_'))
                                                     ->first();
+                                                
                                             @endphp
                                             <input 
                                                 name="columns[{{ $column }}][title]" 
@@ -274,15 +275,15 @@
                                         <td>
                                             <select name="columns[{{ $column }}][type]" class="form-control form-control-sm">
                                                 <option {{ collect($configurations['filters'])
-                                                    ->where('column', Str::slug(strtolower($column), '_'))
+                                                    ->where('name', Str::slug(strtolower($column), '_'))
                                                     ->where('type', null)
                                                     ->first() ? 'selected' : ''}} value="">None</option>
                                                 <option {{ collect($configurations['filters'])
-                                                    ->where('column', Str::slug(strtolower($column), '_'))
+                                                    ->where('name', Str::slug(strtolower($column), '_'))
                                                     ->where('type', 'input')
                                                     ->first() ? 'selected' : ''}} value="input">Input</option>
                                                 <option {{ collect($configurations['filters'])
-                                                    ->where('column', Str::slug(strtolower($column), '_'))
+                                                    ->where('name', Str::slug(strtolower($column), '_'))
                                                     ->where('type', 'select')
                                                     ->first() ? 'selected' : ''}} value="select">Select</option>
                                             </select>

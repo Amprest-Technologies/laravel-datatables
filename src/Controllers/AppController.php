@@ -26,6 +26,6 @@ class AppController extends Controller
      */
     public function users()
     {   
-        return Datatables::renderAjax(User::class);
+        return Datatables::renderAjax( User::query() );
     }
 }

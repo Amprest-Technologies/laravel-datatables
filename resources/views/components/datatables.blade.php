@@ -127,7 +127,7 @@
 			@endif
 
 			// 	Determine if filters have been defined
-			@if(isset($filters) &&count($filters)) 
+			@if(isset($filters) && count($filters) && isset($searching) && $searching) 
 				// 	Clone the header values into the footer
 				cloneHeader(tableID)
 				
@@ -154,10 +154,10 @@
 			const table = $(tableID).DataTable({
 				dom: `<"row"<"col-lg-9"<"${customTitleId}.title-input d-inline-block"><"d-inline-block"B>><"col-lg-3 text-right"l>>rt<"row"<"col-lg-4"i><"col-lg-8"p>>`,
 				order: order,
-				searching: @json($searching ?? true),
-				paging: @json($paging ?? true),
-				ordering: @json($ordering ?? true),
-				info: @json($info ?? true),
+				searching: Boolean(Number(@json($searching ?? 1))),
+				paging: Boolean(Number(@json($paging ?? 1))),
+				ordering: Boolean(Number(@json($ordering ?? 1))),
+				info: Boolean(Number(@json($info ?? 1))),
 				columns: headers,
 				responsive: true,
 				buttons: buttons,
@@ -172,6 +172,10 @@
 							_token : `{{ csrf_token() }}`,
 							filters : headers, 
 							row_indexes : rowIndexes,
+						},
+						dataSrc: function(json) {
+							filters = json.filters
+							return json.data
 						}
 					},
 				@endif
@@ -182,7 +186,7 @@
 					}
 
 					// 	Determine if filters have been defined
-					@if(isset($filters) && count($filters))
+					@if(isset($filters) && count($filters) && isset($searching) && $searching)
 						var newArguments = Array.prototype.slice.call(arguments)
 						newArguments.push(filters)
 						addColumnSearching.apply(this, newArguments)

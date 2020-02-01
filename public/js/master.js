@@ -15875,11 +15875,12 @@ window.addColumnSearching = function (type, row, data, start, end, display) {
 
   var filtersObj = {};
   var columns = options.map(function (item, index) {
-    var key = _this.api().column("".concat(item.column, ":name")).index();
+    var key = _this.api().column("".concat(item.name, ":name")).index();
 
     filtersObj[key] = {
       type: item.type,
-      format: item.js_format
+      format: item.js_format,
+      options: item.options
     };
     return key;
   }).filter(function (el) {
@@ -15890,11 +15891,12 @@ window.addColumnSearching = function (type, row, data, start, end, display) {
 
   table.columns(columns).every(function () {
     var column = this;
-    var columnIndex = column.index(); //  Check what kind of filter is defined for a column
+    var columnIndex = column.index();
+    var filter = filtersObj[columnIndex]; //  Check what kind of filter is defined for a column
 
-    switch (filtersObj[columnIndex].type) {
+    switch (filter.type) {
       case 'select':
-        appendSelectFilter(column);
+        appendSelectFilter(column, filter.options);
         break;
 
       case 'date':
@@ -15918,13 +15920,15 @@ window.addColumnSearching = function (type, row, data, start, end, display) {
 
 
 var appendSelectFilter = function appendSelectFilter(column) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   //  Append the select boxes on the specified columns
   var select = $("<select class=\"form-control text-center w-100\">\n            <option class=\"text-center\" value=\"\">Show All</option>\n        </select>").appendTo($(column.footer()).empty()).on('change', function () {
     column.search($(this).val(), true, false).draw();
   }); //  For each column append options specified by the unique values of the column
 
-  column.data().unique().sort().each(function (d, j) {
-    select.append('<option value="' + d + '">' + d + "</option>");
+  options = options ? options : column.data().unique().sort().toArray();
+  options.map(function (option) {
+    select.append("<option value=\"".concat(option, "\">").concat(option, "</option>"));
   });
 };
 /* --------------------------------------------------------------
@@ -16072,7 +16076,7 @@ window.getHeadersFromFilters = function () {
 
 
   filters.map(function (filter) {
-    var data = filter.column;
+    var data = filter.name;
     headers.push({
       'data': data,
       'name': data,
