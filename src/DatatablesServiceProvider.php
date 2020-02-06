@@ -26,17 +26,18 @@ class DatatablesServiceProvider extends ServiceProvider
     {        
         //  Register default config values
         $this->mergeConfigFrom(__DIR__.'/../config/package.php', 'package');
+         $this->mergeConfigFrom(__DIR__.'/../config/datatables.php', 'datatables');
 
         //  Register dependent service providers.
         $this->app->register('Amprest\LaravelDatatables\Providers\BladeServiceProvider');
         $this->app->register('Amprest\LaravelDatatables\Providers\FacadeServiceProvider');
         
-        //  Load route file dependancies
+        $routePrefix = config('datatables.route.prefix');
         $this->app['router']
             ->name('datatables.')
-            ->prefix('datatables')
+            ->prefix( ( $routePrefix ? $routePrefix.'/' : '' ).'datatables')
             ->namespace('Amprest\\LaravelDatatables\\Controllers')
-            ->middleware(['web'])
+            ->middleware([ 'web', 'auth' ])
             ->group(function () {
                 $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
             });
@@ -44,7 +45,6 @@ class DatatablesServiceProvider extends ServiceProvider
         //  Load other package file dependancies
         $this->loadViewsFrom(__DIR__.'/../resources/views', config('package.name'));
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->mergeConfigFrom(__DIR__.'/../config/datatables.php', 'datatables');
 
         //  Allow the config files to be published.
         $this->publishes( [

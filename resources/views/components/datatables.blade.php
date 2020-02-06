@@ -12,18 +12,16 @@
     class="{{ $classes }}"
 > {{ $slot }} </table>
 
-{{-- Include the js that will be used to manage the datatables functionality --}}
-@section('datatables-js')
+@section('datatables-scripts')
 	<script defer src="{{ package_asset('js/manifest.js') }}"></script>
 	<script defer src="{{ package_asset('js/vendor.js') }}"></script>
 	<script defer src="{{ package_asset('js/app.js') }}"></script>
 	<script defer src="{{ package_asset('js/master.js') }}"></script>
 @endsection
 
-{{-- Include the datatables scripts --}}
-@section('js')
+@section('datatables-config')
 	@parent
-	<script>
+	<script defer>
 		$(document).ready( function() {
 			const tableID = `#{{ $id }}`
 
@@ -36,6 +34,7 @@
 			var buttons = []
 			var order = []
 			var customTitleId = ''
+			var customTitleClass = ''
 			var filters = JSON.parse('@json($filters ?? [])')
 			var rowIndexes = ajax = false
 
@@ -124,6 +123,7 @@
 			// 	Configure custom titles
 			@if(isset($customtitle) && $customtitle)
 				customTitleId = `${tableID}-title-input`
+				customTitleClass = '.title-input'
 			@endif
 
 			// 	Determine if filters have been defined
@@ -152,7 +152,7 @@
 
 			// 	Define the datatables object
 			const table = $(tableID).DataTable({
-				dom: `<"row"<"col-lg-9"<"${customTitleId}.title-input d-inline-block"><"d-inline-block"B>><"col-lg-3 text-right"l>>rt<"row"<"col-lg-4"i><"col-lg-8"p>>`,
+				dom: `<"row"<"col-lg-9"<"${customTitleId}${customTitleClass} d-inline-block"><"d-inline-block"B>><"col-lg-3 text-right"l>>rt<"row"<"col-lg-4"i><"col-lg-8"p>>`,
 				order: order,
 				searching: Boolean(Number(@json($searching ?? 1))),
 				paging: Boolean(Number(@json($paging ?? 1))),

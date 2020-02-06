@@ -36,7 +36,7 @@ class ConfigurationController extends Controller
         //  Merge the request parameters
         $request->merge([ 
             'identifier' => $identifier = Str::slug($request->identifier),
-            'payload' => array_merge([ 'id' => $identifier ], config('datatables')),
+            'payload' => array_merge([ 'id' => $identifier ], config('datatables.config')),
             'columns' => [],
         ]);
 

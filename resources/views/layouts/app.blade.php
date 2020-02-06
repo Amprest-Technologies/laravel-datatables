@@ -29,6 +29,8 @@
         <!-- Styles -->
         <link href="{{ package_asset('css/app.css') }}" rel="stylesheet">
 
+        @datatablesCss()
+
         <!-- Styles -->
         @yield('css')
     </head>
@@ -57,6 +59,9 @@
         <script src="{{ package_asset('js/vendor.js') }}"></script>
         <script src="{{ package_asset('js/app.js') }}"></script>
         <script src="{{ package_asset('js/master.js') }}"></script>
+
+        @datatablesJs()
+
         @yield('js')
     </body>
 </html>

@@ -24,8 +24,8 @@ class FacadeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->singleton( 'Datatables', function($app) {
-            return new Datatables;
+        $this->app->singleton('Datatables', function($app) {
+            return new Datatables();
         });
     }
 }

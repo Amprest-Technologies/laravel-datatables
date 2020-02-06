@@ -1,5 +1,7 @@
 <?php
 
+use Amprest\LaravelDatatables\Facades\Datatables;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,12 +12,10 @@
 |
 */
 
-//  Display a sample datatable
+//  Manage the datatable configurations
 Route::get('/', 'AppController@home')->name('home');
-Route::get('/ajax', 'AppController@ajax')->name('ajax');
 Route::post('/users', 'AppController@users')->name('users');
 
-//  Manage the datatable configurations
 Route::resource('configurations', 'ConfigurationController');
 Route::name('configurations.')->prefix('configurations')->group(function(){
     Route::delete('/{configuration}/trash', 'ConfigurationController@trash')->name('trash');
