@@ -52,9 +52,7 @@ class DatatablesInstall extends Command
         ]);
 
         //  Migrate the database
-        $this->call('migrate:fresh', [
-            '--seed' => true
-        ]);
+        $this->call('migrate');
 
         //  Completed 
         $this->info('Success! Completed Installation. Enjoy.');

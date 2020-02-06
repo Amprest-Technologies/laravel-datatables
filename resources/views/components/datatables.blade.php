@@ -14,10 +14,10 @@
 
 {{-- Include the js that will be used to manage the datatables functionality --}}
 @section('datatables-js')
-	<script src="{{ package_asset('js/manifest.js') }}"></script>
-	<script src="{{ package_asset('js/vendor.js') }}"></script>
-	<script src="{{ package_asset('js/app.js') }}"></script>
-	<script src="{{ package_asset('js/master.js') }}"></script>
+	<script defer src="{{ package_asset('js/manifest.js') }}"></script>
+	<script defer src="{{ package_asset('js/vendor.js') }}"></script>
+	<script defer src="{{ package_asset('js/app.js') }}"></script>
+	<script defer src="{{ package_asset('js/master.js') }}"></script>
 @endsection
 
 {{-- Include the datatables scripts --}}
