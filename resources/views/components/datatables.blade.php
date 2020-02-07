@@ -37,6 +37,7 @@
 			var customTitleClass = ''
 			var filters = JSON.parse('@json($filters ?? [])')
 			var rowIndexes = ajax = false
+			var hasFilters = false;
 
 			// 	Row indexes
 			@if(!isset($rowIndexes) || ( isset($rowIndexes) && $rowIndexes) )
@@ -128,15 +129,18 @@
 
 			// 	Determine if filters have been defined
 			@if(isset($filters) && count($filters) && isset($searching) && $searching) 
-				// 	Clone the header values into the footer
-				cloneHeader(tableID)
-				
 				// 	Define date formats
 				@foreach($filters as $filter)
+					@if($filter['type']) 
+						var hasFilters = true;
+					@endif
 					@isset($filter['js_format'])
 						$.fn.dataTable.moment('{{ $filter['js_format'] }}');
 					@endisset
 				@endforeach
+
+				// 	Clone headers if table needs filters
+				if(hasFilters) cloneHeader(tableID)
 			@endif
 
 			// 	Determine sorting options
@@ -186,12 +190,12 @@
 					}
 
 					// 	Determine if filters have been defined
-					@if(isset($filters) && count($filters) && isset($searching) && $searching)
+					if(hasFilters) {
 						var newArguments = Array.prototype.slice.call(arguments)
 						newArguments.push(filters)
 						addColumnSearching.apply(this, newArguments)
-					@endif
-
+					}
+						
 					// 	Check if any hidden columns have been defined
 					@if(isset($hiddenColumns))
 						@foreach($hiddenColumns as $column)

@@ -14,6 +14,11 @@ class Datatables
 
     //  Define the variable
     private $configuration;
+
+    public function __construct()
+    {
+        $this->configuration = new Configuration();
+    }
     
     /**
      * Generate datatables payload.
@@ -26,15 +31,15 @@ class Datatables
     public function payload($tableID)
     {        
         // 	Define defaults, and fetch configurations
-        $this->configuration = Configuration::identifier($tableID)->first();
+        $this->configuration = $this->configuration->find($tableID);
 
-         //  Check if a configuration was drawn
+        //  Check if a configuration was drawn
         if($this->configuration) {
             //  Check for ajax configurations
             $this->checkForAjaxConfigurations();
 
             //  If everything is ok, return the request
-            return $this->configuration->payload;
+            return ($this->configuration)['payload'];
         };
 
         //  Throw a 404 error otherwise
@@ -50,7 +55,7 @@ class Datatables
     public function checkForAjaxConfigurations()
     {
         //  Get the ajax object payload
-        $ajax = ($this->configuration->payload)['ajax'];
+        $ajax = ($this->configuration)['payload']['ajax'];
 
         //  If the ajax object is defined and ajax is enabled
         if(isset($ajax['enabled']) && $ajax['enabled']) {

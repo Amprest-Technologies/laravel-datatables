@@ -37,7 +37,7 @@ class DatatablesServiceProvider extends ServiceProvider
             ->name('datatables.')
             ->prefix( ( $routePrefix ? $routePrefix.'/' : '' ).'datatables')
             ->namespace('Amprest\\LaravelDatatables\\Controllers')
-            ->middleware([ 'web', 'auth' ])
+            ->middleware([ 'web' ])
             ->group(function () {
                 $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
             });

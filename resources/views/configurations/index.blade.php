@@ -37,25 +37,25 @@
                             <td>{{ $configuration->identifier }}</td>
                             <td class="text-center">
                                 <a href="{{ route('datatables.configurations.edit', [
-                                    'configuration' => $configuration
+                                    'configuration' => $configuration->identifier
                                 ]) }}" class="btn btn-primary btn-sm" href="">Edit</a>
-                                @if($configuration->trashed())
-                                    <form class="d-inline" method="post" action="{{ route('datatables.configurations.restore', [ 'configuration' => $configuration ]) }}">
+                                @if($configuration->deleted_at)
+                                    <form class="d-inline" method="post" action="{{ route('datatables.configurations.restore', [ 'configuration' => $configuration->identifier ]) }}">
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="btn btn-success btn-sm">Activate</button>
                                     </form>
                                 @else
-                                    <form class="d-inline" method="post" action="{{ route('datatables.configurations.trash', [ 'configuration' => $configuration ]) }}">
+                                    <form class="d-inline" method="post" action="{{ route('datatables.configurations.trash', [ 'configuration' => $configuration->identifier ]) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-info btn-sm">Disable</button>
                                     </form>
                                 @endif
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal-{{ $configuration->id }}">
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal-{{ $configuration->identifier }}">
                                     Delete
                                 </button>
-                                <div class="modal fade" id="delete-modal-{{ $configuration->id }}" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+                                <div class="modal fade" id="delete-modal-{{ $configuration->identifier }}" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -69,7 +69,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-success" data-dismiss="modal">No, Do not delete</button>
-                                                <form class="d-inline" method="post" action="{{ route('datatables.configurations.destroy', [ 'configuration' => $configuration ]) }}">
+                                                <form class="d-inline" method="post" action="{{ route('datatables.configurations.destroy', [ 'configuration' => $configuration->identifier ]) }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Yes, Delete</button>

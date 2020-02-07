@@ -11,6 +11,16 @@ use Amprest\LaravelDatatables\Models\Configuration;
 class ColumnController extends Controller 
 {
     /**
+     * Initialize the constructor
+     * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
+     * 
+     */
+    public function __construct()
+    {
+        $this->configuration = new Configuration();
+    }
+
+    /**
      * Update a particular table's columns
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
      * 
@@ -19,23 +29,24 @@ class ColumnController extends Controller
      * @return \Illuminate\Support\Facades\View
      */
     public function store(Request $request, $configuration)
-    {
+    {        
         //  Find the configuration
-        $configuration = Configuration::withTrashed()->identifier($configuration)
-            ->firstOrFail();
+        $configuration = $this->configuration->find($configuration);
 
         //  Update the payload object
-        $payload = $configuration->payload;
+        $payload = $configuration['payload'];
         array_push($payload['filters'], [
             'type' => '',
             'title' => ucwords(strtolower($request->name)),
             'server' => $name = Str::slug( strtolower($request->name), '_' ),
-            'column' => $name,
+            'name' => $name,
         ]);
 
-        //  Update the columns for the table
-        $configuration->update([
-            'columns' => array_unique(array_merge($configuration->columns, [ $request->name ])),
+        //  Merge the processed data items
+        $this->configuration->update([
+            'identifier' => $configuration['identifier'],
+            'columns' => array_unique(array_merge($configuration['columns'], [ $request->name ])),
+            'deleted_at' => $request->deleted_at,
             'payload' => $payload,
         ]);
 
@@ -56,15 +67,14 @@ class ColumnController extends Controller
     public function destroy($configuration, $column)
     {
         //  Find the configuration and permanently delete it
-        $configuration = Configuration::withTrashed()->identifier($configuration)
-            ->firstOrFail();
+        $configuration = $this->configuration->find($configuration);
 
         //  Get the payload
-        $payload = $configuration->payload;
+        $payload = $configuration['payload'];
 
         //  Remove any occurrence of the column in the filters
         $payload['filters'] = collect($payload['filters'])->filter(function($option) use ($column){
-            return $option['column'] != Str::slug(strtolower($column), '_');
+            return $option['name'] != Str::slug(strtolower($column), '_');
         })->toArray();
 
         //  Remove any occurrence of the column in the sorting array
@@ -75,15 +85,17 @@ class ColumnController extends Controller
         //  Remove any occurrence of the column in the hidden columns array
         $payload['hiddenColumns'] = array_diff( $payload['hiddenColumns'], [ Str::slug(strtolower($column), '_') ] );
 
-        //  Finally remove the column 
-        $configuration->update([
-            'columns' => array_diff( $configuration->columns, [ $column ] ),
+        //  Merge the processed data items
+        $this->configuration->update([
+            'identifier' => $identifier = $configuration['identifier'],
+            'columns' => array_diff( $configuration['columns'], [ $column ] ),
+            'deleted_at' => $configuration['deleted_at'],
             'payload' => $payload,
         ]);
 
         //  Redirect to the configuration index page
         return redirect()->route('datatables.configurations.edit', [
-            'configuration' => $configuration
+            'configuration' => $identifier
         ])->with([
             'success' => 'The table column has been permanently deleted.'
         ]);                

@@ -12,6 +12,16 @@ use Amprest\LaravelDatatables\Models\Configuration;
 class ConfigurationController extends Controller 
 {
     /**
+     * Initialize the constructor
+     * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
+     * 
+     */
+    public function __construct()
+    {
+        $this->configuration = new Configuration();
+    }
+
+    /**
      * List all table configurations in the database
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
      * 
@@ -20,7 +30,7 @@ class ConfigurationController extends Controller
     public function index()
     {
         return package_view('configurations.index', [
-            'configurations' => Configuration::withTrashed()->get(),
+            'configurations' => Configuration::all(),
         ]); 
     }
 
@@ -38,6 +48,7 @@ class ConfigurationController extends Controller
             'identifier' => $identifier = Str::slug($request->identifier),
             'payload' => array_merge([ 'id' => $identifier ], config('datatables.config')),
             'columns' => [],
+            'deleted_at' => null,
         ]);
 
         //  Validate the request
@@ -48,7 +59,7 @@ class ConfigurationController extends Controller
 
         //  Redirect to the configuration edit page
         return redirect()->route('datatables.configurations.edit', [
-            'configuration' => $configuration,
+            'configuration' => $identifier,
         ])->with([
             'success' => 'The table has been listed successfully.'
         ]);
@@ -64,13 +75,12 @@ class ConfigurationController extends Controller
     public function edit($configuration)
     {
         //  Find the configuration
-        $configuration = Configuration::withTrashed()->identifier($configuration)
-            ->firstOrFail();
+        $configuration = $this->configuration->find($configuration);
 
         return package_view('configurations.edit', [
             'configuration' => $configuration,
-            'identifier' => $configuration->identifier, 
-            'configurations' => $configuration->payload,
+            'identifier' => $configuration['identifier'], 
+            'configurations' => $configuration['payload'],
         ]); 
     }
 
@@ -85,8 +95,7 @@ class ConfigurationController extends Controller
     public function update(Request $request, $configuration)
     {
         //  Find the configuration
-        $configuration = Configuration::withTrashed()->identifier($configuration)
-            ->firstOrFail();
+        $configuration = $this->configuration->find($configuration);
 
         //  Sanitize the filters element
         $filters = $sorting = $hidden = [];
@@ -116,8 +125,10 @@ class ConfigurationController extends Controller
         }
 
         //  Merge the processed data items
-        $configuration->update([
-            'identifier' => $request['configurations']['id'],
+        $this->configuration->update([
+            'identifier' => $identifier = $request['configurations']['id'],
+            'columns' => $configuration['columns'] ?? [],
+            'deleted_at' => $request->deleted_at,
             'payload' => array_merge($request->configurations, [
                 'filters' => $filters,
                 'sorting' => $sorting,
@@ -127,7 +138,7 @@ class ConfigurationController extends Controller
 
         //  Redirect to the configuration edit page
         return redirect()->route('datatables.configurations.edit', [
-            'configuration' => $configuration,
+            'configuration' => $identifier,
         ])->with([
             'success' => 'The table configurations have been updated successfully.'
         ]);
@@ -140,10 +151,10 @@ class ConfigurationController extends Controller
      * @param \Amprest\LaravelDatatables\Models\Configuration $configuration
      * @return \Illuminate\Support\Facades\View
      */
-    public function trash(Configuration $configuration)
+    public function trash($identifier)
     {
         //  Soft delete the configuration
-        $configuration->delete();  
+        $this->configuration->delete($identifier);  
         
         //  Redirect to the configuration index page
         return redirect()->route('datatables.configurations.index')->with([
@@ -155,14 +166,13 @@ class ConfigurationController extends Controller
      * Restore a soft deleted record
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
      * 
-     * @param string $configuration
+     * @param string $identifier
      * @return \Illuminate\Support\Facades\View
      */
-    public function restore($configuration)
+    public function restore($identifier)
     {
         //  Find the configuration and restore it
-        $configuration = Configuration::withTrashed()->identifier($configuration)
-            ->firstOrFail()->restore();
+        $this->configuration->restore($identifier);  
 
         //  Redirect to the configuration index page
         return redirect()->route('datatables.configurations.index')->with([
@@ -174,14 +184,13 @@ class ConfigurationController extends Controller
      * Hard delete a record in the database
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
      * 
-     * @param string $configuration
+     * @param string $identifier
      * @return \Illuminate\Support\Facades\View
      */
-    public function destroy($configuration)
+    public function destroy($identifier)
     {
         //  Find the configuration and permanently delete it
-        $configuration = Configuration::withTrashed()->identifier($configuration)
-            ->firstOrFail()->forceDelete();
+        $this->configuration->forceDelete($identifier);
 
         //  Redirect to the configuration index page
         return redirect()->route('datatables.configurations.index')->with([
@@ -197,15 +206,11 @@ class ConfigurationController extends Controller
      * @param \Amprest\LaravelDatatables\Models\Configuration $configuration
      * @return \Illuminate\Http\Response
      */
-    public function validateRequest(Request $request, Configuration $configuration = null)
-    {
-        //  Define the unique rule
-        $unique = Rule::unique(  with(new Configuration)->getTable() )
-            ->ignore($configuration->id ?? null);
-
+    public function validateRequest(Request $request)
+    {       
         //  Return the validator instance
         return Validator::make($request->all(), [
-            'identifier' => [ 'required', 'max:30', 'min:5', $unique ],
+            'identifier' => [ 'required', 'max:30', 'min:5' ],
             'payload' => [ 'required', 'array' ],
         ])->validate();
     }
