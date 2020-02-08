@@ -29,9 +29,28 @@ class ColumnController extends Controller
      * @return \Illuminate\Support\Facades\View
      */
     public function store(Request $request, $configuration)
-    {        
+    {   
         //  Find the configuration
         $configuration = $this->configuration->find($configuration);
+        $columns = collect($configuration['columns']);
+
+        //  Validate the request
+        Validator::make($request->all(), [
+            'name' => [
+                'required',
+                'max:30',
+                'regex:/^[a-zA-Z0-9_ ]*$/',
+                function ($attribute, $value, $fail) use ($columns) {
+                    if($columns->contains(function($column, $key) use ($value){
+                        return strtolower($value) == strtolower($column);
+                    })) {
+                        $fail('The table column name should be unique');
+                    }
+                },
+            ],
+        ], [], [
+            'name' => 'column name'
+        ])->validate();
 
         //  Update the payload object
         $payload = $configuration['payload'];
@@ -46,7 +65,7 @@ class ColumnController extends Controller
         $this->configuration->update([
             'identifier' => $configuration['identifier'],
             'columns' => array_unique(array_merge($configuration['columns'], [ $request->name ])),
-            'deleted_at' => $request->deleted_at,
+            'deleted_at' => $configuration['deleted_at'],
             'payload' => $payload,
         ]);
 

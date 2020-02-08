@@ -186,7 +186,7 @@ class Configuration
         $configurations = $this->data;
         $configurations = $configurations->filter(function($configuration, $index) use ($identifier){
             return $configuration['identifier'] != $identifier;
-        });
+        })->values();
         
         //  Insert the item into the json file
         return Storage::put($this->filepath, json_encode($configurations));

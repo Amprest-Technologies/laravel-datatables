@@ -42,7 +42,7 @@ class ConfigurationController extends Controller
      * @return \Illuminate\Support\Facades\View
      */
     public function store(Request $request)
-    {
+    {        
         //  Merge the request parameters
         $request->merge([ 
             'identifier' => $identifier = Str::slug($request->identifier),
@@ -52,7 +52,20 @@ class ConfigurationController extends Controller
         ]);
 
         //  Validate the request
-        $this->validateRequest($request);
+        Validator::make($request->all(), [
+            'payload' => [ 'required', 'array' ],
+            'identifier' => [
+                'required',
+                'max:30',
+                'regex:/^[A-Za-z]+[\w\-\:\.]*$/',
+                function ($attribute, $value, $fail) {
+                    $configurations = collect(Configuration::all());
+                    if($configurations && $configurations->isNotEmpty() && $configurations->where('identifier', $value)->first()) {              
+                        $fail('The table identifier should be unique');
+                    }
+                },
+            ],
+        ])->validate();
 
         //  Create the configuration
         $configuration = Configuration::create($request->all());
@@ -92,10 +105,10 @@ class ConfigurationController extends Controller
      * @param string $configuration
      * @return \Illuminate\Support\Facades\View
      */
-    public function update(Request $request, $configuration)
+    public function update(Request $request, $identifier)
     {
         //  Find the configuration
-        $configuration = $this->configuration->find($configuration);
+        $configuration = $this->configuration->find($identifier);
 
         //  Sanitize the filters element
         $filters = $sorting = $hidden = [];
@@ -126,10 +139,11 @@ class ConfigurationController extends Controller
 
         //  Merge the processed data items
         $this->configuration->update([
-            'identifier' => $identifier = $request['configurations']['id'],
+            'identifier' => $identifier,
             'columns' => $configuration['columns'] ?? [],
             'deleted_at' => $request->deleted_at,
             'payload' => array_merge($request->configurations, [
+                'id' => $identifier,
                 'filters' => $filters,
                 'sorting' => $sorting,
                 'hiddenColumns' => $hidden,

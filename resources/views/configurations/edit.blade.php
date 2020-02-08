@@ -1,5 +1,5 @@
 @extends(package_resource('layouts.app'))
-@section('title', 'Edit this table\'s configurations')
+@section('title', "Edit Configurations : ".$configuration['identifier'])
 @section('content')
     <section class="row">
         <div class="col-lg-12">
@@ -34,115 +34,119 @@
                         <h5 class="font-weight-bold">Column Configurations</h5>
                     </div>
                     <div class="form-group col-lg-12">
-                        <table class="table table-sm table-bordered mb-0">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Column</th>
-                                    <th>Title</th>
-                                    <th>Server Name</th>
-                                    <th>Type</th>
-                                    <th>Sorting</th>
-                                    <th>Hidden</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($configuration['columns'] as $column)
+                        @if(isset($configuration['columns']) && count($configuration['columns']))
+                            <table class="table table-sm table-bordered mb-0">
+                                <thead class="thead-dark">
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $column }}</td>
-                                        <td>
-                                            @php 
-                                                $value = collect($configurations['filters'])
-                                                    ->where('name', Str::slug(strtolower($column), '_'))
-                                                    ->first();
-                                            @endphp
-                                            <input 
-                                                name="columns[{{ $column }}][title]" 
-                                                type="text" 
-                                                class="form-control form-control-sm"
-                                                value="{{ $value['title'] ?? null }}"
-                                            >
-                                        </td>
-                                        <td>
-                                            <input 
-                                                name="columns[{{ $column }}][server]" 
-                                                type="text" 
-                                                class="form-control form-control-sm"
-                                                value="{{ $value['server'] ?? null }}"
-                                            >
-                                        </td>
-                                        <td>
-                                            <select name="columns[{{ $column }}][type]" class="form-control form-control-sm">
-                                                <option {{ collect($configurations['filters'])
-                                                    ->where('name', Str::slug(strtolower($column), '_'))
-                                                    ->where('type', null)
-                                                    ->first() ? 'selected' : ''}} value="">None</option>
-                                                <option {{ collect($configurations['filters'])
-                                                    ->where('name', Str::slug(strtolower($column), '_'))
-                                                    ->where('type', 'input')
-                                                    ->first() ? 'selected' : ''}} value="input">Input</option>
-                                                <option {{ collect($configurations['filters'])
-                                                    ->where('name', Str::slug(strtolower($column), '_'))
-                                                    ->where('type', 'select')
-                                                    ->first() ? 'selected' : ''}} value="select">Select</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select name="columns[{{ $column }}][sorting]" class="form-control form-control-sm">
-                                                <option {{ collect($configurations['sorting'])
-                                                    ->where('column', Str::slug(strtolower($column), '_'))
-                                                    ->where('order', '!=', 'asc')
-                                                    ->where('order', '!=', 'desc')
-                                                    ->first() ? 'selected' : ''}} value="">None</option>
-                                                <option {{ collect($configurations['sorting'])
-                                                    ->where('column', Str::slug(strtolower($column), '_'))
-                                                    ->where('order', 'asc')
-                                                    ->first() ? 'selected' : ''}} value="asc">Ascending</option>
-                                                <option {{ collect($configurations['sorting'])
-                                                    ->where('column', Str::slug(strtolower($column), '_'))
-                                                    ->where('order', 'desc')
-                                                    ->first() ? 'selected' : ''}} value="desc">Descending</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            @php $hidden = in_array(Str::slug(strtolower($column), '_'), $configurations['hiddenColumns']); @endphp
-                                            <select name="columns[{{ $column }}][hidden]" class="form-control form-control-sm">
-                                                <option {{ $hidden ? 'selected' : '' }} value="1">True</option>
-                                                <option {{ $hidden ? '' : 'selected' }} value="0">False</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal-{{ $loop->iteration }}">
-                                                Delete
-                                            </button>
-                                            <div class="modal fade" id="delete-modal-{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="delete-modal-label">Modal title</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body text-left">
-                                                            Are you sure you want to delete this column? The process is irreversible.
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-success" data-dismiss="modal">No, Do not delete</button>
-                                                            <a href="{{ route('datatables.columns.destroy', [ 'configuration' => $configuration['identifier'], 'column' => $column ]) }}" class="btn btn-danger">
-                                                                Yes, Delete
-                                                            </a>
+                                        <th>#</th>
+                                        <th>Column</th>
+                                        <th>Title</th>
+                                        <th>Server Name</th>
+                                        <th>Type</th>
+                                        <th>Sorting</th>
+                                        <th>Hidden</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($configuration['columns'] as $column)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $column }}</td>
+                                            <td>
+                                                @php 
+                                                    $value = collect($configurations['filters'])
+                                                        ->where('name', Str::slug(strtolower($column), '_'))
+                                                        ->first();
+                                                @endphp
+                                                <input 
+                                                    name="columns[{{ $column }}][title]" 
+                                                    type="text" 
+                                                    class="form-control form-control-sm"
+                                                    value="{{ $value['title'] ?? null }}"
+                                                >
+                                            </td>
+                                            <td>
+                                                <input 
+                                                    name="columns[{{ $column }}][server]" 
+                                                    type="text" 
+                                                    class="form-control form-control-sm"
+                                                    value="{{ $value['server'] ?? null }}"
+                                                >
+                                            </td>
+                                            <td>
+                                                <select name="columns[{{ $column }}][type]" class="form-control form-control-sm">
+                                                    <option {{ collect($configurations['filters'])
+                                                        ->where('name', Str::slug(strtolower($column), '_'))
+                                                        ->where('type', null)
+                                                        ->first() ? 'selected' : ''}} value="">None</option>
+                                                    <option {{ collect($configurations['filters'])
+                                                        ->where('name', Str::slug(strtolower($column), '_'))
+                                                        ->where('type', 'input')
+                                                        ->first() ? 'selected' : ''}} value="input">Input</option>
+                                                    <option {{ collect($configurations['filters'])
+                                                        ->where('name', Str::slug(strtolower($column), '_'))
+                                                        ->where('type', 'select')
+                                                        ->first() ? 'selected' : ''}} value="select">Select</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="columns[{{ $column }}][sorting]" class="form-control form-control-sm">
+                                                    <option {{ collect($configurations['sorting'])
+                                                        ->where('column', Str::slug(strtolower($column), '_'))
+                                                        ->where('order', '!=', 'asc')
+                                                        ->where('order', '!=', 'desc')
+                                                        ->first() ? 'selected' : ''}} value="">None</option>
+                                                    <option {{ collect($configurations['sorting'])
+                                                        ->where('column', Str::slug(strtolower($column), '_'))
+                                                        ->where('order', 'asc')
+                                                        ->first() ? 'selected' : ''}} value="asc">Ascending</option>
+                                                    <option {{ collect($configurations['sorting'])
+                                                        ->where('column', Str::slug(strtolower($column), '_'))
+                                                        ->where('order', 'desc')
+                                                        ->first() ? 'selected' : ''}} value="desc">Descending</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                @php $hidden = in_array(Str::slug(strtolower($column), '_'), $configurations['hiddenColumns']); @endphp
+                                                <select name="columns[{{ $column }}][hidden]" class="form-control form-control-sm">
+                                                    <option {{ $hidden ? 'selected' : '' }} value="1">True</option>
+                                                    <option {{ $hidden ? '' : 'selected' }} value="0">False</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal-{{ $loop->iteration }}">
+                                                    Delete
+                                                </button>
+                                                <div class="modal fade" id="delete-modal-{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="delete-modal-label">Modal title</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body text-left">
+                                                                Are you sure you want to delete this column? The process is irreversible.
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-success" data-dismiss="modal">No, Do not delete</button>
+                                                                <a href="{{ route('datatables.columns.destroy', [ 'configuration' => $configuration['identifier'], 'column' => $column ]) }}" class="btn btn-danger">
+                                                                    Yes, Delete
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else 
+                            <h5>No column data is available. Please list a column above.</h5>  
+                        @endif
                     </div>
                 </div>
 
@@ -154,16 +158,11 @@
                     <div class="form-group col-lg-6">
                         <label class="font-weight-bold">Identifier</label>
                         <input 
-                            name="configurations[id]" 
                             type="text" 
-                            class="form-control @error('configurations.id') is-invalid @enderror" 
-                            value="{{ old('configurations.id') ?: $configurations['id'] }}"
-                        >
-                        @error('configurations.id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                            class="form-control" 
+                            value="{{ $configuration['identifier'] }}"
+                            disabled
+                        />
                     </div>
                     <div class="form-group col-lg-6">
                         <label class="font-weight-bold">Classes</label>

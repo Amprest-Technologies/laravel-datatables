@@ -51,9 +51,6 @@ class DatatablesInstall extends Command
             '--force' => false,
         ]);
 
-        //  Migrate the database
-        $this->call('migrate');
-
         //  Completed 
         $this->info('Success! Completed Installation. Enjoy.');
     }

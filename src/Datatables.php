@@ -39,11 +39,13 @@ class Datatables
             $this->checkForAjaxConfigurations();
 
             //  If everything is ok, return the request
-            return ($this->configuration)['payload'];
+            return array_merge(($this->configuration)['payload'], [
+                'datatable' => true,
+            ]);
         };
 
-        //  Throw a 404 error otherwise
-        abort('404', "The table's identifier, $tableID cannot be found or has been deactivated.");
+        //  If no configurations are available, prevent datatable initialization
+        return [ 'datatable' => false ];
     }   
 
     /**
