@@ -8,7 +8,7 @@ class Configuration
 {
     //  Define the data variable
     private $data;
-    private $filepath = 'datatables-configurations.json';
+    private static $filepath = 'datatables.config.json';
 
     /**
     * Initialize the model
@@ -18,10 +18,23 @@ class Configuration
     *
     */
     public function __construct()
+    {       
+        //  Get the config data from the file
+        $this->data = collect(json_decode(
+            $this->fetchDataFromFile(), TRUE)
+        );
+    }
+
+    /**
+    * Return the config path
+    *
+    * @author Alvin Gichira Kaburu
+    * @return string
+    *
+    */
+    public static function getConfigPath()
     {
-        $this->data = collect(json_decode(file_get_contents(
-            storage_path('app'.'/'.$this->filepath)
-        ), TRUE));
+        return base_path(self::$filepath);        
     }
 
     /**
@@ -34,9 +47,7 @@ class Configuration
     public static function all()
     {
         //  Get all configurations
-        $configurations = json_decode(file_get_contents(
-            storage_path('app/datatables-configurations.json')
-        ), TRUE);
+        $configurations = json_decode(self::fetchDataFromFile(), TRUE);
 
         //  Cast the configurations into an object
         return json_decode(json_encode($configurations));
@@ -52,16 +63,14 @@ class Configuration
     public static function create(array $data)
     {
         //  Get all configurations
-        $configurations = json_decode(file_get_contents(
-            storage_path('app/datatables-configurations.json')
-        ), TRUE);
+        $configurations = json_decode(self::fetchDataFromFile(), TRUE);
 
         $configurations = collect($configurations)
             ->push( $data = collect($data)->except('_token') )
             ->toArray();
 
         //  Insert the item into the json file
-        Storage::put('datatables-configurations.json', json_encode($configurations));
+        file_put_contents(self::getConfigPath(), json_encode( $configurations ));
 
         //  Cast the configurations into an object
         return $data;
@@ -126,7 +135,7 @@ class Configuration
         });
         
         //  Insert the item into the json file
-        return Storage::put($this->filepath, json_encode($configurations));
+        return file_put_contents(self::getConfigPath(), json_encode( $configurations ));
     }
 
     /**
@@ -148,7 +157,7 @@ class Configuration
         });
         
         //  Insert the item into the json file
-        return Storage::put($this->filepath, json_encode($configurations));
+        return file_put_contents(self::getConfigPath(), json_encode( $configurations ));
     }
 
     /**
@@ -170,7 +179,7 @@ class Configuration
         });
         
         //  Insert the item into the json file
-        return Storage::put($this->filepath, json_encode($configurations));
+        return file_put_contents(self::getConfigPath(), json_encode( $configurations ));
     }
 
     /**
@@ -189,6 +198,24 @@ class Configuration
         })->values();
         
         //  Insert the item into the json file
-        return Storage::put($this->filepath, json_encode($configurations));
+        return file_put_contents(self::getConfigPath(), json_encode( $configurations ));
+    }
+
+    /**
+    * Fetch config data from external file
+    *
+    * @author Alvin Gichira Kaburu
+    * @return boolean|string
+    *
+    */
+    public static function fetchDataFromFile()
+    {
+        //  Check if the file exits, and create it if it doesn't
+        if(!file_exists($path = self::getConfigPath())) {
+            file_put_contents($path, json_encode([]));
+        }
+
+        //  Get the config data from the file
+        return @file_get_contents( $path );
     }
 }

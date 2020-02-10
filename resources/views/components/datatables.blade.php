@@ -4,7 +4,7 @@
 {{-- Include the actual table that will be converted to a datatable --}}
 <table 
     id="{{ $id }}" 
-    class="{{ $class ?? ( $classes ?? null ) }}"
+    class="{{ $class ?? ( $classes ?? config('datatables.styling.table_classes') ) }}"
 > {{ $slot }} </table>
 
 {{-- If the datatable can be initialized --}}
