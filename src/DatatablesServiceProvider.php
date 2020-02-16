@@ -71,7 +71,7 @@ class DatatablesServiceProvider extends ServiceProvider
      */
     protected function loadHelpers()
     {
-        foreach (glob(__DIR__.'\Utils\*.php') as $helper) {
+        foreach (glob(__DIR__.'/Utils/*.php') as $helper) {
             require_once $helper;
         }
     }
