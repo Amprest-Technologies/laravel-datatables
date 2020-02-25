@@ -57,7 +57,6 @@
         <script src="{{ package_asset('js/vendor.js') }}"></script>
         <script src="{{ package_asset('js/app.js') }}"></script>
         <script src="{{ package_asset('js/master.js') }}"></script>
-
         @yield('js')
     </body>
 </html>

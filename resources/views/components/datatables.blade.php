@@ -156,7 +156,7 @@
 	
 					// 	Define the datatables object
 					const table = $(tableID).DataTable({
-						dom: `<"row"<"col-lg-9"<"${customTitleId}${customTitleClass} d-inline-block"><"d-inline-block"B>><"col-lg-3 text-right"l>>rt<"row"<"col-lg-4"i><"col-lg-8"p>>`,
+						dom: `<"row"<"col-lg-3 text-left"l><"col-lg-9"<"${customTitleId}${customTitleClass} d-inline-block"><"d-inline-block"B>>>rt<"row"<"col-lg-4"i><"col-lg-8"p>>`,
 						order: order,
 						searching: Boolean(Number(@json($searching ?? 1))),
 						paging: Boolean(Number(@json($paging ?? 1))),
