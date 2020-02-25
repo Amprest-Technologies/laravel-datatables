@@ -23,10 +23,13 @@ class DatatablesServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {        
+    {    
+        //  Get the root path  
+        $root =  __DIR__.'/../..';
+         
         //  Register default config values
-        $this->mergeConfigFrom(__DIR__.'/../config/package.php', 'package');
-         $this->mergeConfigFrom(__DIR__.'/../config/datatables.php', 'datatables');
+        $this->mergeConfigFrom($root.'/config/package.php', 'package');
+        $this->mergeConfigFrom($root.'/config/datatables.php', 'datatables');
 
         //  Register dependent service providers.
         $this->app->register('Amprest\LaravelDatatables\Providers\BladeServiceProvider');
@@ -39,21 +42,21 @@ class DatatablesServiceProvider extends ServiceProvider
             ->namespace('Amprest\\LaravelDatatables\\Controllers')
             ->middleware([ 'web' ])
             ->group(function () {
-                $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+                $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
             });
 
         //  Load other package file dependancies
-        $this->loadViewsFrom(__DIR__.'/../resources/views', config('package.name'));
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadViewsFrom($root.'/resources/views', config('package.name'));
+        $this->loadMigrationsFrom($root.'/database/migrations');
 
         //  Allow the config files to be published.
         $this->publishes( [
-            __DIR__.'/../config/datatables.php' => config_path('datatables.php') 
+            $root.'/config/datatables.php' => config_path('datatables.php') 
         ], 'datatables-config');
 
         //  Allow public assets to be published
         $this->publishes([
-            __DIR__.'/../public' => public_path('vendor/'.config('package.name')),
+            $root.'/public' => public_path('vendor/'.config('package.name')),
         ], 'datatables-assets');
 
         //  Register custom package commands
@@ -71,7 +74,7 @@ class DatatablesServiceProvider extends ServiceProvider
      */
     protected function loadHelpers()
     {
-        foreach (glob(__DIR__.'/Utils/*.php') as $helper) {
+        foreach (glob(__DIR__.'/../Utils/*.php') as $helper) {
             require_once $helper;
         }
     }

@@ -43,7 +43,6 @@ function package_resource($path)
  *
  * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
  * @param String $tableID
- * @param String $identifier
  * @return Array 
  */
 function datatables_payload($tableID)

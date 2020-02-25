@@ -28,15 +28,9 @@ class BladeServiceProvider extends ServiceProvider
         Blade::component(package_resource('components.datatables'), 'datatable');
 
         //  Directive to include datatables css files
-        Blade::directive('datatablesCss', function ($expression) {
+        Blade::directive('datatablesScripts', function ($expression) {
             return "<?php 
                 echo View::yieldContent('datatables-css'); 
-            ?>";
-        });
-
-        //  Directive to include datatables js files
-        Blade::directive('datatablesJs', function ($expression) {
-            return "<?php 
                 echo View::yieldContent('datatables-scripts'); 
                 echo View::yieldContent('datatables-config'); 
             ?>";
