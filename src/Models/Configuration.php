@@ -8,7 +8,7 @@ class Configuration
 {
     //  Define the data variable
     private $data;
-    private static $filepath = 'vendor\datatables\datatables.config.json';
+    private static $filepath = 'vendor'.DIRECTORY_SEPARATOR .'datatables'.DIRECTORY_SEPARATOR.'datatables.config.json';
 
     /**
     * Initialize the model

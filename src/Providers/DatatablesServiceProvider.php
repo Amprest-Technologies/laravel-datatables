@@ -25,11 +25,11 @@ class DatatablesServiceProvider extends ServiceProvider
     public function boot()
     {    
         //  Get the root path  
-        $root =  __DIR__.'/../..';
+        $root =  __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..';
          
         //  Register default config values
-        $this->mergeConfigFrom($root.'/config/package.php', 'package');
-        $this->mergeConfigFrom($root.'/config/datatables.php', 'datatables');
+        $this->mergeConfigFrom($root.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'package.php', 'package');
+        $this->mergeConfigFrom($root.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'datatables.php', 'datatables');
 
         //  Register dependent service providers.
         $this->app->register('Amprest\LaravelDatatables\Providers\BladeServiceProvider');
@@ -42,21 +42,21 @@ class DatatablesServiceProvider extends ServiceProvider
             ->namespace('Amprest\\LaravelDatatables\\Controllers')
             ->middleware([ 'web' ])
             ->group(function () {
-                $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
+                $this->loadRoutesFrom(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'routes/web.php');
             });
 
         //  Load other package file dependancies
-        $this->loadViewsFrom($root.'/resources/views', config('package.name'));
-        $this->loadMigrationsFrom($root.'/database/migrations');
+        $this->loadViewsFrom($root.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'views', config('package.name'));
+        $this->loadMigrationsFrom($root.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations');
 
         //  Allow the config files to be published.
         $this->publishes( [
-            $root.'/config/datatables.php' => config_path('datatables.php') 
+            $root.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'datatables.php' => config_path('datatables.php') 
         ], 'datatables-config');
 
         //  Allow public assets to be published
         $this->publishes([
-            $root.'/public' => public_path('vendor/'.config('package.name')),
+            $root.DIRECTORY_SEPARATOR.'public' => public_path('vendor'.DIRECTORY_SEPARATOR.''.config('package.name')),
         ], 'datatables-assets');
 
         //  Register custom package commands
@@ -74,7 +74,7 @@ class DatatablesServiceProvider extends ServiceProvider
      */
     protected function loadHelpers()
     {
-        foreach (glob(__DIR__.'/../Utils/*.php') as $helper) {
+        foreach (glob(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'Utils'.DIRECTORY_SEPARATOR.'*.php') as $helper) {
             require_once $helper;
         }
     }
