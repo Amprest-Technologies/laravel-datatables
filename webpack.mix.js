@@ -14,9 +14,7 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/master.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-    .extract([
-        'jquery', 'bootstrap', 'moment',
-    ])
+    .extract(['moment'])
     .webpackConfig({
         node: {
             fs: 'empty'

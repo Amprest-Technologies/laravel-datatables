@@ -4,9 +4,6 @@
 // Variables
 @import 'variables';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-
 //  Datatables styling
 @import "datatables";
 
@@ -15,6 +12,3 @@
 
 //  Bootstrap datatables
 @import "~datatables.net-bs4/css/dataTables.bootstrap4.min.css";
-
-//  Import bootstrap date range picker
-@import "~bootstrap-daterangepicker/daterangepicker.css";

@@ -7,9 +7,6 @@ window._ = require('lodash');
  */
 
 try {
-    window.Popper = require('popper.js').default;
-    window.$ = window.jQuery = require('jquery');
-
     window.JSZip = require('jszip');
     window.pdfMake = require('pdfmake/build/pdfmake.js');
     window.pdfFonts = require('pdfmake/build/vfs_fonts.js');
@@ -17,11 +14,9 @@ try {
 
     require('fs');
     require('moment');
-    require('bootstrap');
     require('datatables.net-bs4');
     require('datatables.net-buttons-bs4');
     require('datatables.net-buttons/js/buttons.colVis');
     require('datatables.net-buttons/js/buttons.print');
     require('datatables.net-buttons/js/buttons.html5');
-    require('bootstrap-daterangepicker/daterangepicker');
 } catch (e) {}
