@@ -7,13 +7,14 @@ window._ = require('lodash');
  */
 
 try {
+    window.$ = window.jQuery = require('jquery');
+    
     window.JSZip = require('jszip');
     window.pdfMake = require('pdfmake/build/pdfmake.js');
     window.pdfFonts = require('pdfmake/build/vfs_fonts.js');
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
     require('fs');
-    require('moment');
     require('datatables.net-bs4');
     require('datatables.net-buttons-bs4');
     require('datatables.net-buttons/js/buttons.colVis');

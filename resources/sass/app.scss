@@ -1,11 +1,5 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
-// Variables
-@import 'variables';
-
 //  Datatables styling
-@import "datatables";
+@import "utils/datatables";
 
 //  Bootstrap Buttons
 @import "~datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css";

@@ -2,6 +2,7 @@
 
 namespace Amprest\LaravelDatatables;
 
+use Amprest\LaravelDatatables\View\Components\Datatable;
 use Illuminate\Support\ServiceProvider;
 
 class DatatablesServiceProvider extends ServiceProvider

@@ -1,27 +1,23 @@
 {{-- Get all datatables payload, and extract them into usable variables --}}
-@php extract(datatables_payload($id)) @endphp
+@php extract(datatables_payload($id = $attributes->get('id') )) @endphp
 
 {{-- Include the actual table that will be converted to a datatable --}}
-<table 
-    id="{{ $id }}" 
-    class="{{ $class ?? ( $classes ?? config('datatables.styling.table_classes') ) }}"
-> {{ $slot }} </table>
+<table {{ $attributes->merge(['class' => $classes ?? config('datatables.styling.table_classes')]) }}> 
+	{{ $slot }} 
+</table>
+
+@once
+	@push('datatables-config')
+		<link href="{{ package_asset('css/app.css') }}" rel="stylesheet">
+		<script defer type="text/javascript" src="{{ package_asset('js/app.js') }}"></script>
+	@endpush
+@endonce
 
 {{-- If the datatable can be initialized --}}
 @if($datatable)
-	{{-- Include the necessary scrips --}}
-	@section('datatables-scripts')
-		<link href="{{ package_asset('css/app.css') }}" rel="stylesheet">
-		<script src="{{ package_asset('js/manifest.js') }}" defer></script>
-		<script src="{{ package_asset('js/vendor.js') }}" defer></script>
-		<script src="{{ package_asset('js/app.js') }}" defer></script>
-		<script src="{{ package_asset('js/master.js') }}" defer></script>
-	@endsection
-
 	{{-- Include the datatable configurations --}}
-	@section('datatables-config')
-		@parent
-		<script defer>
+	@push('datatables-config')
+		<script type="text/javascript">
 			window.addEventListener('load', function() {
 				$(document).ready( function() {
 					const tableID = `#{{ $id }}`
@@ -213,5 +209,5 @@
 				})
 			})
 		</script>
-	@endsection
+	@endpush
 @endif

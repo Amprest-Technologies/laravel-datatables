@@ -51,7 +51,7 @@ return [
         | Define the default table classes
         |
         */
-        'table_classes' => 'table table-bordered table-sm',
+        'table_classes' => 'table table-sm',
     ],
 
     /*

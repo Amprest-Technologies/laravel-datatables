@@ -13,7 +13,6 @@ use Amprest\LaravelDatatables\Facades\Datatables;
 */
 
 //  Manage the datatable configurations
-Route::get('/', 'AppController@home')->name('home');
 Route::post('/users', 'AppController@users')->name('users');
 
 Route::resource('configurations', 'ConfigurationController');

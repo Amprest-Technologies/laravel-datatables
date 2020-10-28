@@ -14,20 +14,11 @@
         <!-- Title -->
         <title>{{ config('package.name', 'Laravel') }}</title>
 
-        <meta property="og:title" content="{{ config('app.name') }}">
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="{{ url('/') }}/">
-        <meta property="og:image" content="{{ package_asset('img/logo.png') }}" />
-        <meta property="og:description" content="" />
-
         <!-- Canonical Link. -->
         <link rel="canonical" href="{{ url('/') }}/">
 
-        <!-- Favicons -->
-        @include(package_resource('partials.favicons'))
-
         <!-- Styles -->
-        <link href="{{ package_asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ package_asset('css/config.css') }}" rel="stylesheet">
 
         <!-- Styles -->
         @yield('css')
@@ -55,8 +46,7 @@
         </div>     
         <script src="{{ package_asset('js/manifest.js') }}"></script>
         <script src="{{ package_asset('js/vendor.js') }}"></script>
-        <script src="{{ package_asset('js/app.js') }}"></script>
-        <script src="{{ package_asset('js/master.js') }}"></script>
+        <script src="{{ package_asset('js/config.js') }}"></script>
         @yield('js')
     </body>
 </html>

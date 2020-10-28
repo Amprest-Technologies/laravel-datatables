@@ -5,3 +5,10 @@
  */
 
 require('./bootstrap');
+
+
+/**
+ * Include datatables configurations
+ * 
+ */
+require('./utils');

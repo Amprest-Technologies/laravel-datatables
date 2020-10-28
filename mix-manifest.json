@@ -1,7 +1,6 @@
 {
-    "/public/js/manifest.js": "/public/js/manifest.js",
-    "/public/js/vendor.js": "/public/js/vendor.js",
     "/public/js/app.js": "/public/js/app.js",
     "/public/css/app.css": "/public/css/app.css",
-    "/public/js/master.js": "/public/js/master.js"
+    "/public/css/config.css": "/public/css/config.css",
+    "/public/js/config.js": "/public/js/config.js"
 }
