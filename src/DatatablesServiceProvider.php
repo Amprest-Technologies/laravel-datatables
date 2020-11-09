@@ -2,7 +2,8 @@
 
 namespace Amprest\LaravelDatatables;
 
-use Amprest\LaravelDatatables\View\Components\Datatable;
+use Amprest\LaravelDatatables\Http\Middleware\LocalEnvironment;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 class DatatablesServiceProvider extends ServiceProvider
@@ -49,13 +50,18 @@ class DatatablesServiceProvider extends ServiceProvider
         $this->app->register('Amprest\LaravelDatatables\Providers\FacadeServiceProvider');
 
         $routePrefix = config('datatables.route.prefix');
+
+        // Register middleware
+        $router = $this->app->make(Router::class);
+        $router->aliasMiddleware('local', LocalEnvironment::class);
+
         $this->app['router']
             ->name('datatables.')
             ->prefix(($routePrefix ? $routePrefix . '/' : '') . 'datatables')
             ->namespace('Amprest\\LaravelDatatables\\Controllers')
-            ->middleware(['web'])
+            ->middleware(['web', 'local'])
             ->group(function () {
-                $this->loadRoutesFrom(__DIR__ . DIRECTORY_SEPARATOR .  '..' . DIRECTORY_SEPARATOR . 'routes/web.php');
+                $this->loadRoutesFrom(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'routes/web.php');
             });
 
         //  Load other package file dependancies
