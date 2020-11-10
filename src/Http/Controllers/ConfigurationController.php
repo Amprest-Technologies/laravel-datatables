@@ -1,11 +1,10 @@
 <?php
 
-namespace Amprest\LaravelDatatables\Controllers;
+namespace Amprest\LaravelDatatables\Http\Controllers;
 
 use Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controller;
 use Amprest\LaravelDatatables\Models\Configuration;
 

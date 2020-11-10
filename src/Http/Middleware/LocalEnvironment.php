@@ -24,6 +24,6 @@ class LocalEnvironment
         }
 
         // Abort if environment is not local
-        abort('403');
+        return redirect()->back();
     }
 }

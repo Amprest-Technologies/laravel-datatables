@@ -1,6 +1,6 @@
 <?php
 
-namespace Amprest\LaravelDatatables\Controllers;
+namespace Amprest\LaravelDatatables\Http\Controllers;
 
 use Str;
 use Validator;

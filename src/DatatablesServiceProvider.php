@@ -51,15 +51,11 @@ class DatatablesServiceProvider extends ServiceProvider
 
         $routePrefix = config('datatables.route.prefix');
 
-        // Register middleware
-        $router = $this->app->make(Router::class);
-        $router->aliasMiddleware('local', LocalEnvironment::class);
-
         $this->app['router']
             ->name('datatables.')
             ->prefix(($routePrefix ? $routePrefix . '/' : '') . 'datatables')
-            ->namespace('Amprest\\LaravelDatatables\\Controllers')
-            ->middleware(['web', 'local'])
+            ->namespace('Amprest\\LaravelDatatables\\Http\\Controllers')
+            ->middleware(['web', LocalEnvironment::class])
             ->group(function () {
                 $this->loadRoutesFrom(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'routes/web.php');
             });

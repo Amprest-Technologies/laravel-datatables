@@ -156,7 +156,7 @@ class Configuration
     {
         //  Get all configurations
         $configurations = $this->data;
-        $configurations = $configurations->map(function($configuration, $index) use ($identifier){
+        $configurations = $configurations->map(function($configuration) use ($identifier){
             if($configuration['identifier'] == $identifier) {
                 $configuration['deleted_at'] = now()->toDateTimeString();
             }
@@ -178,7 +178,7 @@ class Configuration
     {
         //  Get all configurations
         $configurations = $this->data;
-        $configurations = $configurations->map(function($configuration, $index) use ($identifier){
+        $configurations = $configurations->map(function($configuration) use ($identifier){
             if($configuration['identifier'] == $identifier) {
                 $configuration['deleted_at'] = null;
             }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Amprest\LaravelDatatables\Traits;
+namespace Amprest\LaravelDatatables\Http\Traits;
 
 use Illuminate\Http\Request;
 

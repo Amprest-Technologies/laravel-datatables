@@ -1,9 +1,8 @@
 <?php
 
-namespace Amprest\LaravelDatatables\Controllers;
+namespace Amprest\LaravelDatatables\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Amprest\LaravelDatatables\Facades\Datatables;
 

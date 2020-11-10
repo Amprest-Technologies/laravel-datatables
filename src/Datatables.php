@@ -2,10 +2,9 @@
 
 namespace Amprest\LaravelDatatables;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Amprest\LaravelDatatables\Models\Configuration;
-use Amprest\LaravelDatatables\Traits\HandlesAjaxRequests;
+use Amprest\LaravelDatatables\Http\Traits\HandlesAjaxRequests;
 
 class Datatables
 {
