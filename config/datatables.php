@@ -71,7 +71,7 @@ return [
         'rowIndexes' => true,
         'customTitle' => false,
         'columnVisibility' => false,
-        'classes' => 'table table-hover table-bordered',
+        'classes' => 'table table-sm',
 
         /*
         |--------------------------------------------------------------------------
