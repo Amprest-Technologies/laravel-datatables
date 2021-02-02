@@ -15,10 +15,10 @@ try {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
     require('fs');
-    require('datatables.net');
-    require('datatables.net-buttons');
-    require('datatables.net-dt');
-    require('datatables.net-buttons-dt');
+    require('datatables.net')( window, $ );
+    require('datatables.net-buttons')( window, $ );
+    require('datatables.net-dt')( window, $ );
+    require('datatables.net-buttons-dt')( window, $ );
     require('datatables.net-buttons/js/buttons.colVis');
     require('datatables.net-buttons/js/buttons.print');
     require('datatables.net-buttons/js/buttons.html5');
