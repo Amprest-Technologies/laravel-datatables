@@ -3,7 +3,8 @@
 namespace Amprest\LaravelDatatables\Providers;
 
 use Amprest\LaravelDatatables\View\Components\Datatable;
-use Amprest\LaravelDatatables\View\Components\DatatablesConfig;
+use Amprest\LaravelDatatables\View\Components\DatatablesScripts;
+use Amprest\LaravelDatatables\View\Components\DatatablesStyles;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,6 +29,7 @@ class BladeServiceProvider extends ServiceProvider
     {
         //  Include a customized alias for the datatables component
         Blade::component('datatable', Datatable::class);
-        Blade::component('datatables-config', DatatablesConfig::class);
+        Blade::component('datatables-styles', DatatablesStyles::class);
+        Blade::component('datatables-scripts', DatatablesScripts::class);
     }
 }

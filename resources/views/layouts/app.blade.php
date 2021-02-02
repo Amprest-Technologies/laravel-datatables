@@ -15,7 +15,7 @@
         <title>{{ config('package.name', 'Laravel') }}</title>
 
         <!-- Canonical Link. -->
-        <link rel="canonical" href="{{ url('/') }}/">
+        <link rel="canonical" href="{{ url('/') }}">
 
         <!-- Styles -->
         <link href="{{ package_asset('css/config.css') }}" rel="stylesheet">
@@ -44,8 +44,6 @@
                 </div>
             </div>
         </div>     
-        <script src="{{ package_asset('js/manifest.js') }}"></script>
-        <script src="{{ package_asset('js/vendor.js') }}"></script>
         <script src="{{ package_asset('js/config.js') }}"></script>
         @yield('js')
     </body>

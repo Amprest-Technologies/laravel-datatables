@@ -1,8 +1,8 @@
 //  Datatables styling
 @import "utils/datatables";
 
-//  Bootstrap Buttons
-@import "~datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css";
-
 //  Bootstrap datatables
-@import "~datatables.net-bs4/css/dataTables.bootstrap4.min.css";
+@import "~datatables.net-dt/css/jquery.dataTables.min.css";
+
+//  Bootstrap Buttons
+@import "~datatables.net-buttons-dt/css/buttons.dataTables.min.css";

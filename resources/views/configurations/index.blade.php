@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <form action="{{ route('datatables.configurations.store') }}" method="post">
                 @csrf
-                <label class="mb-0 font-weight-bold" for="">List a new table</label>
+                <label class="mb-0 fw-bold" for="">List a new table</label>
                 <div class="input-group mb-1 mt-0">
                     <input 
                         name="identifier" 
@@ -67,7 +67,7 @@
                                                     <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body text-left">
+                                                <div class="modal-body text-start">
                                                     Are you sure you want to delete this table listing? The process is irreversible.
                                                 </div>
                                                 <div class="modal-footer">

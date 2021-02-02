@@ -15,8 +15,10 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/config.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/config.scss', 'public/css')
-    .webpackConfig({
-        node: {
-            fs: 'empty'
+    .webpackConfig({ 
+        resolve: {
+            fallback: {
+              fs: false
+            }
         }
     });

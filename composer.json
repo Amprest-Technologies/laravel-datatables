@@ -1,37 +1,36 @@
 {
-  "name": "amprest/laravel-datatables",
-  "type": "library",
-  "description": "This is a package that provides a customizable datatables component for the Laravel Framework.",
-  "keywords": [
-    "laravel",
-    "datatables"
-  ],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Alvin Kaburu",
-      "email": "geekaburu@amprest.co.ke"
-    },
-    {
-      "name": "Paul Gitau",
-      "email": "kinyanjuipaul34@gmail.com"
-    }
-  ],
-  "minimum-stability": "dev",
-  "require": {
-    "php": "^7.3|8.0",
-    "laravel/framework": "^8.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Amprest\\LaravelDatatables\\": "src/"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Amprest\\LaravelDatatables\\DatatablesServiceProvider"
-      ]
-    }
-  }
+	"name": "amprest/laravel-datatables",
+	"type": "library",
+	"description": "This is a package that provides a customizable datatables component for the Laravel Framework.",
+	"keywords": [
+		"laravel",
+		"datatables"
+	],
+	"license": "MIT",
+	"authors": [{
+			"name": "Alvin Kaburu",
+			"email": "geekaburu@amprest.co.ke"
+		},
+		{
+			"name": "Paul Gitau",
+			"email": "kinyanjuipaul34@gmail.com"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {
+		"php": "^7.3|8.0",
+		"laravel/framework": "^8.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Amprest\\LaravelDatatables\\": "src/"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Amprest\\LaravelDatatables\\DatatablesServiceProvider"
+			]
+		}
+	}
 }

@@ -14,7 +14,7 @@ class DatatablesServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {
+    {        
         //  Load helper functions
         $this->loadHelpers();
     }

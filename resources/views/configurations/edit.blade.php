@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <form action="{{ route('datatables.columns.store', [ 'configuration' => $configuration['identifier'] ]) }}" method="post">
                 @csrf
-                <label class="mb-0 font-weight-bold" for="">List a new column</label>
+                <label class="mb-0 fw-bold" for="">List a new column</label>
                 <div class="input-group mb-1 mt-0">
                     <input 
                         name="name" 
@@ -29,11 +29,11 @@
                 @method('PUT')
 
                 {{-- The Column filtering, sorting, display section --}}
-                <div class="form-row mt-4">
-                    <div class="form-group col-lg-12">
-                        <h5 class="font-weight-bold">Column Configurations</h5>
+                <div class="row mt-4">
+                    <div class="mb-3 col-lg-12">
+                        <h5 class="fw-bold">Column Configurations</h5>
                     </div>
-                    <div class="form-group col-lg-12">
+                    <div class="mb-3 col-lg-12">
                         @if(isset($configuration['columns']) && count($configuration['columns']))
                             <table class="table table-sm table-bordered mb-0">
                                 <thead class="thead-dark">
@@ -127,7 +127,7 @@
                                                                 <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <div class="modal-body text-left">
+                                                            <div class="modal-body text-start">
                                                                 Are you sure you want to delete this column? The process is irreversible.
                                                             </div>
                                                             <div class="modal-footer">
@@ -151,12 +151,12 @@
                 </div>
 
                 {{-- The general section --}}
-                <div class="form-row mt-4">
-                    <div class="form-group col-lg-12">
-                        <h5 class="font-weight-bold">General</h5>
+                <div class="row mt-4">
+                    <div class="mb-3 col-lg-12">
+                        <h5 class="fw-bold">General</h5>
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Identifier</label>
+                    <div class="mb-3 col-lg-12">
+                        <label class="fw-bold">Identifier</label>
                         <input 
                             type="text" 
                             class="form-control" 
@@ -164,22 +164,8 @@
                             disabled
                         />
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Classes</label>
-                        <input 
-                            name="configurations[classes]" 
-                            type="text" 
-                            class="form-control @error('configurations.classes') is-invalid @enderror" 
-                            value="{{ old('configurations.classes') ?: $configurations['classes'] }}"
-                        >
-                        @error('configurations.classes')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Info</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Info</label>
                         @php $info = old('configurations.info') ?: ( $configurations['info'] ?: '' ) @endphp
                         <select name="configurations[info]" class="form-control @error('configurations.info') is-invalid @enderror">
                             <option {{ $info ? 'selected' : '' }} value="1">True</option>
@@ -191,8 +177,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Ordering</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Ordering</label>
                         @php $ordering = old('configurations.ordering') ?: ( $configurations['ordering'] ?: '' ) @endphp
                         <select name="configurations[ordering]" class="form-control @error('configurations.ordering') is-invalid @enderror">
                             <option {{ $ordering ? 'selected' : '' }} value="1">True</option>
@@ -204,8 +190,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Searching</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Searching</label>
                         @php $searching = old('configurations.searching') ?: ( $configurations['searching'] ?: '' ) @endphp
                         <select name="configurations[searching]" class="form-control @error('configurations.searching') is-invalid @enderror">
                             <option {{ $searching ? 'selected' : '' }} value="1">True</option>
@@ -217,8 +203,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Row Indexes</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Row Indexes</label>
                         @php $rowIndexes = old('configurations.rowIndexes') ?: ( $configurations['rowIndexes'] ?: '' ) @endphp
                         <select name="configurations[rowIndexes]" class="form-control @error('configurations.rowIndexes') is-invalid @enderror">
                             <option {{ $rowIndexes ? 'selected' : '' }} value="1">True</option>
@@ -230,8 +216,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Column Visibility</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Column Visibility</label>
                         @php $columnVisibility = old('configurations.columnVisibility') ?: ( $configurations['columnVisibility'] ?: '' ) @endphp
                         <select name="configurations[columnVisibility]" class="form-control @error('configurations.columnVisibility') is-invalid @enderror">
                             <option {{ $columnVisibility ? 'selected' : '' }} value="1">True</option>
@@ -243,8 +229,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Custom Export Title  </label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Custom Export Title  </label>
                         @php $customTitle = old('configurations.customTitle') ?: ( $configurations['customTitle'] ?: '' ) @endphp
                         <select name="configurations[customTitle]" class="form-control @error('configurations.customTitle') is-invalid @enderror">
                             <option {{ $customTitle ? 'selected' : '' }} value="1">True</option>
@@ -258,12 +244,12 @@
                     </div>
                 </div>
 
-                <div class="form-row mt-4">
-                    <div class="form-group col-lg-12">
-                        <h5 class="font-weight-bold">Ajax Configurations</h5>
+                <div class="row mt-4">
+                    <div class="mb-3 col-lg-12">
+                        <h5 class="fw-bold">Ajax Configurations</h5>
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Enabled</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Enabled</label>
                         @php $enabled = old('configurations.ajax.enabled') ?: ( $configurations['ajax']['enabled'] ?: '' ) @endphp
                         <select name="configurations[ajax][enabled]" class="form-control @error('configurations.ajax.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
@@ -275,8 +261,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">End Point Route Name</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">End Point Route Name</label>
                         <input 
                             name="configurations[ajax][options][route]" 
                             type="text" 
@@ -292,13 +278,13 @@
                 </div>
 
                 {{-- The Exports section - Print --}}
-                <div class="form-row mt-4">
-                    <div class="form-group col-lg-12">
-                        <h5 class="font-weight-bold mb-4">Table Exports</h5>
-                        <h5 class="font-weight-bold">Print</h5>
+                <div class="row mt-4">
+                    <div class="mb-3 col-lg-12">
+                        <h5 class="fw-bold mb-4">Table Exports</h5>
+                        <h5 class="fw-bold">Print</h5>
                     </div>
-                    <div class="form-group col-lg-12">
-                        <label class="font-weight-bold">Enabled</label>
+                    <div class="mb-3 col-lg-12">
+                        <label class="fw-bold">Enabled</label>
                         @php $enabled = old('configurations.exports.print.enabled') ?: ( $configurations['exports']['print']['enabled'] ?: '' ) @endphp
                         <select name="configurations[exports][print][enabled]" class="form-control @error('configurations.exports.print.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
@@ -310,8 +296,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Header</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Header</label>
                         @php $header = old('configurations.exports.print.options.header') ?: ( $configurations['exports']['print']['options']['header'] ?: '' ) @endphp
                         <select name="configurations[exports][print][options][header]" class="form-control @error('configurations.exports.print.options.header') is-invalid @enderror">
                             <option {{ $header ? 'selected' : '' }} value="1">True</option>
@@ -323,8 +309,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Footer</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Footer</label>
                         @php $footer = old('configurations.exports.print.options.footer') ?: ( $configurations['exports']['print']['options']['footer'] ?: '' ) @endphp
                         <select name="configurations[exports][print][options][footer]" class="form-control @error('configurations.exports.print.options.footer') is-invalid @enderror">
                             <option {{ $footer ? 'selected' : '' }} value="1">True</option>
@@ -336,8 +322,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Auto Print</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Auto Print</label>
                         @php $autoPrint = old('configurations.exports.print.options.autoPrint') ?: ( $configurations['exports']['print']['options']['autoPrint'] ?: '' ) @endphp
                         <select name="configurations[exports][print][options][autoPrint]" class="form-control @error('configurations.exports.print.options.autoPrint') is-invalid @enderror">
                             <option {{ $autoPrint ? 'selected' : '' }} value="1">True</option>
@@ -349,8 +335,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Page Size</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Page Size</label>
                         @php $pageSize = old('configurations.exports.print.options.pageSize') ?: ( $configurations['exports']['print']['options']['pageSize'] ?: '' ) @endphp
                         <select name="configurations[exports][print][options][pageSize]" class="form-control @error('configurations.exports.print.options.pageSize') is-invalid @enderror">
                             <option {{ $pageSize == 'A3' ? 'selected' : '' }} value="A3">A3</option>
@@ -366,8 +352,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Orientation</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Orientation</label>
                         @php $orientation = old('configurations.exports.print.options.orientation') ?: ( $configurations['exports']['print']['options']['orientation'] ?: '' ) @endphp
                         <select name="configurations[exports][print][options][orientation]" class="form-control @error('configurations.exports.print.options.orientation') is-invalid @enderror">
                             <option {{ $orientation == 'landscape' ? 'selected' : '' }} value="landscape">Landscape</option>
@@ -379,8 +365,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Button Text</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Button Text</label>
                         <input 
                             name="configurations[exports][print][options][text]" 
                             type="text" 
@@ -393,8 +379,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Document Title</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Document Title</label>
                         <input 
                             name="configurations[exports][print][options][title]" 
                             type="text" 
@@ -407,8 +393,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Document Logo</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Document Logo</label>
                         <input 
                             name="configurations[exports][print][options][logo]" 
                             type="text" 
@@ -421,8 +407,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Message Top</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Message Top</label>
                         <input 
                             name="configurations[exports][print][options][messageTop]" 
                             type="text" 
@@ -435,8 +421,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Message Bottom</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Message Bottom</label>
                         <input 
                             name="configurations[exports][print][options][messageBottom]" 
                             type="text" 
@@ -449,8 +435,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Columns To Export</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Columns To Export</label>
                         @php $columns = old('configurations.exports.print.options.exportOptions.columns') ?: ( $configurations['exports']['print']['options']['exportOptions']['columns'] ?: '' ) @endphp
                         <select name="configurations[exports][print][options][exportOptions][columns]" class="form-control @error('configurations.exports.print.options.exportOptions.columns') is-invalid @enderror">
                             <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
@@ -465,12 +451,12 @@
                 </div>
 
                 {{-- The Exports section - PDF --}}
-                <div class="form-row mt-4">
-                    <div class="form-group col-lg-12">
-                        <h5 class="font-weight-bold">PDF</h5>
+                <div class="row mt-4">
+                    <div class="mb-3 col-lg-12">
+                        <h5 class="fw-bold">PDF</h5>
                     </div>
-                    <div class="form-group col-lg-12">
-                        <label class="font-weight-bold">Enabled</label>
+                    <div class="mb-3 col-lg-12">
+                        <label class="fw-bold">Enabled</label>
                         @php $enabled = old('configurations.exports.pdf.enabled') ?: ( $configurations['exports']['pdf']['enabled'] ?: '' ) @endphp
                         <select name="configurations[exports][pdf][enabled]" class="form-control @error('configurations.exports.pdf.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
@@ -482,8 +468,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Header</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Header</label>
                         @php $header = old('configurations.exports.pdf.options.header') ?: ( $configurations['exports']['pdf']['options']['header'] ?: '' ) @endphp
                         <select name="configurations[exports][pdf][options][header]" class="form-control @error('configurations.exports.pdf.options.header') is-invalid @enderror">
                             <option {{ $header ? 'selected' : '' }} value="1">True</option>
@@ -495,8 +481,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Footer</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Footer</label>
                         @php $footer = old('configurations.exports.pdf.options.footer') ?: ( $configurations['exports']['pdf']['options']['footer'] ?: '' ) @endphp
                         <select name="configurations[exports][pdf][options][footer]" class="form-control @error('configurations.exports.pdf.options.footer') is-invalid @enderror">
                             <option {{ $footer ? 'selected' : '' }} value="1">True</option>
@@ -508,8 +494,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Auto Download</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Auto Download</label>
                         @php $autoDownload = old('configurations.exports.pdf.options.autoDownload') ?: ( $configurations['exports']['pdf']['options']['autoDownload'] ?: '' ) @endphp
                         <select name="configurations[exports][pdf][options][autoDownload]" class="form-control @error('configurations.exports.pdf.options.autoDownload') is-invalid @enderror">
                             <option {{ $autoDownload ? 'selected' : '' }} value="1">True</option>
@@ -521,8 +507,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">File Name</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">File Name</label>
                         <input 
                             name="configurations[exports][pdf][options][filename]" 
                             type="text" 
@@ -535,8 +521,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Extension</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Extension</label>
                         <input 
                             name="configurations[exports][pdf][options][extension]" 
                             type="text" 
@@ -549,8 +535,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Page Size</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Page Size</label>
                         @php $pageSize = old('configurations.exports.pdf.options.pageSize') ?: ( $configurations['exports']['pdf']['options']['pageSize'] ?: '' ) @endphp
                         <select name="configurations[exports][pdf][options][pageSize]" class="form-control @error('configurations.exports.pdf.options.pageSize') is-invalid @enderror">
                             <option {{ $pageSize == 'A3' ? 'selected' : '' }} value="A3">A3</option>
@@ -566,8 +552,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Orientation</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Orientation</label>
                         @php $orientation = old('configurations.exports.pdf.options.orientation') ?: ( $configurations['exports']['pdf']['options']['orientation'] ?: '' ) @endphp
                         <select name="configurations[exports][pdf][options][orientation]" class="form-control @error('configurations.exports.pdf.options.orientation') is-invalid @enderror">
                             <option {{ $orientation == 'landscape' ? 'selected' : '' }} value="landscape">Landscape</option>
@@ -579,8 +565,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Button Text</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Button Text</label>
                         <input 
                             name="configurations[exports][pdf][options][text]" 
                             type="text" 
@@ -593,8 +579,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Document Title</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Document Title</label>
                         <input 
                             name="configurations[exports][pdf][options][title]" 
                             type="text" 
@@ -607,8 +593,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Document Logo</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Document Logo</label>
                         <input 
                             name="configurations[exports][pdf][options][logo]" 
                             type="text" 
@@ -621,8 +607,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Message Top</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Message Top</label>
                         <input 
                             name="configurations[exports][pdf][options][messageTop]" 
                             type="text" 
@@ -635,8 +621,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Message Bottom</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Message Bottom</label>
                         <input 
                             name="configurations[exports][pdf][options][messageBottom]" 
                             type="text" 
@@ -649,8 +635,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Columns To Export</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Columns To Export</label>
                         @php $columns = old('configurations.exports.pdf.options.exportOptions.columns') ?: ( $configurations['exports']['pdf']['options']['exportOptions']['columns'] ?: '' ) @endphp
                         <select name="configurations[exports][pdf][options][exportOptions][columns]" class="form-control @error('configurations.exports.pdf.options.exportOptions.columns') is-invalid @enderror">
                             <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
@@ -665,12 +651,12 @@
                 </div>
 
                 {{-- The Exports section - Excel --}}
-                <div class="form-row mt-4">
-                    <div class="form-group col-lg-12">
-                        <h5 class="font-weight-bold">Excel</h5>
+                <div class="row mt-4">
+                    <div class="mb-3 col-lg-12">
+                        <h5 class="fw-bold">Excel</h5>
                     </div>
-                    <div class="form-group col-lg-12">
-                        <label class="font-weight-bold">Enabled</label>
+                    <div class="mb-3 col-lg-12">
+                        <label class="fw-bold">Enabled</label>
                         @php $enabled = old('configurations.exports.excel.enabled') ?: ( $configurations['exports']['excel']['enabled'] ?: '' ) @endphp
                         <select name="configurations[exports][excel][enabled]" class="form-control @error('configurations.exports.excel.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
@@ -682,8 +668,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Header</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Header</label>
                         @php $header = old('configurations.exports.excel.options.header') ?: ( $configurations['exports']['excel']['options']['header'] ?: '' ) @endphp
                         <select name="configurations[exports][excel][options][header]" class="form-control @error('configurations.exports.excel.options.header') is-invalid @enderror">
                             <option {{ $header ? 'selected' : '' }} value="1">True</option>
@@ -695,8 +681,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Footer</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Footer</label>
                         @php $footer = old('configurations.exports.excel.options.footer') ?: ( $configurations['exports']['excel']['options']['footer'] ?: '' ) @endphp
                         <select name="configurations[exports][excel][options][footer]" class="form-control @error('configurations.exports.excel.options.footer') is-invalid @enderror">
                             <option {{ $footer ? 'selected' : '' }} value="1">True</option>
@@ -708,8 +694,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">File Name</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">File Name</label>
                         <input 
                             name="configurations[exports][excel][options][filename]" 
                             type="text" 
@@ -722,8 +708,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Extension</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Extension</label>
                         <input 
                             name="configurations[exports][excel][options][extension]" 
                             type="text" 
@@ -736,8 +722,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Button Text</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Button Text</label>
                         <input 
                             name="configurations[exports][excel][options][text]" 
                             type="text" 
@@ -750,8 +736,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Document Title</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Document Title</label>
                         <input 
                             name="configurations[exports][excel][options][title]" 
                             type="text" 
@@ -764,8 +750,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Document Logo</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Document Logo</label>
                         <input 
                             name="configurations[exports][excel][options][logo]" 
                             type="text" 
@@ -778,8 +764,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Message Top</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Message Top</label>
                         <input 
                             name="configurations[exports][excel][options][messageTop]" 
                             type="text" 
@@ -792,8 +778,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Message Bottom</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Message Bottom</label>
                         <input 
                             name="configurations[exports][excel][options][messageBottom]" 
                             type="text" 
@@ -806,8 +792,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Columns To Export</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Columns To Export</label>
                         @php $columns = old('configurations.exports.excel.options.exportOptions.columns') ?: ( $configurations['exports']['excel']['options']['exportOptions']['columns'] ?: '' ) @endphp
                         <select name="configurations[exports][excel][options][exportOptions][columns]" class="form-control @error('configurations.exports.excel.options.exportOptions.columns') is-invalid @enderror">
                             <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
@@ -822,12 +808,12 @@
                 </div>
 
                  {{-- The Exports section - CSV --}}
-                <div class="form-row mt-4">
-                    <div class="form-group col-lg-12">
-                        <h5 class="font-weight-bold">CSV</h5>
+                <div class="row mt-4">
+                    <div class="mb-3 col-lg-12">
+                        <h5 class="fw-bold">CSV</h5>
                     </div>
-                    <div class="form-group col-lg-12">
-                        <label class="font-weight-bold">Enabled</label>
+                    <div class="mb-3 col-lg-12">
+                        <label class="fw-bold">Enabled</label>
                         @php $enabled = old('configurations.exports.csv.enabled') ?: ( $configurations['exports']['csv']['enabled'] ?: '' ) @endphp
                         <select name="configurations[exports][csv][enabled]" class="form-control @error('configurations.exports.csv.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
@@ -839,8 +825,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Header</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Header</label>
                         @php $header = old('configurations.exports.csv.options.header') ?: ( $configurations['exports']['csv']['options']['header'] ?: '' ) @endphp
                         <select name="configurations[exports][csv][options][header]" class="form-control @error('configurations.exports.csv.options.header') is-invalid @enderror">
                             <option {{ $header ? 'selected' : '' }} value="1">True</option>
@@ -852,8 +838,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Footer</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Footer</label>
                         @php $footer = old('configurations.exports.csv.options.footer') ?: ( $configurations['exports']['csv']['options']['footer'] ?: '' ) @endphp
                         <select name="configurations[exports][csv][options][footer]" class="form-control @error('configurations.exports.csv.options.footer') is-invalid @enderror">
                             <option {{ $footer ? 'selected' : '' }} value="1">True</option>
@@ -865,8 +851,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">File Name</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">File Name</label>
                         <input 
                             name="configurations[exports][csv][options][filename]" 
                             type="text" 
@@ -879,8 +865,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Extension</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Extension</label>
                         <input 
                             name="configurations[exports][csv][options][extension]" 
                             type="text" 
@@ -893,8 +879,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Button Text</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Button Text</label>
                         <input 
                             name="configurations[exports][csv][options][text]" 
                             type="text" 
@@ -907,8 +893,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Columns To Export</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Columns To Export</label>
                         @php $columns = old('configurations.exports.csv.options.exportOptions.columns') ?: ( $configurations['exports']['csv']['options']['exportOptions']['columns'] ?: '' ) @endphp
                         <select name="configurations[exports][csv][options][exportOptions][columns]" class="form-control @error('configurations.exports.csv.options.exportOptions.columns') is-invalid @enderror">
                             <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
@@ -923,12 +909,12 @@
                 </div>
 
                 {{-- The Exports section - Copy --}}
-                <div class="form-row mt-4">
-                    <div class="form-group col-lg-12">
-                        <h5 class="font-weight-bold">Copy</h5>
+                <div class="row mt-4">
+                    <div class="mb-3 col-lg-12">
+                        <h5 class="fw-bold">Copy</h5>
                     </div>
-                    <div class="form-group col-lg-12">
-                        <label class="font-weight-bold">Enabled</label>
+                    <div class="mb-3 col-lg-12">
+                        <label class="fw-bold">Enabled</label>
                         @php $enabled = old('configurations.exports.copy.enabled') ?: ( $configurations['exports']['copy']['enabled'] ?: '' ) @endphp
                         <select name="configurations[exports][copy][enabled]" class="form-control @error('configurations.exports.copy.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
@@ -940,8 +926,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Header</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Header</label>
                         @php $header = old('configurations.exports.copy.options.header') ?: ( $configurations['exports']['copy']['options']['header'] ?: '' ) @endphp
                         <select name="configurations[exports][copy][options][header]" class="form-control @error('configurations.exports.copy.options.header') is-invalid @enderror">
                             <option {{ $header ? 'selected' : '' }} value="1">True</option>
@@ -953,8 +939,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Footer</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Footer</label>
                         @php $footer = old('configurations.exports.copy.options.footer') ?: ( $configurations['exports']['copy']['options']['footer'] ?: '' ) @endphp
                         <select name="configurations[exports][copy][options][footer]" class="form-control @error('configurations.exports.copy.options.footer') is-invalid @enderror">
                             <option {{ $footer ? 'selected' : '' }} value="1">True</option>
@@ -966,8 +952,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Button Text</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Button Text</label>
                         <input 
                             name="configurations[exports][copy][options][text]" 
                             type="text" 
@@ -980,8 +966,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Document Title</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Document Title</label>
                         <input 
                             name="configurations[exports][copy][options][title]" 
                             type="text" 
@@ -994,8 +980,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Message Top</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Message Top</label>
                         <input 
                             name="configurations[exports][copy][options][messageTop]" 
                             type="text" 
@@ -1008,8 +994,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Message Bottom</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Message Bottom</label>
                         <input 
                             name="configurations[exports][copy][options][messageBottom]" 
                             type="text" 
@@ -1022,8 +1008,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Columns To Export</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Columns To Export</label>
                         @php $columns = old('configurations.exports.copy.options.exportOptions.columns') ?: ( $configurations['exports']['copy']['options']['exportOptions']['columns'] ?: '' ) @endphp
                         <select name="configurations[exports][copy][options][exportOptions][columns]" class="form-control @error('configurations.exports.copy.options.exportOptions.columns') is-invalid @enderror">
                             <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
@@ -1038,12 +1024,12 @@
                 </div>
 
                 {{-- The Exports section - JSON --}}
-                <div class="form-row mt-4">
-                    <div class="form-group col-lg-12">
-                        <h5 class="font-weight-bold">JSON</h5>
+                <div class="row mt-4">
+                    <div class="mb-3 col-lg-12">
+                        <h5 class="fw-bold">JSON</h5>
                     </div>
-                    <div class="form-group col-lg-12">
-                        <label class="font-weight-bold">Enabled</label>
+                    <div class="mb-3 col-lg-12">
+                        <label class="fw-bold">Enabled</label>
                         @php $enabled = old('configurations.exports.json.enabled') ?: ( $configurations['exports']['json']['enabled'] ?: '' ) @endphp
                         <select name="configurations[exports][json][enabled]" class="form-control @error('configurations.exports.json.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
@@ -1055,8 +1041,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Header</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Header</label>
                         @php $header = old('configurations.exports.json.options.header') ?: ( $configurations['exports']['json']['options']['header'] ?: '' ) @endphp
                         <select name="configurations[exports][json][options][header]" class="form-control @error('configurations.exports.json.options.header') is-invalid @enderror">
                             <option {{ $header ? 'selected' : '' }} value="1">True</option>
@@ -1068,8 +1054,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label class="font-weight-bold">Footer</label>
+                    <div class="mb-3 col-lg-6">
+                        <label class="fw-bold">Footer</label>
                         @php $footer = old('configurations.exports.json.options.footer') ?: ( $configurations['exports']['json']['options']['footer'] ?: '' ) @endphp
                         <select name="configurations[exports][json][options][footer]" class="form-control @error('configurations.exports.json.options.footer') is-invalid @enderror">
                             <option {{ $footer ? 'selected' : '' }} value="1">True</option>
@@ -1081,8 +1067,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">File Name</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">File Name</label>
                         <input 
                             name="configurations[exports][json][options][filename]" 
                             type="text" 
@@ -1095,8 +1081,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Extension</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Extension</label>
                         <input 
                             name="configurations[exports][json][options][extension]" 
                             type="text" 
@@ -1109,8 +1095,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Button Text</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Button Text</label>
                         <input 
                             name="configurations[exports][json][options][text]" 
                             type="text" 
@@ -1123,8 +1109,8 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label class="font-weight-bold">Columns To Export</label>
+                    <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Columns To Export</label>
                         @php $columns = old('configurations.exports.json.options.exportOptions.columns') ?: ( $configurations['exports']['json']['options']['exportOptions']['columns'] ?: '' ) @endphp
                         <select name="configurations[exports][json][options][exportOptions][columns]" class="form-control @error('configurations.exports.json.options.exportOptions.columns') is-invalid @enderror">
                             <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
@@ -1138,8 +1124,8 @@
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group col-lg-12">
+                <div class="row">
+                    <div class="mb-3 col-lg-12">
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </div>

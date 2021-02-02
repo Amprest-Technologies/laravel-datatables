@@ -2,16 +2,9 @@
 @php extract(datatables_payload($id = $attributes->get('id') )) @endphp
 
 {{-- Include the actual table that will be converted to a datatable --}}
-<table {{ $attributes->merge(['class' => $classes ?? config('datatables.styling.table_classes')]) }}> 
+<table {{ $attributes }}> 
 	{{ $slot }} 
 </table>
-
-@once
-	@push('datatables-config')
-		<link href="{{ package_asset('css/app.css') }}" rel="stylesheet">
-		<script defer type="text/javascript" src="{{ package_asset('js/app.js') }}"></script>
-	@endpush
-@endonce
 
 {{-- If the datatable can be initialized --}}
 @if($datatable)
