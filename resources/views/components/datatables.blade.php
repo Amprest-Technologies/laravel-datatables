@@ -6,6 +6,8 @@
 	{{ $slot }} 
 </table>
 
+{{-- Tested --}}
+
 {{-- Include the datatable configurations --}}
 @push('datatables-config')
 	<script type="text/javascript">
