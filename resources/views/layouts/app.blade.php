@@ -18,7 +18,7 @@
         <link rel="canonical" href="{{ url('/') }}">
 
         <!-- Styles -->
-        <link href="{{ package_asset('css/config.css') }}" rel="stylesheet">
+        <link href="{{ route('datatables.configurations.css') }}" rel="stylesheet">
 
         <!-- Styles -->
         @yield('css')
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>     
-        <script src="{{ package_asset('js/config.js') }}"></script>
+        <script src="{{ route('datatables.configurations.js') }}"></script>
         @yield('js')
     </body>
 </html>

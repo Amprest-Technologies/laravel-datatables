@@ -2,19 +2,24 @@
 
 namespace Amprest\LaravelDatatables\Http\Controllers;
 
-use App\User;
+use Amprest\LaravelDatatables\Traits\HasAssets;
 use Illuminate\Routing\Controller;
-use Amprest\LaravelDatatables\Facades\Datatables;
 
 class AppController extends Controller 
 {
+    use HasAssets;
+
     /**
-     *  Return the sample users as datatables json object
-     *  @author Alvin Gichira Kaburu
-     *  @return Illuminate\Http\Response
+     *  Declate the css asset
+     * 
+     * @var string
      */
-    public function users()
-    {   
-        return Datatables::renderAjax( User::query() );
-    }
+    protected string $cssPath = __DIR__."/../../../public/css/app.css"; 
+
+    /**
+     *  Declate the js asset
+     * 
+     * @var string
+     */
+    protected string $jsPath = __DIR__."/../../../public/js/app.js"; 
 }

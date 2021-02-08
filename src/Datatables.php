@@ -4,7 +4,7 @@ namespace Amprest\LaravelDatatables;
 
 use Illuminate\Support\Facades\Route;
 use Amprest\LaravelDatatables\Models\Configuration;
-use Amprest\LaravelDatatables\Http\Traits\HandlesAjaxRequests;
+use Amprest\LaravelDatatables\Traits\HandlesAjaxRequests;
 
 class Datatables
 {

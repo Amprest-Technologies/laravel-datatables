@@ -15,17 +15,21 @@ use Amprest\LaravelDatatables\Http\Controllers\ConfigurationController;
 */
 
 //  Manage the datatable configurations
-Route::post('/users', [AppController::class, 'users'])->name('users');
-Route::get('/css-assets', [AppController::class, 'loadCss'])->name('css.load');
-Route::get('/js-assets', [AppController::class, 'loadJs'])->name('js.load');
+Route::name('app.')->prefix('app')->group(function(){
+    Route::get('/css-assets', [AppController::class, 'css'])->name('css');
+    Route::get('/js-assets', [AppController::class, 'js'])->name('js');
+});
 
-Route::resource('configurations', ConfigurationController::class);
+//  Configuration options
+Route::resource('configurations', ConfigurationController::class)->except(['show']);
 Route::name('configurations.')->prefix('configurations')->group(function(){
+    Route::get('/css', [ConfigurationController::class, 'css'])->name('css');
+    Route::get('/js', [ConfigurationController::class, 'js'])->name('js');
     Route::delete('/{configuration}/trash', [ConfigurationController::class, 'trash'])->name('trash');
     Route::put('/{configuration}/restore', [ConfigurationController::class, 'restore'])->name('restore');
 });
 
-//  Manage columns
+//  Column configurations
 Route::name('columns.')->prefix('columns')->group(function(){
     Route::post('/{configuration}', [ColumnController::class, 'store'])->name('store');
     Route::get('/{configuration}/{column}', [ColumnController::class, 'destroy'])->name('destroy');

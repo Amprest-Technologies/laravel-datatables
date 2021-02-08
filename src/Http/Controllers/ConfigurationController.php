@@ -7,9 +7,26 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Amprest\LaravelDatatables\Models\Configuration;
+use Amprest\LaravelDatatables\Traits\HasAssets;
 
 class ConfigurationController extends Controller 
 {
+    use HasAssets;
+
+    /**
+     *  Declate the css asset
+     * 
+     * @var string
+     */
+    protected string $cssPath = __DIR__."/../../../public/css/config.css"; 
+
+    /**
+     *  Declate the js asset
+     * 
+     * @var string
+     */
+    protected string $jsPath = __DIR__."/../../../public/js/config.js"; 
+
     /**
      * Initialize the constructor
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
