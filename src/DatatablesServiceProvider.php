@@ -100,6 +100,7 @@ class DatatablesServiceProvider extends ServiceProvider
      */
     public function registerRouteFiles(): void
     {
+        //  Create a route group
         $this->app['router']->name('datatables.')->prefix('datatables')
             ->middleware(['web', LocalEnvironment::class])
             ->group(function () {
