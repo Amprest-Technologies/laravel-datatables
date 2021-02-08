@@ -2,6 +2,7 @@
 
 namespace Amprest\LaravelDatatables;
 
+use Exception;
 use Illuminate\Support\Facades\Route;
 use Amprest\LaravelDatatables\Models\Configuration;
 use Amprest\LaravelDatatables\Traits\HandlesAjaxRequests;
@@ -23,12 +24,19 @@ class Datatables
      * Generate datatables payload.
      *
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
-     * @param String $tableID
-     * @param String $identifier
-     * @return Array
+     * @param string $tableID
+     * @param string $identifier
+     * @return array
      */
-    public function payload($tableID)
-    {        
+    public function payload($tableID = null): array
+    {     
+        // Throw an exception if the id is not provided 
+        if(!$tableID) {
+            throw new Exception(
+                'Please provide an id attribute to proceed.'
+            );
+        }
+
         // 	Define defaults, and fetch configurations
         $this->configuration = $this->configuration->find($tableID);
 
@@ -38,13 +46,11 @@ class Datatables
             $this->checkForAjaxConfigurations();
 
             //  If everything is ok, return the request
-            return array_merge(($this->configuration)['payload'], [
-                'datatable' => true,
-            ]);
+            return $this->configuration['payload'];
         };
 
         //  If no configurations are available, prevent datatable initialization
-        return [ 'datatable' => false ];
+        return [];
     }   
 
     /**
