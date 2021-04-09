@@ -14,7 +14,7 @@
 				const tableID = `#{{ $id }}`
 
 				// 	Prepend or append an empty cell on each row
-				@if(!isset($rowIndexes) || ( isset($rowIndexes) && $rowIndexes) )
+				@if(!isset($rowIndexes) || ($rowIndexes ?? false))
 					insertEmptyColumn(tableID, 1)
 				@endif
 
@@ -28,7 +28,7 @@
 				var rowIndexes = ajax = hasFilters = false;
 
 				// 	Row indexes
-				@if(!isset($rowIndexes) || ( isset($rowIndexes) && $rowIndexes) )
+				@if(!isset($rowIndexes) || ($rowIndexes ?? false))
 					rowIndexes = true;
 				@endif
 
@@ -42,7 +42,7 @@
 				@endif
 				
 				// 	Printable options
-				@if(isset($exports['print']) && $exports['print']['enabled'])
+				@if($exports['print']['enabled'] ?? false)
 					options = JSON.parse('@json($exports['print']['options'])');
 					buttons.push({ ...options , ...{ 
 						extend: 'print',
@@ -52,6 +52,7 @@
 						messageTop: function() {
 							let titleElement = $(`${tableID}-title-input input`).val();
 							let messageTop = titleElement ?? (options.messageTop ?? options.title);
+							messageTop = messageTop == undefined ? null : messageTop;
 							return `<h5 style="margin-bottom:1rem;">${messageTop}</h5>`
 						},
 						customize: function ( win ) {
