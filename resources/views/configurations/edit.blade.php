@@ -13,7 +13,7 @@
                         class="form-control" 
                         placeholder="The Table's Unique Column Name" 
                         required
-                        value="{{ old('name') ?: '' }}"
+                        value="{{ old('name') ?? '' }}"
                     >
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="submit">List Column</button>
@@ -34,7 +34,7 @@
                         <h5 class="fw-bold">Column Configurations</h5>
                     </div>
                     <div class="mb-3 col-lg-12">
-                        @if(isset($configuration['columns']) && count($configuration['columns']))
+                        @if(count($configuration['columns']) ?? false)
                             <table class="table table-sm table-bordered mb-0">
                                 <thead class="thead-dark">
                                     <tr>
@@ -166,7 +166,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Info</label>
-                        @php $info = old('configurations.info') ?: ( $configurations['info'] ?: '' ) @endphp
+                        @php $info = old('configurations.info') ?? ( $configurations['info'] ?? '' ) @endphp
                         <select name="configurations[info]" class="form-control @error('configurations.info') is-invalid @enderror">
                             <option {{ $info ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$info ? 'selected' : '' }} value="0">False</option>
@@ -179,7 +179,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Ordering</label>
-                        @php $ordering = old('configurations.ordering') ?: ( $configurations['ordering'] ?: '' ) @endphp
+                        @php $ordering = old('configurations.ordering') ?? ( $configurations['ordering'] ?? '' ) @endphp
                         <select name="configurations[ordering]" class="form-control @error('configurations.ordering') is-invalid @enderror">
                             <option {{ $ordering ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$ordering ? 'selected' : '' }} value="0">False</option>
@@ -192,7 +192,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Searching</label>
-                        @php $searching = old('configurations.searching') ?: ( $configurations['searching'] ?: '' ) @endphp
+                        @php $searching = old('configurations.searching') ?? ( $configurations['searching'] ?? '' ) @endphp
                         <select name="configurations[searching]" class="form-control @error('configurations.searching') is-invalid @enderror">
                             <option {{ $searching ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$searching ? 'selected' : '' }} value="0">False</option>
@@ -205,7 +205,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Row Indexes</label>
-                        @php $rowIndexes = old('configurations.rowIndexes') ?: ( $configurations['rowIndexes'] ?: '' ) @endphp
+                        @php $rowIndexes = old('configurations.rowIndexes') ?? ( $configurations['rowIndexes'] ?? '' ) @endphp
                         <select name="configurations[rowIndexes]" class="form-control @error('configurations.rowIndexes') is-invalid @enderror">
                             <option {{ $rowIndexes ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$rowIndexes ? 'selected' : '' }} value="0">False</option>
@@ -218,7 +218,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Column Visibility</label>
-                        @php $columnVisibility = old('configurations.columnVisibility') ?: ( $configurations['columnVisibility'] ?: '' ) @endphp
+                        @php $columnVisibility = old('configurations.columnVisibility') ?? ( $configurations['columnVisibility'] ?? '' ) @endphp
                         <select name="configurations[columnVisibility]" class="form-control @error('configurations.columnVisibility') is-invalid @enderror">
                             <option {{ $columnVisibility ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$columnVisibility ? 'selected' : '' }} value="0">False</option>
@@ -231,7 +231,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Custom Export Title  </label>
-                        @php $customTitle = old('configurations.customTitle') ?: ( $configurations['customTitle'] ?: '' ) @endphp
+                        @php $customTitle = old('configurations.customTitle') ?? ( $configurations['customTitle'] ?? '' ) @endphp
                         <select name="configurations[customTitle]" class="form-control @error('configurations.customTitle') is-invalid @enderror">
                             <option {{ $customTitle ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$customTitle ? 'selected' : '' }} value="0">False</option>
@@ -250,7 +250,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Enabled</label>
-                        @php $enabled = old('configurations.ajax.enabled') ?: ( $configurations['ajax']['enabled'] ?: '' ) @endphp
+                        @php $enabled = old('configurations.ajax.enabled') ?? ( $configurations['ajax']['enabled'] ?? '' ) @endphp
                         <select name="configurations[ajax][enabled]" class="form-control @error('configurations.ajax.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$enabled ? 'selected' : '' }} value="0">False</option>
@@ -267,7 +267,7 @@
                             name="configurations[ajax][options][route]" 
                             type="text" 
                             class="form-control @error('configurations.ajax.options.route') is-invalid @enderror" 
-                            value="{{ old('configurations.ajax.options.route') ?: $configurations['ajax']['options']['route'] }}"
+                            value="{{ old('configurations.ajax.options.route') ?? $configurations['ajax']['options']['route'] }}"
                         >
                         @error('configurations.ajax.options.route')
                             <span class="invalid-feedback" role="alert">
@@ -285,7 +285,7 @@
                     </div>
                     <div class="mb-3 col-lg-12">
                         <label class="fw-bold">Enabled</label>
-                        @php $enabled = old('configurations.exports.print.enabled') ?: ( $configurations['exports']['print']['enabled'] ?: '' ) @endphp
+                        @php $enabled = old('configurations.exports.print.enabled') ?? ( $configurations['exports']['print']['enabled'] ?? '' ) @endphp
                         <select name="configurations[exports][print][enabled]" class="form-control @error('configurations.exports.print.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$enabled ? 'selected' : '' }} value="0">False</option>
@@ -298,7 +298,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Header</label>
-                        @php $header = old('configurations.exports.print.options.header') ?: ( $configurations['exports']['print']['options']['header'] ?: '' ) @endphp
+                        @php $header = old('configurations.exports.print.options.header') ?? ( $configurations['exports']['print']['options']['header'] ?? '' ) @endphp
                         <select name="configurations[exports][print][options][header]" class="form-control @error('configurations.exports.print.options.header') is-invalid @enderror">
                             <option {{ $header ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$header ? 'selected' : '' }} value="0">False</option>
@@ -311,7 +311,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Footer</label>
-                        @php $footer = old('configurations.exports.print.options.footer') ?: ( $configurations['exports']['print']['options']['footer'] ?: '' ) @endphp
+                        @php $footer = old('configurations.exports.print.options.footer') ?? ( $configurations['exports']['print']['options']['footer'] ?? '' ) @endphp
                         <select name="configurations[exports][print][options][footer]" class="form-control @error('configurations.exports.print.options.footer') is-invalid @enderror">
                             <option {{ $footer ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$footer ? 'selected' : '' }} value="0">False</option>
@@ -324,7 +324,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Auto Print</label>
-                        @php $autoPrint = old('configurations.exports.print.options.autoPrint') ?: ( $configurations['exports']['print']['options']['autoPrint'] ?: '' ) @endphp
+                        @php $autoPrint = old('configurations.exports.print.options.autoPrint') ?? ( $configurations['exports']['print']['options']['autoPrint'] ?? '' ) @endphp
                         <select name="configurations[exports][print][options][autoPrint]" class="form-control @error('configurations.exports.print.options.autoPrint') is-invalid @enderror">
                             <option {{ $autoPrint ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$autoPrint ? 'selected' : '' }} value="0">False</option>
@@ -337,7 +337,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Page Size</label>
-                        @php $pageSize = old('configurations.exports.print.options.pageSize') ?: ( $configurations['exports']['print']['options']['pageSize'] ?: '' ) @endphp
+                        @php $pageSize = old('configurations.exports.print.options.pageSize') ?? ( $configurations['exports']['print']['options']['pageSize'] ?? '' ) @endphp
                         <select name="configurations[exports][print][options][pageSize]" class="form-control @error('configurations.exports.print.options.pageSize') is-invalid @enderror">
                             <option {{ $pageSize == 'A3' ? 'selected' : '' }} value="A3">A3</option>
                             <option {{ $pageSize == 'A4' ? 'selected' : '' }} value="A4">A4</option>
@@ -354,7 +354,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Orientation</label>
-                        @php $orientation = old('configurations.exports.print.options.orientation') ?: ( $configurations['exports']['print']['options']['orientation'] ?: '' ) @endphp
+                        @php $orientation = old('configurations.exports.print.options.orientation') ?? ( $configurations['exports']['print']['options']['orientation'] ?? '' ) @endphp
                         <select name="configurations[exports][print][options][orientation]" class="form-control @error('configurations.exports.print.options.orientation') is-invalid @enderror">
                             <option {{ $orientation == 'landscape' ? 'selected' : '' }} value="landscape">Landscape</option>
                             <option {{ $orientation == 'portrait' ? 'selected' : '' }} value="portrait">Portrait</option>
@@ -371,7 +371,7 @@
                             name="configurations[exports][print][options][text]" 
                             type="text" 
                             class="form-control @error('configurations.exports.print.options.text') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.print.options.text') ?: $configurations['exports']['print']['options']['text'] }}"
+                            value="{{ old('configurations.exports.print.options.text') ?? $configurations['exports']['print']['options']['text'] }}"
                         >
                         @error('configurations.exports.print.options.text')
                             <span class="invalid-feedback" role="alert">
@@ -385,7 +385,7 @@
                             name="configurations[exports][print][options][title]" 
                             type="text" 
                             class="form-control @error('configurations.exports.print.options.title') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.print.options.title') ?: $configurations['exports']['print']['options']['title'] }}"
+                            value="{{ old('configurations.exports.print.options.title') ?? $configurations['exports']['print']['options']['title'] }}"
                         >
                         @error('configurations.exports.print.options.title')
                             <span class="invalid-feedback" role="alert">
@@ -399,7 +399,7 @@
                             name="configurations[exports][print][options][logo]" 
                             type="text" 
                             class="form-control @error('configurations.exports.print.options.logo') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.print.options.logo') ?: $configurations['exports']['print']['options']['logo'] }}"
+                            value="{{ old('configurations.exports.print.options.logo') ?? $configurations['exports']['print']['options']['logo'] }}"
                         >
                         @error('configurations.exports.print.options.logo')
                             <span class="invalid-feedback" role="alert">
@@ -413,7 +413,7 @@
                             name="configurations[exports][print][options][messageTop]" 
                             type="text" 
                             class="form-control @error('configurations.exports.print.options.messageTop') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.print.options.messageTop') ?: $configurations['exports']['print']['options']['messageTop'] }}"
+                            value="{{ old('configurations.exports.print.options.messageTop') ?? $configurations['exports']['print']['options']['messageTop'] }}"
                         >
                         @error('configurations.exports.print.options.messageTop')
                             <span class="invalid-feedback" role="alert">
@@ -427,7 +427,7 @@
                             name="configurations[exports][print][options][messageBottom]" 
                             type="text" 
                             class="form-control @error('configurations.exports.print.options.messageBottom') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.print.options.messageBottom') ?: $configurations['exports']['print']['options']['messageBottom'] }}"
+                            value="{{ old('configurations.exports.print.options.messageBottom') ?? $configurations['exports']['print']['options']['messageBottom'] }}"
                         >
                         @error('configurations.exports.print.options.messageBottom')
                             <span class="invalid-feedback" role="alert">
@@ -437,7 +437,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Columns To Export</label>
-                        @php $columns = old('configurations.exports.print.options.exportOptions.columns') ?: ( $configurations['exports']['print']['options']['exportOptions']['columns'] ?: '' ) @endphp
+                        @php $columns = old('configurations.exports.print.options.exportOptions.columns') ?? ( $configurations['exports']['print']['options']['exportOptions']['columns'] ?? '' ) @endphp
                         <select name="configurations[exports][print][options][exportOptions][columns]" class="form-control @error('configurations.exports.print.options.exportOptions.columns') is-invalid @enderror">
                             <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
                             <option {{ $columns == ':visible' ? 'selected' : '' }} value=":visible">Only Visible Columns</option>
@@ -457,7 +457,7 @@
                     </div>
                     <div class="mb-3 col-lg-12">
                         <label class="fw-bold">Enabled</label>
-                        @php $enabled = old('configurations.exports.pdf.enabled') ?: ( $configurations['exports']['pdf']['enabled'] ?: '' ) @endphp
+                        @php $enabled = old('configurations.exports.pdf.enabled') ?? ( $configurations['exports']['pdf']['enabled'] ?? '' ) @endphp
                         <select name="configurations[exports][pdf][enabled]" class="form-control @error('configurations.exports.pdf.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$enabled ? 'selected' : '' }} value="0">False</option>
@@ -470,7 +470,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Header</label>
-                        @php $header = old('configurations.exports.pdf.options.header') ?: ( $configurations['exports']['pdf']['options']['header'] ?: '' ) @endphp
+                        @php $header = old('configurations.exports.pdf.options.header') ?? ( $configurations['exports']['pdf']['options']['header'] ?? '' ) @endphp
                         <select name="configurations[exports][pdf][options][header]" class="form-control @error('configurations.exports.pdf.options.header') is-invalid @enderror">
                             <option {{ $header ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$header ? 'selected' : '' }} value="0">False</option>
@@ -483,7 +483,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Footer</label>
-                        @php $footer = old('configurations.exports.pdf.options.footer') ?: ( $configurations['exports']['pdf']['options']['footer'] ?: '' ) @endphp
+                        @php $footer = old('configurations.exports.pdf.options.footer') ?? ( $configurations['exports']['pdf']['options']['footer'] ?? '' ) @endphp
                         <select name="configurations[exports][pdf][options][footer]" class="form-control @error('configurations.exports.pdf.options.footer') is-invalid @enderror">
                             <option {{ $footer ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$footer ? 'selected' : '' }} value="0">False</option>
@@ -496,7 +496,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Auto Download</label>
-                        @php $autoDownload = old('configurations.exports.pdf.options.autoDownload') ?: ( $configurations['exports']['pdf']['options']['autoDownload'] ?: '' ) @endphp
+                        @php $autoDownload = old('configurations.exports.pdf.options.autoDownload') ?? ( $configurations['exports']['pdf']['options']['autoDownload'] ?? '' ) @endphp
                         <select name="configurations[exports][pdf][options][autoDownload]" class="form-control @error('configurations.exports.pdf.options.autoDownload') is-invalid @enderror">
                             <option {{ $autoDownload ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$autoDownload ? 'selected' : '' }} value="0">False</option>
@@ -513,7 +513,7 @@
                             name="configurations[exports][pdf][options][filename]" 
                             type="text" 
                             class="form-control @error('configurations.exports.pdf.options.filename') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.pdf.options.filename') ?: $configurations['exports']['pdf']['options']['filename'] }}"
+                            value="{{ old('configurations.exports.pdf.options.filename') ?? $configurations['exports']['pdf']['options']['filename'] }}"
                         >
                         @error('configurations.exports.pdf.options.filename')
                             <span class="invalid-feedback" role="alert">
@@ -527,7 +527,7 @@
                             name="configurations[exports][pdf][options][extension]" 
                             type="text" 
                             class="form-control @error('configurations.exports.pdf.options.extension') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.pdf.options.extension') ?: $configurations['exports']['pdf']['options']['extension'] }}"
+                            value="{{ old('configurations.exports.pdf.options.extension') ?? $configurations['exports']['pdf']['options']['extension'] }}"
                         >
                         @error('configurations.exports.pdf.options.extension')
                             <span class="invalid-feedback" role="alert">
@@ -537,7 +537,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Page Size</label>
-                        @php $pageSize = old('configurations.exports.pdf.options.pageSize') ?: ( $configurations['exports']['pdf']['options']['pageSize'] ?: '' ) @endphp
+                        @php $pageSize = old('configurations.exports.pdf.options.pageSize') ?? ( $configurations['exports']['pdf']['options']['pageSize'] ?? '' ) @endphp
                         <select name="configurations[exports][pdf][options][pageSize]" class="form-control @error('configurations.exports.pdf.options.pageSize') is-invalid @enderror">
                             <option {{ $pageSize == 'A3' ? 'selected' : '' }} value="A3">A3</option>
                             <option {{ $pageSize == 'A4' ? 'selected' : '' }} value="A4">A4</option>
@@ -554,7 +554,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Orientation</label>
-                        @php $orientation = old('configurations.exports.pdf.options.orientation') ?: ( $configurations['exports']['pdf']['options']['orientation'] ?: '' ) @endphp
+                        @php $orientation = old('configurations.exports.pdf.options.orientation') ?? ( $configurations['exports']['pdf']['options']['orientation'] ?? '' ) @endphp
                         <select name="configurations[exports][pdf][options][orientation]" class="form-control @error('configurations.exports.pdf.options.orientation') is-invalid @enderror">
                             <option {{ $orientation == 'landscape' ? 'selected' : '' }} value="landscape">Landscape</option>
                             <option {{ $orientation == 'portrait' ? 'selected' : '' }} value="portrait">Portrait</option>
@@ -571,7 +571,7 @@
                             name="configurations[exports][pdf][options][text]" 
                             type="text" 
                             class="form-control @error('configurations.exports.pdf.options.text') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.pdf.options.text') ?: $configurations['exports']['pdf']['options']['text'] }}"
+                            value="{{ old('configurations.exports.pdf.options.text') ?? $configurations['exports']['pdf']['options']['text'] }}"
                         >
                         @error('configurations.exports.pdf.options.text')
                             <span class="invalid-feedback" role="alert">
@@ -585,7 +585,7 @@
                             name="configurations[exports][pdf][options][title]" 
                             type="text" 
                             class="form-control @error('configurations.exports.pdf.options.title') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.pdf.options.title') ?: $configurations['exports']['pdf']['options']['title'] }}"
+                            value="{{ old('configurations.exports.pdf.options.title') ?? $configurations['exports']['pdf']['options']['title'] }}"
                         >
                         @error('configurations.exports.pdf.options.title')
                             <span class="invalid-feedback" role="alert">
@@ -599,7 +599,7 @@
                             name="configurations[exports][pdf][options][logo]" 
                             type="text" 
                             class="form-control @error('configurations.exports.pdf.options.logo') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.pdf.options.logo') ?: $configurations['exports']['pdf']['options']['logo'] }}"
+                            value="{{ old('configurations.exports.pdf.options.logo') ?? $configurations['exports']['pdf']['options']['logo'] }}"
                         >
                         @error('configurations.exports.pdf.options.logo')
                             <span class="invalid-feedback" role="alert">
@@ -613,7 +613,7 @@
                             name="configurations[exports][pdf][options][messageTop]" 
                             type="text" 
                             class="form-control @error('configurations.exports.pdf.options.messageTop') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.pdf.options.messageTop') ?: $configurations['exports']['pdf']['options']['messageTop'] }}"
+                            value="{{ old('configurations.exports.pdf.options.messageTop') ?? $configurations['exports']['pdf']['options']['messageTop'] }}"
                         >
                         @error('configurations.exports.pdf.options.messageTop')
                             <span class="invalid-feedback" role="alert">
@@ -627,7 +627,7 @@
                             name="configurations[exports][pdf][options][messageBottom]" 
                             type="text" 
                             class="form-control @error('configurations.exports.pdf.options.messageBottom') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.pdf.options.messageBottom') ?: $configurations['exports']['pdf']['options']['messageBottom'] }}"
+                            value="{{ old('configurations.exports.pdf.options.messageBottom') ?? $configurations['exports']['pdf']['options']['messageBottom'] }}"
                         >
                         @error('configurations.exports.pdf.options.messageBottom')
                             <span class="invalid-feedback" role="alert">
@@ -637,7 +637,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Columns To Export</label>
-                        @php $columns = old('configurations.exports.pdf.options.exportOptions.columns') ?: ( $configurations['exports']['pdf']['options']['exportOptions']['columns'] ?: '' ) @endphp
+                        @php $columns = old('configurations.exports.pdf.options.exportOptions.columns') ?? ( $configurations['exports']['pdf']['options']['exportOptions']['columns'] ?? '' ) @endphp
                         <select name="configurations[exports][pdf][options][exportOptions][columns]" class="form-control @error('configurations.exports.pdf.options.exportOptions.columns') is-invalid @enderror">
                             <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
                             <option {{ $columns == ':visible' ? 'selected' : '' }} value=":visible">Only Visible Columns</option>
@@ -657,7 +657,7 @@
                     </div>
                     <div class="mb-3 col-lg-12">
                         <label class="fw-bold">Enabled</label>
-                        @php $enabled = old('configurations.exports.excel.enabled') ?: ( $configurations['exports']['excel']['enabled'] ?: '' ) @endphp
+                        @php $enabled = old('configurations.exports.excel.enabled') ?? ( $configurations['exports']['excel']['enabled'] ?? '' ) @endphp
                         <select name="configurations[exports][excel][enabled]" class="form-control @error('configurations.exports.excel.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$enabled ? 'selected' : '' }} value="0">False</option>
@@ -670,7 +670,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Header</label>
-                        @php $header = old('configurations.exports.excel.options.header') ?: ( $configurations['exports']['excel']['options']['header'] ?: '' ) @endphp
+                        @php $header = old('configurations.exports.excel.options.header') ?? ( $configurations['exports']['excel']['options']['header'] ?? '' ) @endphp
                         <select name="configurations[exports][excel][options][header]" class="form-control @error('configurations.exports.excel.options.header') is-invalid @enderror">
                             <option {{ $header ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$header ? 'selected' : '' }} value="0">False</option>
@@ -683,7 +683,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Footer</label>
-                        @php $footer = old('configurations.exports.excel.options.footer') ?: ( $configurations['exports']['excel']['options']['footer'] ?: '' ) @endphp
+                        @php $footer = old('configurations.exports.excel.options.footer') ?? ( $configurations['exports']['excel']['options']['footer'] ?? '' ) @endphp
                         <select name="configurations[exports][excel][options][footer]" class="form-control @error('configurations.exports.excel.options.footer') is-invalid @enderror">
                             <option {{ $footer ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$footer ? 'selected' : '' }} value="0">False</option>
@@ -700,7 +700,7 @@
                             name="configurations[exports][excel][options][filename]" 
                             type="text" 
                             class="form-control @error('configurations.exports.excel.options.filename') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.excel.options.filename') ?: $configurations['exports']['excel']['options']['filename'] }}"
+                            value="{{ old('configurations.exports.excel.options.filename') ?? $configurations['exports']['excel']['options']['filename'] }}"
                         >
                         @error('configurations.exports.excel.options.filename')
                             <span class="invalid-feedback" role="alert">
@@ -714,7 +714,7 @@
                             name="configurations[exports][excel][options][extension]" 
                             type="text" 
                             class="form-control @error('configurations.exports.excel.options.extension') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.excel.options.extension') ?: $configurations['exports']['excel']['options']['extension'] }}"
+                            value="{{ old('configurations.exports.excel.options.extension') ?? $configurations['exports']['excel']['options']['extension'] }}"
                         >
                         @error('configurations.exports.excel.options.extension')
                             <span class="invalid-feedback" role="alert">
@@ -728,7 +728,7 @@
                             name="configurations[exports][excel][options][text]" 
                             type="text" 
                             class="form-control @error('configurations.exports.excel.options.text') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.excel.options.text') ?: $configurations['exports']['excel']['options']['text'] }}"
+                            value="{{ old('configurations.exports.excel.options.text') ?? $configurations['exports']['excel']['options']['text'] }}"
                         >
                         @error('configurations.exports.excel.options.text')
                             <span class="invalid-feedback" role="alert">
@@ -742,7 +742,7 @@
                             name="configurations[exports][excel][options][title]" 
                             type="text" 
                             class="form-control @error('configurations.exports.excel.options.title') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.excel.options.title') ?: $configurations['exports']['excel']['options']['title'] }}"
+                            value="{{ old('configurations.exports.excel.options.title') ?? $configurations['exports']['excel']['options']['title'] }}"
                         >
                         @error('configurations.exports.excel.options.title')
                             <span class="invalid-feedback" role="alert">
@@ -756,7 +756,7 @@
                             name="configurations[exports][excel][options][logo]" 
                             type="text" 
                             class="form-control @error('configurations.exports.excel.options.logo') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.excel.options.logo') ?: $configurations['exports']['excel']['options']['logo'] }}"
+                            value="{{ old('configurations.exports.excel.options.logo') ?? $configurations['exports']['excel']['options']['logo'] }}"
                         >
                         @error('configurations.exports.excel.options.logo')
                             <span class="invalid-feedback" role="alert">
@@ -770,7 +770,7 @@
                             name="configurations[exports][excel][options][messageTop]" 
                             type="text" 
                             class="form-control @error('configurations.exports.excel.options.messageTop') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.excel.options.messageTop') ?: $configurations['exports']['excel']['options']['messageTop'] }}"
+                            value="{{ old('configurations.exports.excel.options.messageTop') ?? $configurations['exports']['excel']['options']['messageTop'] }}"
                         >
                         @error('configurations.exports.excel.options.messageTop')
                             <span class="invalid-feedback" role="alert">
@@ -784,7 +784,7 @@
                             name="configurations[exports][excel][options][messageBottom]" 
                             type="text" 
                             class="form-control @error('configurations.exports.excel.options.messageBottom') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.excel.options.messageBottom') ?: $configurations['exports']['excel']['options']['messageBottom'] }}"
+                            value="{{ old('configurations.exports.excel.options.messageBottom') ?? $configurations['exports']['excel']['options']['messageBottom'] }}"
                         >
                         @error('configurations.exports.excel.options.messageBottom')
                             <span class="invalid-feedback" role="alert">
@@ -794,7 +794,7 @@
                     </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Columns To Export</label>
-                        @php $columns = old('configurations.exports.excel.options.exportOptions.columns') ?: ( $configurations['exports']['excel']['options']['exportOptions']['columns'] ?: '' ) @endphp
+                        @php $columns = old('configurations.exports.excel.options.exportOptions.columns') ?? ( $configurations['exports']['excel']['options']['exportOptions']['columns'] ?? '' ) @endphp
                         <select name="configurations[exports][excel][options][exportOptions][columns]" class="form-control @error('configurations.exports.excel.options.exportOptions.columns') is-invalid @enderror">
                             <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
                             <option {{ $columns == ':visible' ? 'selected' : '' }} value=":visible">Only Visible Columns</option>
@@ -814,7 +814,7 @@
                     </div>
                     <div class="mb-3 col-lg-12">
                         <label class="fw-bold">Enabled</label>
-                        @php $enabled = old('configurations.exports.csv.enabled') ?: ( $configurations['exports']['csv']['enabled'] ?: '' ) @endphp
+                        @php $enabled = old('configurations.exports.csv.enabled') ?? ( $configurations['exports']['csv']['enabled'] ?? '' ) @endphp
                         <select name="configurations[exports][csv][enabled]" class="form-control @error('configurations.exports.csv.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$enabled ? 'selected' : '' }} value="0">False</option>
@@ -827,7 +827,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Header</label>
-                        @php $header = old('configurations.exports.csv.options.header') ?: ( $configurations['exports']['csv']['options']['header'] ?: '' ) @endphp
+                        @php $header = old('configurations.exports.csv.options.header') ?? ( $configurations['exports']['csv']['options']['header'] ?? '' ) @endphp
                         <select name="configurations[exports][csv][options][header]" class="form-control @error('configurations.exports.csv.options.header') is-invalid @enderror">
                             <option {{ $header ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$header ? 'selected' : '' }} value="0">False</option>
@@ -840,7 +840,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Footer</label>
-                        @php $footer = old('configurations.exports.csv.options.footer') ?: ( $configurations['exports']['csv']['options']['footer'] ?: '' ) @endphp
+                        @php $footer = old('configurations.exports.csv.options.footer') ?? ( $configurations['exports']['csv']['options']['footer'] ?? '' ) @endphp
                         <select name="configurations[exports][csv][options][footer]" class="form-control @error('configurations.exports.csv.options.footer') is-invalid @enderror">
                             <option {{ $footer ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$footer ? 'selected' : '' }} value="0">False</option>
@@ -857,7 +857,7 @@
                             name="configurations[exports][csv][options][filename]" 
                             type="text" 
                             class="form-control @error('configurations.exports.csv.options.filename') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.csv.options.filename') ?: $configurations['exports']['csv']['options']['filename'] }}"
+                            value="{{ old('configurations.exports.csv.options.filename') ?? $configurations['exports']['csv']['options']['filename'] }}"
                         >
                         @error('configurations.exports.csv.options.filename')
                             <span class="invalid-feedback" role="alert">
@@ -871,7 +871,7 @@
                             name="configurations[exports][csv][options][extension]" 
                             type="text" 
                             class="form-control @error('configurations.exports.csv.options.extension') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.csv.options.extension') ?: $configurations['exports']['csv']['options']['extension'] }}"
+                            value="{{ old('configurations.exports.csv.options.extension') ?? $configurations['exports']['csv']['options']['extension'] }}"
                         >
                         @error('configurations.exports.csv.options.extension')
                             <span class="invalid-feedback" role="alert">
@@ -885,7 +885,7 @@
                             name="configurations[exports][csv][options][text]" 
                             type="text" 
                             class="form-control @error('configurations.exports.csv.options.text') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.csv.options.text') ?: $configurations['exports']['csv']['options']['text'] }}"
+                            value="{{ old('configurations.exports.csv.options.text') ?? $configurations['exports']['csv']['options']['text'] }}"
                         >
                         @error('configurations.exports.csv.options.text')
                             <span class="invalid-feedback" role="alert">
@@ -895,7 +895,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Columns To Export</label>
-                        @php $columns = old('configurations.exports.csv.options.exportOptions.columns') ?: ( $configurations['exports']['csv']['options']['exportOptions']['columns'] ?: '' ) @endphp
+                        @php $columns = old('configurations.exports.csv.options.exportOptions.columns') ?? ( $configurations['exports']['csv']['options']['exportOptions']['columns'] ?? '' ) @endphp
                         <select name="configurations[exports][csv][options][exportOptions][columns]" class="form-control @error('configurations.exports.csv.options.exportOptions.columns') is-invalid @enderror">
                             <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
                             <option {{ $columns == ':visible' ? 'selected' : '' }} value=":visible">Only Visible Columns</option>
@@ -915,7 +915,7 @@
                     </div>
                     <div class="mb-3 col-lg-12">
                         <label class="fw-bold">Enabled</label>
-                        @php $enabled = old('configurations.exports.copy.enabled') ?: ( $configurations['exports']['copy']['enabled'] ?: '' ) @endphp
+                        @php $enabled = old('configurations.exports.copy.enabled') ?? ( $configurations['exports']['copy']['enabled'] ?? '' ) @endphp
                         <select name="configurations[exports][copy][enabled]" class="form-control @error('configurations.exports.copy.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$enabled ? 'selected' : '' }} value="0">False</option>
@@ -932,7 +932,7 @@
                             name="configurations[exports][copy][options][text]" 
                             type="text" 
                             class="form-control @error('configurations.exports.copy.options.text') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.copy.options.text') ?: $configurations['exports']['copy']['options']['text'] }}"
+                            value="{{ old('configurations.exports.copy.options.text') ?? $configurations['exports']['copy']['options']['text'] }}"
                         >
                         @error('configurations.exports.copy.options.text')
                             <span class="invalid-feedback" role="alert">
@@ -942,7 +942,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Columns To Export</label>
-                        @php $columns = old('configurations.exports.copy.options.exportOptions.columns') ?: ( $configurations['exports']['copy']['options']['exportOptions']['columns'] ?: '' ) @endphp
+                        @php $columns = old('configurations.exports.copy.options.exportOptions.columns') ?? ( $configurations['exports']['copy']['options']['exportOptions']['columns'] ?? '' ) @endphp
                         <select name="configurations[exports][copy][options][exportOptions][columns]" class="form-control @error('configurations.exports.copy.options.exportOptions.columns') is-invalid @enderror">
                             <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
                             <option {{ $columns == ':visible' ? 'selected' : '' }} value=":visible">Only Visible Columns</option>
@@ -962,7 +962,7 @@
                     </div>
                     <div class="mb-3 col-lg-12">
                         <label class="fw-bold">Enabled</label>
-                        @php $enabled = old('configurations.exports.json.enabled') ?: ( $configurations['exports']['json']['enabled'] ?: '' ) @endphp
+                        @php $enabled = old('configurations.exports.json.enabled') ?? ( $configurations['exports']['json']['enabled'] ?? '' ) @endphp
                         <select name="configurations[exports][json][enabled]" class="form-control @error('configurations.exports.json.enabled') is-invalid @enderror">
                             <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
                             <option {{ !$enabled ? 'selected' : '' }} value="0">False</option>
@@ -979,7 +979,7 @@
                             name="configurations[exports][json][options][filename]" 
                             type="text" 
                             class="form-control @error('configurations.exports.json.options.filename') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.json.options.filename') ?: $configurations['exports']['json']['options']['filename'] }}"
+                            value="{{ old('configurations.exports.json.options.filename') ?? $configurations['exports']['json']['options']['filename'] }}"
                         >
                         @error('configurations.exports.json.options.filename')
                             <span class="invalid-feedback" role="alert">
@@ -993,7 +993,7 @@
                             name="configurations[exports][json][options][extension]" 
                             type="text" 
                             class="form-control @error('configurations.exports.json.options.extension') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.json.options.extension') ?: $configurations['exports']['json']['options']['extension'] }}"
+                            value="{{ old('configurations.exports.json.options.extension') ?? $configurations['exports']['json']['options']['extension'] }}"
                         >
                         @error('configurations.exports.json.options.extension')
                             <span class="invalid-feedback" role="alert">
@@ -1007,7 +1007,7 @@
                             name="configurations[exports][json][options][text]" 
                             type="text" 
                             class="form-control @error('configurations.exports.json.options.text') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.json.options.text') ?: $configurations['exports']['json']['options']['text'] }}"
+                            value="{{ old('configurations.exports.json.options.text') ?? $configurations['exports']['json']['options']['text'] }}"
                         >
                         @error('configurations.exports.json.options.text')
                             <span class="invalid-feedback" role="alert">
@@ -1017,7 +1017,7 @@
                     </div>
                     <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Columns To Export</label>
-                        @php $columns = old('configurations.exports.json.options.exportOptions.columns') ?: ( $configurations['exports']['json']['options']['exportOptions']['columns'] ?: '' ) @endphp
+                        @php $columns = old('configurations.exports.json.options.exportOptions.columns') ?? ( $configurations['exports']['json']['options']['exportOptions']['columns'] ?? '' ) @endphp
                         <select name="configurations[exports][json][options][exportOptions][columns]" class="form-control @error('configurations.exports.json.options.exportOptions.columns') is-invalid @enderror">
                             <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
                             <option {{ $columns == ':visible' ? 'selected' : '' }} value=":visible">Only Visible Columns</option>
