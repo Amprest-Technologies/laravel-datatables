@@ -4,21 +4,6 @@
 */
 require('./datatables-exports-styles')
 
-
-$(() => {
-    /* --------------------------------------------------------------
-     *  Add an input form to declare a custom input
-     * --------------------------------------------------------------
-     */
-    $('div.title-input').html(`
-        <input 
-            type="text" 
-            class="form-control form-control-sm" 
-            placeholder="Custom heading for exports" 
-        />
-    `)
-})
-
 /* --------------------------------------------------------------
  * This function appends select search fields into a datatable.
  * It takes in column indexes as parameters
@@ -69,8 +54,8 @@ window.addColumnSearching = function(type, row, data, start, end, display) {
 const appendSelectFilter = ( column, options = null ) => {
     //  Append the select boxes on the specified columns
     var select = $(
-        `<select class="form-control text-center w-100">
-            <option class="text-center" value="">Show All</option>
+        `<select class="select-search">
+            <option value="">Show All</option>
         </select>`
     )
         .appendTo( $(column.footer()).empty() )
@@ -94,7 +79,7 @@ const appendSelectFilter = ( column, options = null ) => {
  * --------------------------------------------------------------
  */
 const appendInputFilter = ( column, disabled = false ) => {
-    let html =  $(`<input class="form-control w-100" placeholder="Search..." ${ disabled ? 'disabled' : '' }>`)
+    let html =  $(`<input class="input-search" placeholder="Search..." ${ disabled ? 'disabled' : '' }>`)
     // Append the input fiels on the specified columns
     html.appendTo( $(column.footer()).empty() ).on( 'keyup change', function () {
         if ( column.search() !== this.value ) {
@@ -193,16 +178,16 @@ window.getHeadersFromFilters = (filters = [], index = false) => {
  */
 window.insertEmptyColumn = ( tableID, columns, position = 'prepend' ) => {
     for (var i = 0; i < columns; i++) {
-        $(`${ tableID } thead tr`).prepend('<th class="text-center"></th>')
+        $(`${ tableID } thead tr`).prepend('<th></th>')
         switch ( position ) {
             case 'prepend':
                 $(`${ tableID } tbody tr`).each( function() {
-                    $(this).prepend('<td class="text-center"></td>')                
+                    $(this).prepend('<td></td>')                
                 })
             break
             case 'append':
                 $(`${ tableID } tbody tr`).each( function() {
-                    $(this).append('<td class="text-center"></td>')                
+                    $(this).append('<td></td>')                
                 })
             break
         }
@@ -227,12 +212,5 @@ window.addRowIndexes = ( table, index = 0) => {
  * --------------------------------------------------------------
  */
 window.initializeCustomTitle = () => {
-    $('div.title-input').html(`
-        <input 
-            style="width: 300px;"
-            type="text" 
-            class="form-control form-control-sm" 
-            placeholder="Insert table heading" 
-        />
-    `)
+    $('div.title-input').html(`<input type="text" placeholder="Insert the print title"/>`)
 }

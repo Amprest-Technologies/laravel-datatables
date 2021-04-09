@@ -62,7 +62,7 @@ class ConfigurationController extends Controller
         //  Merge the request parameters
         $request->merge([ 
             'identifier' => $identifier = Str::slug($request->identifier),
-            'payload' => array_merge([ 'id' => $identifier ], config('datatables.config')),
+            'payload' => $payload = array_merge([ 'id' => $identifier ], config('datatables.config')),
             'columns' => [],
             'deleted_at' => null,
         ]);
@@ -83,8 +83,28 @@ class ConfigurationController extends Controller
             ],
         ])->validate();
 
+        //  Assign default values to the options
+        $payload['exports'] = collect($payload['exports'])->map(function($export) use ($request){
+            //  Get the options
+            $options = $export['options'];
+
+            //  Assign default title and file name values
+            $identifier = str_replace('-', ' ', Str::title($request->identifier));
+            $options['title'] = $identifier;
+            $options['filename'] = $identifier;
+
+            //  Assign the modifed options to the export
+            $export['options'] = $options;
+
+            //  Return the export
+            return $export;
+        })->toArray();
+
+        //  Merge the new payload
+        $request->merge(['payload' => $payload]);
+
         //  Create the configuration
-        $configuration = Configuration::create($request->all());
+        Configuration::create($request->all());
 
         //  Redirect to the configuration edit page
         return redirect()->route('datatables.configurations.edit', [

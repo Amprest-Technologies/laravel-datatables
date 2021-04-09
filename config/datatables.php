@@ -56,9 +56,9 @@ return [
                     'pageSize' => 'A4',
                     'orientation' => 'landscape',
                     'text' => 'Print',
-                    'title' => 'This is a title',
-                    'messageTop' => 'Lorem',
-                    'messageBottom' => 'Lorem Bottom',
+                    'title' => '',
+                    'messageTop' => '',
+                    'messageBottom' => '',
                     'logo' => '',
                     'exportOptions' => [
                         'columns' => ':visible'
@@ -80,7 +80,7 @@ return [
                     'header' => true,
                     'footer' => false,
                     'text' => 'CSV',
-                    'filename' => 'Random',
+                    'filename' => '',
                     'extension' => '.csv',
                     'exportOptions' => [
                         'columns' => ':visible'
@@ -107,9 +107,9 @@ return [
                     'text' => 'PDF',
                     'filename' => 'Random',
                     'extension' => '.pdf',
-                    'title' => 'This is a title',
-                    'messageTop' => 'Lorem',
-                    'messageBottom' => 'Lorem Bottom',
+                    'title' => '',
+                    'messageTop' => '',
+                    'messageBottom' => '',
                     'logo' => '',
                     'exportOptions' => [
                         'columns' => ':visible'
@@ -131,11 +131,11 @@ return [
                     'header' => true,
                     'footer' => true,
                     'text' => 'Excel',
-                    'filename' => 'Random',
+                    'filename' => '',
                     'extension' => '.xlsx',
-                    'title' => 'This is a title',
-                    'messageTop' => 'Lorem',
-                    'messageBottom' => 'Lorem Bottom',
+                    'title' => '',
+                    'messageTop' => '',
+                    'messageBottom' => '',
                     'logo' => '',
                     'exportOptions' => [
                         'columns' => ':visible'
@@ -155,12 +155,7 @@ return [
             'copy' => [
                 'enabled' => false,
                 'options' => [
-                    'header' => true,
-                    'footer' => false,
                     'text' => 'Copy',
-                    'title' => 'This is a title',
-                    'messageTop' => 'Lorem',
-                    'messageBottom' => 'Lorem Bottom',
                     'exportOptions' => [
                         'columns' => ':visible'
                     ]
@@ -178,10 +173,7 @@ return [
             'json' => [
                 'enabled' => false,
                 'options' => [
-                    'header' => true,
-                    'footer' => true,
                     'text' => 'JSON',
-                    'filename' => 'Random',
                     'extension' => '.json',
                     'exportOptions' => [
                         'columns' => ':visible'

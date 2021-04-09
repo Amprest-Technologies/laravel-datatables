@@ -19,78 +19,85 @@
 				@endif
 
 				// 	Define default parameters
-				var buttons = []
-				var order = []
-				var customTitleId = ''
-				var customTitleClass = ''
-				var filters = JSON.parse('@json($filters ?? [])')
-				var rowIndexes = ajax = hasFilters = false
+				var options = {};
+				var order = [];
+				var buttons = [];
+				var customTitleId = '';
+				var customTitleClass = '';
+				var filters = JSON.parse('@json($filters ?? [])');
+				var rowIndexes = ajax = hasFilters = false;
 
 				// 	Row indexes
 				@if(!isset($rowIndexes) || ( isset($rowIndexes) && $rowIndexes) )
-					rowIndexes = true
+					rowIndexes = true;
 				@endif
 
 				// 	Set the headers variable
-				@if(isset($ajax) && $ajax['enabled'])
-					var ajax = true
-					var headers = getHeadersFromFilters(filters, rowIndexes)
-					prepareTableForAjax(tableID, headers)
+				@if($ajax['enabled'] ?? false)
+					var ajax = true;
+					var headers = getHeadersFromFilters(filters, rowIndexes);
+					prepareTableForAjax(tableID, headers);
 				@else
-					var headers = getHeadersFromHtml(tableID)
+					var headers = getHeadersFromHtml(tableID);
 				@endif
 				
 				// 	Printable options
 				@if(isset($exports['print']) && $exports['print']['enabled'])
-					var options = JSON.parse('@json($exports['print']['options'])')
+					options = JSON.parse('@json($exports['print']['options'])');
 					buttons.push({ ...options , ...{ 
 						extend: 'print',
+						title: function() {
+							return `{{ config('app.name') }}`;
+						},
 						messageTop: function() {
-							let organization = options.organization
-							let messageTop = $(`${tableID}-title-input input`).val() ||  options.messageTop
-							return `<h5 class="text-center font-weight-bold my-3 text-uppercase">${organization ? organization + ' : ' : null } ${messageTop}</h5>`
+							let titleElement = $(`${tableID}-title-input input`).val();
+							let messageTop = titleElement ?? (options.messageTop ?? options.title);
+							return `<h5 style="margin-bottom:1rem;">${messageTop}</h5>`
 						},
 						customize: function ( win ) {
-							//  Include the print styles. Pass the logo if it is defined
 							printStyles( win, options.logo)
 						},
-					}})
+					}});
 				@endif
 
 				// 	Excel Options
-				@if(isset($exports['excel']) && $exports['excel']['enabled'])
-					buttons.push( { ...(JSON.parse('@json($exports['excel']['options'])')), ...{
+				@if($exports['excel']['enabled'] ?? false)
+					options = JSON.parse('@json($exports['excel']['options'])')
+					buttons.push({ ...options, ...{
 						extend: 'excelHtml5', 
 						customize: function ( win ) {},
-					} })
+					}});
 				@endif
 
 				// 	CSV Options
-				@if(isset($exports['csv']) && $exports['csv']['enabled'])
-					buttons.push( { ...(JSON.parse('@json($exports['csv']['options'])')), ...{
+				@if($exports['csv']['enabled'] ?? false)
+					options = JSON.parse('@json($exports['csv']['options'])');
+					buttons.push({ ...options, ...{
 						extend: 'csvHtml5', 
 						customize: function ( win ) {},
-					} })
+					}})
 				@endif
 
 				// 	PDF Options
-				@if(isset($exports['pdf']) && $exports['pdf']['enabled'])
-					buttons.push( { ...(JSON.parse('@json($exports['pdf']['options'])')), ...{ 
+				@if($exports['pdf']['enabled'] ?? false)
+					options = JSON.parse('@json($exports['pdf']['options'])');
+					buttons.push( { ...options, ...{ 
 						extend: 'pdfHtml5',
 						customize: function ( win ) {},
-					} })
+					}})
 				@endif
 
 				// 	Copy Options
-				@if(isset($exports['copy']) && $exports['copy']['enabled'])
-					buttons.push( { ...(JSON.parse('@json($exports['copy']['options'])')), ...{ 
+				@if($exports['copy']['enabled'] ?? false)
+					options = JSON.parse('@json($exports['copy']['options'])');
+					buttons.push( { ...options, ...{ 
 						extend: 'copyHtml5',
 						customize: function ( win ) {},
-					} })
+					}});
 				@endif
 
 				// 	JSON Options
-				@if(isset($exports['json']) && $exports['json']['enabled'])
+				@if($exports['json']['enabled'] ?? false)
 					var options = JSON.parse('@json($exports['json']['options'])')
 					buttons.push( { ...options, ...{ 
 						action: function ( e, dt, button, config ) {
@@ -100,22 +107,22 @@
 								`${options.filename}${options.extension}`
 							);
 						},
-					} })
+					}});
 				@endif
 
 				// 	Column visibility
-				@if(isset($columnVisibility) && $columnVisibility)
-					buttons.push('colvis')
+				@if($columnVisibility ?? false)
+					buttons.push('colvis');
 				@endif
 
 				// 	Configure custom titles
-				@if(isset($customtitle) && $customtitle)
-					customTitleId = `${tableID}-title-input`
-					customTitleClass = '.title-input'
+				@if($customTitle ?? false)
+					customTitleId = `${tableID}-title-input`;
+					customTitleClass = '.title-input.';
 				@endif
 
 				// 	Determine if filters have been defined
-				@if(isset($filters) && count($filters) && isset($searching) && $searching) 
+				@if(count($filters ?? []) && ($searching ?? false)) 
 					// 	Define date formats
 					@foreach($filters as $filter)
 						@if($filter['type']) 
@@ -127,23 +134,20 @@
 					@endforeach
 
 					// 	Clone headers if table needs filters
-					if(hasFilters) cloneHeader(tableID)
+					if(hasFilters) cloneHeader(tableID);
 				@endif
 
 				// 	Determine sorting options
-				@if(isset($sorting))
+				@if($sorting ?? false)
 					@foreach($sorting as $option)
-						var column = headers.map( ( column ) => column.data ).indexOf(`{{ $option['column'] }}`)
-						// 	Push if column exists
-						if(column > 0) {
-							order.push([ column, `{{ $option['order'] }}` ])
-						}
+						var column = headers.map( ( column ) => column.data ).indexOf(`{{ $option['column'] }}`);
+						if(column > 0) order.push([ column, `{{ $option['order'] }}` ]);
 					@endforeach
 				@endif
 
 				// 	Define the datatables object
 				const table = $(tableID).DataTable({
-					dom: `<"row"<"col-lg-3 text-left"l><"col-lg-9"<"${customTitleId}${customTitleClass} d-inline-block"><"d-inline-block"B>>>rt<"row"<"col-lg-4"i><"col-lg-8"p>>`,
+					dom: `<"table-container"<"control-panel top"<"buttons-control"<"${customTitleId}${customTitleClass}"><"buttons"B>><"length-control"l>><"table-panel"rt><"control-panel"<"table-information"i><"pagination"p>>>`,
 					order: order,
 					searching: Boolean(Number(@json($searching ?? 1))),
 					paging: Boolean(Number(@json($paging ?? 1))),
@@ -152,7 +156,7 @@
 					columns: headers,
 					responsive: true,
 					buttons: buttons,
-					@if(isset($ajax) && $ajax['enabled'])
+					@if($ajax['enabled'] ?? false)
 						processing: true,
 						serverSide: true,
 						ajax: {
@@ -165,35 +169,33 @@
 								row_indexes : rowIndexes,
 							},
 							dataSrc: function(json) {
-								filters = json.filters
-								return json.data
+								filters = json.filters;
+								return json.data;
 							}
 						},
 					@endif
 					initComplete: function () {	
 						// 	Add table numberings on the first column
-						if (rowIndexes && !ajax) {
-							addRowIndexes(this.api())
-						}
+						if (rowIndexes && !ajax) addRowIndexes(this.api());
 
 						// 	Determine if filters have been defined
 						if(hasFilters) {
-							var newArguments = Array.prototype.slice.call(arguments)
-							newArguments.push(filters)
-							addColumnSearching.apply(this, newArguments)
+							var newArguments = Array.prototype.slice.call(arguments);
+							newArguments.push(filters);
+							addColumnSearching.apply(this, newArguments);
 						}
 							
 						// 	Check if any hidden columns have been defined
-						@if(isset($hiddenColumns))
+						@if($hiddenColumns ?? false)
 							@foreach($hiddenColumns as $column)
-								var key = this.api().column(`{{ $column }}:name`).index()
-								var column = this.api().column(key).visible(false)
+								var key = this.api().column(`{{ $column }}:name`).index();
+								var column = this.api().column(key).visible(false);
 							@endforeach
 						@endif
 
 						// 	Initialize a custom title input if its defined 
-						@if(isset($customTitle) && $customTitle)
-							initializeCustomTitle()
+						@if($customTitle ?? false)
+							initializeCustomTitle();
 						@endif					
 					}
 				});

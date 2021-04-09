@@ -926,33 +926,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
-                        <label class="fw-bold">Header</label>
-                        @php $header = old('configurations.exports.copy.options.header') ?: ( $configurations['exports']['copy']['options']['header'] ?: '' ) @endphp
-                        <select name="configurations[exports][copy][options][header]" class="form-control @error('configurations.exports.copy.options.header') is-invalid @enderror">
-                            <option {{ $header ? 'selected' : '' }} value="1">True</option>
-                            <option {{ !$header ? 'selected' : '' }} value="0">False</option>
-                        </select>
-                        @error('configurations.exports.copy.options.header')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-4">
-                        <label class="fw-bold">Footer</label>
-                        @php $footer = old('configurations.exports.copy.options.footer') ?: ( $configurations['exports']['copy']['options']['footer'] ?: '' ) @endphp
-                        <select name="configurations[exports][copy][options][footer]" class="form-control @error('configurations.exports.copy.options.footer') is-invalid @enderror">
-                            <option {{ $footer ? 'selected' : '' }} value="1">True</option>
-                            <option {{ !$footer ? 'selected' : '' }} value="0">False</option>
-                        </select>
-                        @error('configurations.exports.copy.options.footer')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Button Text</label>
                         <input 
                             name="configurations[exports][copy][options][text]" 
@@ -966,49 +940,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
-                        <label class="fw-bold">Document Title</label>
-                        <input 
-                            name="configurations[exports][copy][options][title]" 
-                            type="text" 
-                            class="form-control @error('configurations.exports.copy.options.title') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.copy.options.title') ?: $configurations['exports']['copy']['options']['title'] }}"
-                        >
-                        @error('configurations.exports.copy.options.title')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-4">
-                        <label class="fw-bold">Message Top</label>
-                        <input 
-                            name="configurations[exports][copy][options][messageTop]" 
-                            type="text" 
-                            class="form-control @error('configurations.exports.copy.options.messageTop') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.copy.options.messageTop') ?: $configurations['exports']['copy']['options']['messageTop'] }}"
-                        >
-                        @error('configurations.exports.copy.options.messageTop')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-4">
-                        <label class="fw-bold">Message Bottom</label>
-                        <input 
-                            name="configurations[exports][copy][options][messageBottom]" 
-                            type="text" 
-                            class="form-control @error('configurations.exports.copy.options.messageBottom') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.copy.options.messageBottom') ?: $configurations['exports']['copy']['options']['messageBottom'] }}"
-                        >
-                        @error('configurations.exports.copy.options.messageBottom')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Columns To Export</label>
                         @php $columns = old('configurations.exports.copy.options.exportOptions.columns') ?: ( $configurations['exports']['copy']['options']['exportOptions']['columns'] ?: '' ) @endphp
                         <select name="configurations[exports][copy][options][exportOptions][columns]" class="form-control @error('configurations.exports.copy.options.exportOptions.columns') is-invalid @enderror">
@@ -1042,32 +974,6 @@
                         @enderror
                     </div>
                     <div class="mb-3 col-lg-6">
-                        <label class="fw-bold">Header</label>
-                        @php $header = old('configurations.exports.json.options.header') ?: ( $configurations['exports']['json']['options']['header'] ?: '' ) @endphp
-                        <select name="configurations[exports][json][options][header]" class="form-control @error('configurations.exports.json.options.header') is-invalid @enderror">
-                            <option {{ $header ? 'selected' : '' }} value="1">True</option>
-                            <option {{ !$header ? 'selected' : '' }} value="0">False</option>
-                        </select>
-                        @error('configurations.exports.json.options.header')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="fw-bold">Footer</label>
-                        @php $footer = old('configurations.exports.json.options.footer') ?: ( $configurations['exports']['json']['options']['footer'] ?: '' ) @endphp
-                        <select name="configurations[exports][json][options][footer]" class="form-control @error('configurations.exports.json.options.footer') is-invalid @enderror">
-                            <option {{ $footer ? 'selected' : '' }} value="1">True</option>
-                            <option {{ !$footer ? 'selected' : '' }} value="0">False</option>
-                        </select>
-                        @error('configurations.exports.json.options.footer')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-4">
                         <label class="fw-bold">File Name</label>
                         <input 
                             name="configurations[exports][json][options][filename]" 
@@ -1081,7 +987,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Extension</label>
                         <input 
                             name="configurations[exports][json][options][extension]" 
@@ -1095,7 +1001,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Button Text</label>
                         <input 
                             name="configurations[exports][json][options][text]" 
@@ -1109,7 +1015,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Columns To Export</label>
                         @php $columns = old('configurations.exports.json.options.exportOptions.columns') ?: ( $configurations['exports']['json']['options']['exportOptions']['columns'] ?: '' ) @endphp
                         <select name="configurations[exports][json][options][exportOptions][columns]" class="form-control @error('configurations.exports.json.options.exportOptions.columns') is-invalid @enderror">
