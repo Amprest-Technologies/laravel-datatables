@@ -23,7 +23,7 @@ class DatatablesStyles extends Component
     public function render()
     {
         return <<<'blade'
-            <link href="{{ route(name: 'datatables.app.css', absolute: false) }}">
+            <link href="{{ route('datatables.app.css') }}" rel="stylesheet" type="text/css">
         blade;
     }
 }

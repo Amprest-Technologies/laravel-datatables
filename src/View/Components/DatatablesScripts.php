@@ -23,7 +23,7 @@ class DatatablesScripts extends Component
     public function render()
     {
         return <<<'blade'
-            <script defer src="{{ route(name: 'datatables.app.js', absolute: false) }}"></script>
+            <script defer type="text/javascript" src="{{ route('datatables.app.js') }}"></script>
             @stack('datatables-config')
         blade;
     }
