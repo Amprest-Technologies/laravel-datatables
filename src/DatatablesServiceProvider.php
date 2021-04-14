@@ -2,7 +2,6 @@
 
 namespace Amprest\LaravelDatatables;
 
-use Amprest\LaravelDatatables\Http\Middleware\LocalEnvironment;
 use Amprest\LaravelDatatables\Services\FileService;
 use Illuminate\Support\ServiceProvider;
 
@@ -102,7 +101,6 @@ class DatatablesServiceProvider extends ServiceProvider
     {
         //  Create a route group
         $this->app['router']->name('datatables.')->prefix('datatables')
-            ->middleware(['web', LocalEnvironment::class])
             ->group(function () {
                 $this->loadRoutesFrom(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'routes/web.php');
             });
