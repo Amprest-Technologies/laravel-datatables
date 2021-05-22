@@ -2,6 +2,8 @@
 
 namespace Amprest\LaravelDatatables;
 
+use Amprest\LaravelDatatables\Providers\BladeServiceProvider;
+use Amprest\LaravelDatatables\Providers\FacadeServiceProvider;
 use Amprest\LaravelDatatables\Services\FileService;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,11 +30,6 @@ class DatatablesServiceProvider extends ServiceProvider
      */
     public function register()
     {  
-        //  Register the file service
-        $this->app->singleton(FileService::class, function ($app) {
-            return new FileService;
-        });
-
         //  Determine the root path
         $this->root = __DIR__ . DIRECTORY_SEPARATOR . '..';
 
@@ -74,8 +71,8 @@ class DatatablesServiceProvider extends ServiceProvider
      */
     public function registerServiceProviders(): void
     {
-        $this->app->register('Amprest\LaravelDatatables\Providers\BladeServiceProvider');
-        $this->app->register('Amprest\LaravelDatatables\Providers\FacadeServiceProvider');
+        $this->app->register(BladeServiceProvider::class);
+        $this->app->register(FacadeServiceProvider::class);
     }
 
     /**
