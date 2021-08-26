@@ -1,5 +1,3 @@
-{{-- @dd(datatables_payload($id = $attributes->get('id'))) --}}
-
 {{-- Get all datatables payload, and extract them into usable variables --}}
 @php extract(datatables_payload($id = $attributes->get('id'))) @endphp
 
@@ -13,7 +11,8 @@
 	<script type="text/javascript">
 		window.addEventListener('load', function() {
 			$(document).ready( function() {
-				const tableID = `#{{ $id }}`
+				const tableID = `#{{ $id }}`;
+				const organization = `{{ $attributes->get('organization-name') ?? config('app.name') }}`;
 
 				// 	Define default parameters
 				var options = {};
@@ -27,7 +26,6 @@
 				var hasFilters = false;
 
 				@if(!isset($rowIndexes) || ($rowIndexes ?? false))
-					// 	Prepend or append an empty cell on each row
 					insertEmptyColumn(tableID, 1);
 					rowIndexes = true;
 				@endif
@@ -42,69 +40,86 @@
 				
 				// Printable options
 				@if($exports['print']['enabled'] ?? false)
-					options = JSON.parse('@json($exports['print']['options'])');
-					buttons.push({ ...options , ...{ 
+					let printOptions = JSON.parse('@json($exports['print']['options'])');
+					buttons.push({ ...printOptions , ...{ 
 						extend: 'print',
-						title: function() {
-							return `{{ config('app.name') }}`;
-						},
+						title: organization,
 						messageTop: function() {
 							let titleElement = $(`${tableID}-title-input input`).val();
-							let messageTop = titleElement ?? (options.messageTop ?? options.title);
+							let messageTop = titleElement ? titleElement : (printOptions.messageTop ?? printOptions.title);
 							messageTop = messageTop == undefined ? null : messageTop;
-							return `<h5 style="margin-bottom:1rem;">${messageTop}</h5>`
+							return `<h5 class="message-top">${messageTop}</h5>`;
 						},
 						customize: function ( win ) {
-							printStyles( win, options.logo)
+							printStyles( win, `{{ $attributes->get('organization-logo') }}`)
 						},
 					}});
 				@endif
 
 				// 	Excel Options
 				@if($exports['excel']['enabled'] ?? false)
-					options = JSON.parse('@json($exports['excel']['options'])')
-					buttons.push({ ...options, ...{
+					let excelOptions = JSON.parse('@json($exports['excel']['options'])');
+					buttons.push({ ...excelOptions, ...{
 						extend: 'excelHtml5', 
-						customize: function ( win ) {},
+						filename: function(){
+							let filename = $(`${tableID}-title-input input`).val();
+							return filename ? filename : (excelOptions.filename ?? excelOptions.title);
+						},
+						title: function(){
+							let title = $(`${tableID}-title-input input`).val();
+							return title ? title : (excelOptions.title ?? excelOptions.filename);
+						}
 					}});
 				@endif
 
 				// 	CSV Options
 				@if($exports['csv']['enabled'] ?? false)
-					options = JSON.parse('@json($exports['csv']['options'])');
-					buttons.push({ ...options, ...{
-						extend: 'csvHtml5', 
-						customize: function ( win ) {},
+					let csvOptions = JSON.parse('@json($exports['csv']['options'])');
+					buttons.push({ ...csvOptions, ...{
+						extend: 'csvHtml5',
+						filename: function(){
+							let filename = $(`${tableID}-title-input input`).val();
+							return filename ? filename : csvOptions.filename;
+						}
 					}})
 				@endif
 
 				// 	PDF Options
 				@if($exports['pdf']['enabled'] ?? false)
-					options = JSON.parse('@json($exports['pdf']['options'])');
-					buttons.push( { ...options, ...{ 
+					let pdfOptions = JSON.parse('@json($exports['pdf']['options'])');
+					buttons.push( { ...pdfOptions, ...{ 
 						extend: 'pdfHtml5',
-						customize: function ( win ) {},
+						filename: function(){
+							let filename = $(`${tableID}-title-input input`).val();
+							return filename ? filename : (pdfOptions.filename ?? pdfOptions.title);
+						},
+						title: function(){
+							let title = $(`${tableID}-title-input input`).val();
+							return title ? title : (pdfOptions.title ?? pdfOptions.filename);
+						},
+						customize: function (document) {
+							document.content[1].table.widths = Array(document.content[1].table.body[0].length + 1).join('*').split('');
+						}
 					}})
 				@endif
 
 				// 	Copy Options
 				@if($exports['copy']['enabled'] ?? false)
-					options = JSON.parse('@json($exports['copy']['options'])');
-					buttons.push( { ...options, ...{ 
+					let copyOptions = JSON.parse('@json($exports['copy']['options'])');
+					buttons.push( { ...copyOptions, ...{ 
 						extend: 'copyHtml5',
-						customize: function ( win ) {},
 					}});
 				@endif
 
 				// 	JSON Options
 				@if($exports['json']['enabled'] ?? false)
-					var options = JSON.parse('@json($exports['json']['options'])')
-					buttons.push( { ...options, ...{ 
+					let jsonOptions = JSON.parse('@json($exports['json']['options'])')
+					buttons.push( { ...jsonOptions, ...{ 
 						action: function ( e, dt, button, config ) {
-							var data = dt.buttons.exportData( options.exportOptions );
+							let data = dt.buttons.exportData( jsonOptions.exportOptions );
 							$.fn.dataTable.fileSave(
 								new Blob( [ JSON.stringify( data ) ] ),
-								`${options.filename}${options.extension}`
+								`${jsonOptions.filename}${jsonOptions.extension}`
 							);
 						},
 					}});

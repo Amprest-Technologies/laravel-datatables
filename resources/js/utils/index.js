@@ -192,7 +192,7 @@ window.getHeadersFromFilters = (filters = [], index = false) => {
  */
 window.insertEmptyColumn = ( tableID, columns, position = 'prepend' ) => {
     for (var i = 0; i < columns; i++) {
-        $(`${ tableID } thead tr`).prepend('<th></th>')
+        $(`${ tableID } thead tr`).prepend('<th>#</th>')
         switch ( position ) {
             case 'prepend':
                 $(`${ tableID } tbody tr`).each( function() {
@@ -226,5 +226,5 @@ window.addRowIndexes = ( table, index = 0) => {
  * --------------------------------------------------------------
  */
 window.initializeCustomTitle = () => {
-    $('div.title-input').html(`<input type="text" placeholder="Insert the print title"/>`)
+    $('div.title-input').html(`<input type="text" placeholder="Insert custom title"/>`)
 }
