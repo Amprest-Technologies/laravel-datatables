@@ -139,10 +139,7 @@
 				// 	Determine if filters have been defined
 				@if(count($filters ?? []) && ($searching ?? false)) 
 					@foreach($filters as $filter)
-						@if($filter['type']) 
-							hasFilters = true; 
-							@break
-						@endif
+						@if($filter['type']) hasFilters = true; @break @endif
 					@endforeach
 
 					// 	Clone headers if table needs filters
@@ -208,9 +205,7 @@
 						@endif
 
 						// 	Initialize a custom title input if its defined 
-						@if($customTitle ?? false)
-							initializeCustomTitle();
-						@endif					
+						@if($customTitle ?? false) initializeCustomTitle(); @endif					
 					}
 				});
 			})
