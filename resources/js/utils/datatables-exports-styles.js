@@ -11,7 +11,10 @@ window.printStyles = ( win, logo = false ) => {
     if (logo) insertLogo(body, logo)
 
     //  The body styling
-    $(body).css({ 'font-size' : '10pt'})
+    $(body).css({ 
+        'font-size' : '10pt',
+        'background-color': 'transparent'
+    })
 
     //  Table styling
     $(body).find('table').addClass('compact').css({
