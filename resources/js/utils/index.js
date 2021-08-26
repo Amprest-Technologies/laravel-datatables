@@ -225,6 +225,6 @@ window.addRowIndexes = ( table, index = 0) => {
  *  Add an input form to declare a custom input
  * --------------------------------------------------------------
  */
-window.initializeCustomTitle = () => {
-    $('div.title-input').html(`<input type="text" placeholder="Insert custom title"/>`)
+window.initializeCustomTitle = (title = '') => {
+    $('div.title-input').html(`<input type="text" placeholder="Insert custom title" value="${title}"/>`)
 }

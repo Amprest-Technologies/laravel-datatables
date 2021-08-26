@@ -13,7 +13,7 @@ window.printStyles = ( win, logo = false ) => {
     //  The body styling
     $(body).css({ 
         'font-size' : '10pt',
-        'background-color': 'transparent'
+        'background-color': 'white !important'
     })
 
     //  Table styling
