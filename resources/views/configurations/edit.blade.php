@@ -101,6 +101,10 @@
                                                         ->where('name', Str::slug(strtolower($column), '_'))
                                                         ->where('data_type', 'num')
                                                         ->first() ? 'selected' : ''}} value="num">Number</option>
+                                                    <option {{ collect($configurations['filters'])
+                                                        ->where('name', Str::slug(strtolower($column), '_'))
+                                                        ->where('data_type', 'num-fmt')
+                                                        ->first() ? 'selected' : ''}} value="num-fmt">Formated Number</option>
                                                 </select>
                                             </td>
                                             <td>
@@ -128,7 +132,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal-{{ $loop->iteration }}">
+                                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-modal-{{ $loop->iteration }}">
                                                     Delete
                                                 </button>
                                                 <div class="modal fade" id="delete-modal-{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
@@ -136,17 +140,15 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="delete-modal-label">Modal title</h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                                </button>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body text-start">
                                                                 Are you sure you want to delete this column? The process is irreversible.
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-success" data-dismiss="modal">No, Do not delete</button>
+                                                                <button type="button" class="btn btn-success" data-bs-dismiss="modal">No, do not delete</button>
                                                                 <a href="{{ route('datatables.columns.destroy', [ 'configuration' => $configuration['identifier'], 'column' => $column ]) }}" class="btn btn-danger">
-                                                                    Yes, Delete
+                                                                    Yes, delete
                                                                 </a>
                                                             </div>
                                                         </div>

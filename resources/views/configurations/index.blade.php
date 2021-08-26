@@ -55,7 +55,7 @@
                                             <button type="submit" class="btn btn-info btn-sm">Disable</button>
                                         </form>
                                     @endif
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal-{{ $configuration->identifier }}">
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-modal-{{ $configuration->identifier }}">
                                         Delete
                                     </button>
                                     <div class="modal fade" id="delete-modal-{{ $configuration->identifier }}" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
@@ -63,7 +63,7 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="delete-modal-label">Modal title</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
@@ -71,7 +71,7 @@
                                                     Are you sure you want to delete this table listing? The process is irreversible.
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-success" data-dismiss="modal">No, Do not delete</button>
+                                                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">No, Do not delete</button>
                                                     <form class="d-inline" method="post" action="{{ route('datatables.configurations.destroy', [ 'configuration' => $configuration->identifier ]) }}">
                                                         @csrf
                                                         @method('DELETE')

@@ -137,15 +137,17 @@
 				// 	Determine sorting options
 				@if($sorting ?? false)
 					@foreach($sorting as $option)
-						var column = headers.map( ( column ) => column.data ).indexOf(`{{ $option['column'] }}`);
-						if(column > 0) order.push([ column, `{{ $option['order'] }}` ]);
+						@if(($column = $option['column'] ?? null) && ($order = $option['order'] ?? null))
+							let index = headers.findIndex(column => column.name == `{{ $column }}`);
+							order.push([index, `{{ $order }}`]);
+						@endif
 					@endforeach
 				@endif
 
 				// 	Define the datatables object
 				const table = $(tableID).DataTable({
 					dom: `<"table-container"<"control-panel top"<"buttons-control"<"${customTitleId}${customTitleClass}"><"buttons"B>><"length-control"l>><"table-panel"rt><"control-panel"<"table-information"i><"pagination"p>>>`,
-					order: order,
+					order: order.length > 0 ? order : [],
 					searching: Boolean(Number(@json($searching ?? 1))),
 					paging: Boolean(Number(@json($paging ?? 1))),
 					ordering: Boolean(Number(@json($ordering ?? 1))),
