@@ -11,21 +11,21 @@
     },
     "devDependencies": {
         "cross-env": "^7.0",
-        "laravel-mix": "^6.0.19",
+        "laravel-mix": "^6.0.28",
         "lodash": "^4.17.21",
         "resolve-url-loader": "^4.0.0",
-        "sass": "^1.32.13",
-        "sass-loader": "^11.1.1"
+        "sass": "^1.38.1",
+        "sass-loader": "^12.1.0"
     },
     "dependencies": {
-        "@popperjs/core": "^2.9.2",
-        "bootstrap": "^5.0.1",
-        "datatables.net-buttons-dt": "^1.7.0",
+        "@popperjs/core": "^2.9.3",
+        "bootstrap": "^5.1.0",
+        "datatables.net-buttons-dt": "^2.0.0",
         "datatables.net-dt": "^1.10.24",
         "fs": "0.0.1-security",
         "jquery": "^3.6.0",
-        "jszip": "^3.6.0",
-        "pdfmake": "^0.1.71",
+        "jszip": "^3.7.1",
+        "pdfmake": "^0.2.2",
         "stream": "^0.0.2"
     }
 }

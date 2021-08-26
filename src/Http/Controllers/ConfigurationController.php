@@ -157,6 +157,7 @@ class ConfigurationController extends Controller
                     'name' => $column = Str::slug(strtolower($column), '_'),
                     'type' => $options['type'],
                     'title' => $options['title'],
+                    'data_type' => $options['data_type'],
                     'server' => $options['server'],
                 ]);
     

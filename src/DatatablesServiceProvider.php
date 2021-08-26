@@ -2,9 +2,9 @@
 
 namespace Amprest\LaravelDatatables;
 
+use Amprest\LaravelDatatables\Console\Commands\DatatablesInstall;
 use Amprest\LaravelDatatables\Providers\BladeServiceProvider;
 use Amprest\LaravelDatatables\Providers\FacadeServiceProvider;
-use Amprest\LaravelDatatables\Services\FileService;
 use Illuminate\Support\ServiceProvider;
 
 class DatatablesServiceProvider extends ServiceProvider
@@ -98,6 +98,7 @@ class DatatablesServiceProvider extends ServiceProvider
     {
         //  Create a route group
         $this->app['router']->name('datatables.')->prefix('datatables')
+            ->middleware(['web'])
             ->group(function () {
                 $this->loadRoutesFrom(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'routes/web.php');
             });
@@ -125,9 +126,7 @@ class DatatablesServiceProvider extends ServiceProvider
     {
         //  Register custom package commands
         if ($this->app->runningInConsole()) {
-            $this->commands([
-                Console\Commands\DatatablesInstall::class,
-            ]);
+            $this->commands([ DatatablesInstall::class ]);
         }
     }
 

@@ -43,6 +43,7 @@
                                         <th>Title</th>
                                         <th>Server Name</th>
                                         <th>Type</th>
+                                        <th>Data Type</th>
                                         <th>Sorting</th>
                                         <th>Hidden</th>
                                         <th></th>
@@ -88,6 +89,18 @@
                                                         ->where('name', Str::slug(strtolower($column), '_'))
                                                         ->where('type', 'select')
                                                         ->first() ? 'selected' : ''}} value="select">Select</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="columns[{{ $column }}][data_type]" class="form-control form-control-sm">
+                                                    <option {{ collect($configurations['filters'])
+                                                        ->where('name', Str::slug(strtolower($column), '_'))
+                                                        ->where('data_type', 'string')
+                                                        ->first() ? 'selected' : ''}} value="string">String</option>
+                                                    <option {{ collect($configurations['filters'])
+                                                        ->where('name', Str::slug(strtolower($column), '_'))
+                                                        ->where('data_type', 'num')
+                                                        ->first() ? 'selected' : ''}} value="num">Number</option>
                                                 </select>
                                             </td>
                                             <td>

@@ -1,5 +1,7 @@
+{{-- @dd(datatables_payload($id = $attributes->get('id'))) --}}
+
 {{-- Get all datatables payload, and extract them into usable variables --}}
-@php extract(datatables_payload($id = $attributes->get('id') )) @endphp
+@php extract(datatables_payload($id = $attributes->get('id'))) @endphp
 
 {{-- Include the actual table that will be converted to a datatable --}}
 <table {{ $attributes }}> 
@@ -13,11 +15,6 @@
 			$(document).ready( function() {
 				const tableID = `#{{ $id }}`
 
-				// 	Prepend or append an empty cell on each row
-				@if(!isset($rowIndexes) || ($rowIndexes ?? false))
-					insertEmptyColumn(tableID, 1)
-				@endif
-
 				// 	Define default parameters
 				var options = {};
 				var order = [];
@@ -25,23 +22,25 @@
 				var customTitleId = '';
 				var customTitleClass = '';
 				var filters = JSON.parse('@json($filters ?? [])');
-				var rowIndexes = ajax = hasFilters = false;
+				var rowIndexes = false; 
+				var ajax = false;
+				var hasFilters = false;
 
-				// 	Row indexes
 				@if(!isset($rowIndexes) || ($rowIndexes ?? false))
+					// 	Prepend or append an empty cell on each row
+					insertEmptyColumn(tableID, 1);
 					rowIndexes = true;
 				@endif
 
-				// 	Set the headers variable
 				@if($ajax['enabled'] ?? false)
 					var ajax = true;
 					var headers = getHeadersFromFilters(filters, rowIndexes);
 					prepareTableForAjax(tableID, headers);
 				@else
-					var headers = getHeadersFromHtml(tableID);
+					var headers = getHeadersFromHtml(tableID, filters);
 				@endif
 				
-				// 	Printable options
+				// Printable options
 				@if($exports['print']['enabled'] ?? false)
 					options = JSON.parse('@json($exports['print']['options'])');
 					buttons.push({ ...options , ...{ 
@@ -124,14 +123,11 @@
 
 				// 	Determine if filters have been defined
 				@if(count($filters ?? []) && ($searching ?? false)) 
-					// 	Define date formats
 					@foreach($filters as $filter)
 						@if($filter['type']) 
-							var hasFilters = true;
+							hasFilters = true; 
+							@break
 						@endif
-						@isset($filter['js_format'])
-							$.fn.dataTable.moment('{{ $filter['js_format'] }}');
-						@endisset
 					@endforeach
 
 					// 	Clone headers if table needs filters

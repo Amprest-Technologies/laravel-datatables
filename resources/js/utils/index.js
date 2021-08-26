@@ -125,21 +125,35 @@ window.prepareTableForAjax = (tableID, headers = []) => {
  * tag
  * --------------------------------------------------------------
  */
-window.getHeadersFromHtml = (tableID) => {
+window.getHeadersFromHtml = (tableID, filters = []) => {
+    //  Define an empty headers array
     let headers = []
+
+    //  Get the table headers
     $(`${ tableID } thead tr th`).each( function(){
-        let data = $(this).html().replace(/\s+/g, '_').toLowerCase()
+        //  Get the header name and set a default data type
+        let name = $(this).html().replace(/\s+/g, '_').toLowerCase();
+        let type = "string";
+
+        //  Define the data type
+        let column = filters.find((column) => column.name == name);
+        if(column && column.hasOwnProperty('data_type')) type = column['data_type'];
+
+        //  Insert into the headers array
         headers.push({
-            'data': data,
-            'name': data,
+            data : name,
+            name : name,
+            type : type
         })
-    })
-    return headers
+    });
+
+    //  Return the headers
+    return headers;
 }
 
 /* --------------------------------------------------------------
  * This function creates an array of table headers from the filters
- * option
+ * option, meant for AJAX
  * --------------------------------------------------------------
  */
 window.getHeadersFromFilters = (filters = [], index = false) => {
@@ -164,7 +178,7 @@ window.getHeadersFromFilters = (filters = [], index = false) => {
             'name': data,
             'server': filter.server ? filter.server : data,
             'title': filter.title ? filter.title : data,
-            'type' : filter.type,
+            'type' : filter.data_type,
         })
     })
 

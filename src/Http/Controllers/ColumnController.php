@@ -55,7 +55,8 @@ class ColumnController extends Controller
         //  Update the payload object
         $payload = $configuration['payload'];
         array_push($payload['filters'], [
-            'type' => '',
+            'type' => 'input',
+            'data_type' => 'string',
             'title' => ucwords(strtolower($request->name)),
             'server' => $name = Str::slug( strtolower($request->name), '_' ),
             'name' => $name,
