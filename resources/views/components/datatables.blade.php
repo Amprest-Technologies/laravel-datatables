@@ -25,20 +25,16 @@
 				var ajax = false;
 				var hasFilters = false;
 
+				{{-- Enable row indexes --}}
 				@if(!isset($rowIndexes) || ($rowIndexes ?? false))
 					insertEmptyColumn(tableID, 1);
 					rowIndexes = true;
 				@endif
 
-				@if($ajax['enabled'] ?? false)
-					var ajax = true;
-					var headers = getHeadersFromFilters(filters, rowIndexes);
-					prepareTableForAjax(tableID, headers);
-				@else
-					var headers = getHeadersFromHtml(tableID, filters);
-				@endif
+				// 	Get headers from the table
+				var headers = getHeadersFromHtml(tableID, filters);
 				
-				// Printable options
+				{{-- Printable options --}}
 				@if($exports['print']['enabled'] ?? false)
 					let printOptions = JSON.parse('@json($exports['print']['options'])');
 					buttons.push({ ...printOptions , ...{ 
@@ -56,8 +52,8 @@
 					}});
 				@endif
 
-				// 	Excel Options
-				@if($exports['excel']['enabled'] ?? false)
+				{{-- Excel Options --}}
+ 				@if($exports['excel']['enabled'] ?? false)
 					let excelOptions = JSON.parse('@json($exports['excel']['options'])');
 					buttons.push({ ...excelOptions, ...{
 						extend: 'excelHtml5', 
@@ -72,7 +68,7 @@
 					}});
 				@endif
 
-				// 	CSV Options
+				{{-- CSV Options --}}
 				@if($exports['csv']['enabled'] ?? false)
 					let csvOptions = JSON.parse('@json($exports['csv']['options'])');
 					buttons.push({ ...csvOptions, ...{
@@ -84,7 +80,7 @@
 					}})
 				@endif
 
-				// 	PDF Options
+				{{-- PDF Options --}}
 				@if($exports['pdf']['enabled'] ?? false)
 					let pdfOptions = JSON.parse('@json($exports['pdf']['options'])');
 					buttons.push( { ...pdfOptions, ...{ 
@@ -103,7 +99,7 @@
 					}})
 				@endif
 
-				// 	Copy Options
+				{{-- Copy Options --}}
 				@if($exports['copy']['enabled'] ?? false)
 					let copyOptions = JSON.parse('@json($exports['copy']['options'])');
 					buttons.push( { ...copyOptions, ...{ 
@@ -111,7 +107,7 @@
 					}});
 				@endif
 
-				// 	JSON Options
+				{{-- JSON Options --}}
 				@if($exports['json']['enabled'] ?? false)
 					let jsonOptions = JSON.parse('@json($exports['json']['options'])')
 					buttons.push( { ...jsonOptions, ...{ 
@@ -125,28 +121,29 @@
 					}});
 				@endif
 
-				// 	Column visibility
+				{{-- Column Visibility --}}
 				@if($columnVisibility ?? false)
 					buttons.push('colvis');
 				@endif
 
-				// 	Configure custom titles
+				{{-- Configure custom titles --}}
 				@if($customTitle ?? false)
 					customTitleId = `${tableID}-title-input`;
 					customTitleClass = '.title-input.';
 				@endif
 
-				// 	Determine if filters have been defined
+				{{-- Determine if filters have been defined --}}
 				@if(count($filters ?? []) && ($searching ?? false)) 
 					@foreach($filters as $filter)
-						@if($filter['type']) hasFilters = true; @break @endif
+						@if($filter['type']) 
+							hasFilters = true; 
+							cloneHeader(tableID)
+							@break 
+						@endif
 					@endforeach
-
-					// 	Clone headers if table needs filters
-					if(hasFilters) cloneHeader(tableID);
 				@endif
 
-				// 	Determine sorting options
+				{{-- Determine sorting options --}}
 				@if($sorting ?? false)
 					@foreach($sorting as $option)
 						@if(($column = $option['column'] ?? null) && ($order = $option['order'] ?? null))
@@ -167,24 +164,6 @@
 					columns: headers,
 					responsive: true,
 					buttons: buttons,
-					@if($ajax['enabled'] ?? false)
-						processing: true,
-						serverSide: true,
-						ajax: {
-							url: `{{ route($ajax['options']['route']) }}`,
-							dataType: 'json',
-							type: 'POST',
-							data: {
-								_token : `{{ csrf_token() }}`,
-								filters : headers, 
-								row_indexes : rowIndexes,
-							},
-							dataSrc: function(json) {
-								filters = json.filters;
-								return json.data;
-							}
-						},
-					@endif
 					initComplete: function () {	
 						// 	Add table numberings on the first column
 						if (rowIndexes && !ajax) addRowIndexes(this.api());
@@ -196,7 +175,7 @@
 							addColumnSearching.apply(this, newArguments);
 						}
 							
-						// 	Check if any hidden columns have been defined
+						{{-- Check if any hidden columns have been defined --}}
 						@if($hiddenColumns ?? false)
 							@foreach($hiddenColumns as $column)
 								var key = this.api().column(`{{ $column }}:name`).index();
@@ -204,8 +183,8 @@
 							@endforeach
 						@endif
 
-						// 	Initialize a custom title input if its defined 
-						@if($customTitle ?? false) initializeCustomTitle(); @endif					
+						{{-- Initialize a custom title input if its defined  --}}
+						@if($customTitle ?? false) initializeCustomTitle(); @endif	
 					}
 				});
 			})
