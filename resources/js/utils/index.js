@@ -189,5 +189,5 @@ window.addRowIndexes = ( table, index = 0) => {
  * --------------------------------------------------------------
  */
 window.initializeCustomTitle = (title = '') => {
-    $('div.title-input').html(`<input type="text" placeholder="Insert custom title" value="${title}"/>`)
+    $('div.title-input').html(`<input type="text" placeholder="Insert custom report title" value="${title}"/>`)
 }
