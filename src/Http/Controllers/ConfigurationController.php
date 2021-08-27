@@ -63,7 +63,6 @@ class ConfigurationController extends Controller
         $request->merge([ 
             'identifier' => $identifier = Str::slug($request->identifier),
             'payload' => $payload = array_merge([ 'id' => $identifier ], config('datatables.config')),
-            'columns' => [],
             'deleted_at' => null,
         ]);
 
@@ -146,41 +145,12 @@ class ConfigurationController extends Controller
         //  Find the configuration
         $configuration = $this->configuration->find($identifier);
 
-        //  Sanitize the filters element
-        $filters = $sorting = $hidden = [];
-        
-        //  Check if columns exist
-        if($request->columns) {
-            foreach($request->columns as $column => $options) {
-                //  Push options into the filters array
-                array_push($filters, [
-                    'name' => $column = Str::slug(strtolower($title = $options['title']), '_'),
-                    'title' => $title,
-                    'type' => $options['type'],
-                    'data_type' => $options['data_type'],
-                ]);
-    
-                //  Push filters into the sorting array
-                array_push($sorting, [
-                    'column' => $column,
-                    'order' => $options['sorting']
-                ]);
-    
-                //  Push hidden columns
-                if($options['hidden']) array_push($hidden, $column);
-            }
-        }
-
         //  Merge the processed data items
         $this->configuration->update([
             'identifier' => $identifier,
-            'columns' => $configuration['columns'] ?? [],
-            'deleted_at' => $request->deleted_at,
+            'deleted_at' => $configuration['deleted_at'],
             'payload' => array_merge($request->configurations, [
-                'id' => $identifier,
-                'filters' => $filters,
-                'sorting' => $sorting,
-                'hiddenColumns' => $hidden,
+                'columns' => $configuration['payload']['columns'],
             ])
         ]);
 

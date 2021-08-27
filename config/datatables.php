@@ -58,7 +58,7 @@ return [
                     'messageTop' => '',
                     'messageBottom' => '',
                     'exportOptions' => [
-                        'columns' => ':visible'
+                        'columns' => ':visible:not(th.exclude-from-export)'
                     ]
                 ]
             ],
@@ -85,7 +85,7 @@ return [
                     'messageTop' => '',
                     'messageBottom' => '',
                     'exportOptions' => [
-                        'columns' => ':visible'
+                        'columns' => ':visible:not(th.exclude-from-export)'
                     ]
                 ]
             ],
@@ -110,7 +110,7 @@ return [
                     'messageTop' => '',
                     'messageBottom' => '',
                     'exportOptions' => [
-                        'columns' => ':visible'
+                        'columns' => ':visible:not(th.exclude-from-export)'
                     ]
                 ]
             ],
@@ -132,7 +132,7 @@ return [
                     'filename' => '',
                     'extension' => '.csv',
                     'exportOptions' => [
-                        'columns' => ':visible'
+                        'columns' => ':visible:not(th.exclude-from-export)'
                     ]
                 ]
             ],
@@ -151,7 +151,7 @@ return [
                 'options' => [
                     'text' => 'Copy',
                     'exportOptions' => [
-                        'columns' => ':visible'
+                        'columns' => ':visible:not(th.exclude-from-export)'
                     ]
                 ]
             ],
@@ -170,7 +170,7 @@ return [
                     'text' => 'JSON',
                     'extension' => '.json',
                     'exportOptions' => [
-                        'columns' => ':visible'
+                        'columns' => ':visible:not(th.exclude-from-export)'
                     ]
                 ]
             ]
@@ -178,36 +178,14 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | Filters setup
+        | Columns setup
         |--------------------------------------------------------------------------
         |
-        | These are the configurations that enable application of datatables filters.
+        | These are the configurations that enable application of datatables columns.
         | Input is an array of searchable column properties eg
         | [ 'column' => 'column_name', 'type' => 'input|select' ]
         |
         */
-        'filters' => [],
-
-        /*
-        |--------------------------------------------------------------------------
-        | Sorting Configurations
-        |--------------------------------------------------------------------------
-        |
-        | These are the configurations for the default sorting of datatable columns
-        | [ 'column' => 'column_name', 'order' => 'asc|desc' ]
-        |
-        */
-        'sorting' => [],
-
-        /*
-        |--------------------------------------------------------------------------
-        | Hidden Column Configurations
-        |--------------------------------------------------------------------------
-        |
-        | These are the configurations that determine which columns are hidden by 
-        | default. Provide an array of column names
-        |
-        */
-        'hiddenColumns' => [],
+        'columns' => []
     ]
 ];

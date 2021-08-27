@@ -15,10 +15,7 @@ class ColumnController extends Controller
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
      * 
      */
-    public function __construct()
-    {
-        $this->configuration = new Configuration();
-    }
+    public function __construct(public Configuration $configuration){}
 
     /**
      * Update a particular table's columns
@@ -32,7 +29,7 @@ class ColumnController extends Controller
     {   
         //  Find the configuration
         $configuration = $this->configuration->find($configuration);
-        $columns = collect($configuration['columns']);
+        $columns = collect($configuration['payload']['columns'])->pluck('name');
 
         //  Validate the request
         Validator::make($request->all(), [
@@ -42,7 +39,9 @@ class ColumnController extends Controller
                 'regex:/^[a-zA-Z0-9_ ]*$/',
                 function ($attribute, $value, $fail) use ($columns) {
                     if($columns->contains(function($column, $key) use ($value){
-                        return strtolower($value) == strtolower($column);
+                        $value = Str::slug( strtolower($value), '_' );
+                        $column = Str::slug( strtolower($column), '_' );
+                        return $value == $column;
                     })) {
                         $fail('The table column name should be unique');
                     }
@@ -54,17 +53,18 @@ class ColumnController extends Controller
 
         //  Update the payload object
         $payload = $configuration['payload'];
-        array_push($payload['filters'], [
-            'type' => 'input',
+        array_push($payload['columns'], [
+            'type' => null,
             'data_type' => 'string',
             'title' => ucwords(strtolower($request->name)),
             'name' => Str::slug( strtolower($request->name), '_' ),
+            'hidden' => false,
+            'sorting' => null,
         ]);
 
         //  Merge the processed data items
         $this->configuration->update([
             'identifier' => $configuration['identifier'],
-            'columns' => array_unique(array_merge($configuration['columns'], [ $request->name ])),
             'deleted_at' => $configuration['deleted_at'],
             'payload' => $payload,
         ]);
@@ -73,6 +73,47 @@ class ColumnController extends Controller
         return redirect()->back()->with([
             'success' => 'Columns have been updated successfully.'
         ]);
+    }
+
+    /**
+     * Update each column
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param $configuration
+     * @param $column
+     * @author Alvin G. Kaburu <geekaburu@amprest.co.ke>
+     */
+    public function update(Request $request, $configuration, $column)
+    {
+        //  Get the data object
+        $data = $request->merge([
+            'title' => ucwords(strtolower($title = $request->title)),
+            'name' => Str::slug( strtolower($title), '_' ),
+        ])->except(['_token', '_method']);
+
+        //  Get the configurations
+        $configuration = $this->configuration->find($configuration);
+
+        //  Get the columns
+        $columns = collect($configuration['payload']['columns']);
+
+        //  Get the index of the column to be updated
+        $index = $columns->search(function($col) use ($column){
+            return $col['name'] == $column;
+        });
+
+        //  Replace the entry with new values
+        $configuration['payload']['columns'] = $columns->replace([$index => $data])->toArray();
+
+        //  Update the configurations
+        $this->configuration->update($configuration);
+
+        //  Redirect to the configuration index page
+        return redirect()->route('datatables.configurations.edit', [
+            'configuration' => $configuration['identifier']
+        ])->with([
+            'success' => 'The table column has been updated successfully.'
+        ]);    
     }
 
     /**
@@ -91,23 +132,22 @@ class ColumnController extends Controller
         //  Get the payload
         $payload = $configuration['payload'];
 
-        //  Remove any occurrence of the column in the filters
-        $payload['filters'] = collect($payload['filters'])->filter(function($option) use ($column){
-            return $option['name'] != Str::slug(strtolower($column), '_');
+        //  Remove any occurrence of the column in the columns
+        $payload['columns'] = collect($payload['columns'])->filter(function($option) use ($column){
+            return $option['name'] != $column;
         })->toArray();
 
         //  Remove any occurrence of the column in the sorting array
         $payload['sorting'] = collect($payload['sorting'])->filter(function($option) use ($column){
-            return $option['column'] != Str::slug(strtolower($column), '_');
+            return $option['column'] != $column;
         })->toArray();
 
         //  Remove any occurrence of the column in the hidden columns array
-        $payload['hiddenColumns'] = array_diff( $payload['hiddenColumns'], [ Str::slug(strtolower($column), '_') ] );
+        $payload['hiddenColumns'] = array_diff( $payload['hiddenColumns'], [ $column ] );
 
         //  Merge the processed data items
         $this->configuration->update([
             'identifier' => $identifier = $configuration['identifier'],
-            'columns' => array_diff( $configuration['columns'], [ $column ] ),
             'deleted_at' => $configuration['deleted_at'],
             'payload' => $payload,
         ]);

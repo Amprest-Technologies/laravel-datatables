@@ -104,7 +104,7 @@ window.cloneHeader = ( tableID ) => {
  * tag
  * --------------------------------------------------------------
  */
-window.getHeadersFromHtml = (tableID, filters = []) => {
+window.getHeadersFromHtml = (tableID, columns = []) => {
     //  Define an empty headers array
     let headers = []
 
@@ -115,7 +115,7 @@ window.getHeadersFromHtml = (tableID, filters = []) => {
         let type = "string";
 
         //  Define the data type
-        let column = filters.find((column) => column.name == name);
+        let column = columns.find((column) => column.name == name);
         if(column && column.hasOwnProperty('data_type')) type = column['data_type'];
 
         //  Insert into the headers array
@@ -151,6 +151,25 @@ window.insertEmptyColumn = ( tableID, columns, position = 'prepend' ) => {
         }
     }    
 }
+
+/* --------------------------------------------------------------
+ * This gets all columns that should be hidden
+ * --------------------------------------------------------------
+ */
+window.getHiddenColumns = (columns = []) => {
+    return columns.filter((column) => column.hidden != 0).map((column) => column.name);
+} 
+
+/* --------------------------------------------------------------
+ * This gets all columns that should be sorted
+ * --------------------------------------------------------------
+ */
+window.getSortingOrder = (columns = [], headers = []) => {
+    return columns.filter((column) => column.sorting !== null).map((column) => {
+        let index = headers.findIndex(col => col.name == column.name);
+        return [index, column.sorting];
+    });
+} 
 
 /* --------------------------------------------------------------
  * Add numbering of datatables in the first column

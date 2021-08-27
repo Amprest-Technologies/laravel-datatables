@@ -8,7 +8,7 @@ class Configuration
 {
     //  Define the data variable
     private $data;
-    private static $filepath = 'vendor'.DIRECTORY_SEPARATOR .'datatables'.DIRECTORY_SEPARATOR.'datatables.config.json';
+    private static $filepath = 'datatables.config.json';
 
     /**
     * Initialize the model
@@ -35,13 +35,13 @@ class Configuration
     public static function getConfigPath()
     {
         //  Get the directory and check if it already exists.
-        if(!is_dir($directory = resource_path(dirname(self::$filepath)))){
+        if(!is_dir($directory = base_path(dirname(self::$filepath)))){
             //  Directory does not exist, so lets create it.
             mkdir($directory, 0755, true);
         }
 
         //  Return the path
-        return resource_path(self::$filepath);        
+        return base_path(self::$filepath);        
     }
 
     /**
