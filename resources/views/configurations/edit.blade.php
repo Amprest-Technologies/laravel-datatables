@@ -39,9 +39,7 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>#</th>
-                                        <th>Column</th>
                                         <th>Title</th>
-                                        <th>Server Name</th>
                                         <th>Type</th>
                                         <th>Data Type</th>
                                         <th>Sorting</th>
@@ -53,7 +51,6 @@
                                     @foreach($configuration['columns'] as $column)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $column }}</td>
                                             <td>
                                                 @php 
                                                     $value = collect($configurations['filters'])
@@ -65,14 +62,6 @@
                                                     type="text" 
                                                     class="form-control form-control-sm"
                                                     value="{{ $value['title'] ?? null }}"
-                                                >
-                                            </td>
-                                            <td>
-                                                <input 
-                                                    name="columns[{{ $column }}][server]" 
-                                                    type="text" 
-                                                    class="form-control form-control-sm"
-                                                    value="{{ $value['server'] ?? null }}"
                                                 >
                                             </td>
                                             <td>
@@ -259,39 +248,6 @@
                     </div>
                 </div>
 
-                <div class="row mt-4">
-                    <div class="mb-3 col-lg-12">
-                        <h5 class="fw-bold">Ajax Configurations</h5>
-                    </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="fw-bold">Enabled</label>
-                        @php $enabled = old('configurations.ajax.enabled') ?? ( $configurations['ajax']['enabled'] ?? '' ) @endphp
-                        <select name="configurations[ajax][enabled]" class="form-control @error('configurations.ajax.enabled') is-invalid @enderror">
-                            <option {{ $enabled ? 'selected' : '' }} value="1">True</option>
-                            <option {{ !$enabled ? 'selected' : '' }} value="0">False</option>
-                        </select>
-                        @error('configurations.ajax.enabled')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="fw-bold">End Point Route Name</label>
-                        <input 
-                            name="configurations[ajax][options][route]" 
-                            type="text" 
-                            class="form-control @error('configurations.ajax.options.route') is-invalid @enderror" 
-                            value="{{ old('configurations.ajax.options.route') ?? $configurations['ajax']['options']['route'] }}"
-                        >
-                        @error('configurations.ajax.options.route')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
                 {{-- The Exports section - Print --}}
                 <div class="row mt-4">
                     <div class="mb-3 col-lg-12">
@@ -350,36 +306,6 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="fw-bold">Page Size</label>
-                        @php $pageSize = old('configurations.exports.print.options.pageSize') ?? ( $configurations['exports']['print']['options']['pageSize'] ?? '' ) @endphp
-                        <select name="configurations[exports][print][options][pageSize]" class="form-control @error('configurations.exports.print.options.pageSize') is-invalid @enderror">
-                            <option {{ $pageSize == 'A3' ? 'selected' : '' }} value="A3">A3</option>
-                            <option {{ $pageSize == 'A4' ? 'selected' : '' }} value="A4">A4</option>
-                            <option {{ $pageSize == 'A5' ? 'selected' : '' }} value="A5">A5</option>
-                            <option {{ $pageSize == 'LEGAL' ? 'selected' : '' }} value="LEGAL">LEGAL</option>
-                            <option {{ $pageSize == 'LETTER' ? 'selected' : '' }} value="LETTER">LETTER</option>
-                            <option {{ $pageSize == 'TABLOID' ? 'selected' : '' }} value="TABLOID">TABLOID</option>
-                        </select>
-                        @error('configurations.exports.print.options.pageSize')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="fw-bold">Orientation</label>
-                        @php $orientation = old('configurations.exports.print.options.orientation') ?? ( $configurations['exports']['print']['options']['orientation'] ?? '' ) @endphp
-                        <select name="configurations[exports][print][options][orientation]" class="form-control @error('configurations.exports.print.options.orientation') is-invalid @enderror">
-                            <option {{ $orientation == 'landscape' ? 'selected' : '' }} value="landscape">Landscape</option>
-                            <option {{ $orientation == 'portrait' ? 'selected' : '' }} value="portrait">Portrait</option>
-                        </select>
-                        @error('configurations.exports.print.options.orientation')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
                     <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Button Text</label>
                         <input 
@@ -409,20 +335,6 @@
                         @enderror
                     </div>
                     <div class="mb-3 col-lg-4">
-                        <label class="fw-bold">Document Logo</label>
-                        <input 
-                            name="configurations[exports][print][options][logo]" 
-                            type="text" 
-                            class="form-control @error('configurations.exports.print.options.logo') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.print.options.logo') ?? $configurations['exports']['print']['options']['logo'] }}"
-                        >
-                        @error('configurations.exports.print.options.logo')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Message Top</label>
                         <input 
                             name="configurations[exports][print][options][messageTop]" 
@@ -436,7 +348,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Message Bottom</label>
                         <input 
                             name="configurations[exports][print][options][messageBottom]" 
@@ -450,7 +362,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Columns To Export</label>
                         @php $columns = old('configurations.exports.print.options.exportOptions.columns') ?? ( $configurations['exports']['print']['options']['exportOptions']['columns'] ?? '' ) @endphp
                         <select name="configurations[exports][print][options][exportOptions][columns]" class="form-control @error('configurations.exports.print.options.exportOptions.columns') is-invalid @enderror">
@@ -509,20 +421,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
-                        <label class="fw-bold">Auto Download</label>
-                        @php $autoDownload = old('configurations.exports.pdf.options.autoDownload') ?? ( $configurations['exports']['pdf']['options']['autoDownload'] ?? '' ) @endphp
-                        <select name="configurations[exports][pdf][options][autoDownload]" class="form-control @error('configurations.exports.pdf.options.autoDownload') is-invalid @enderror">
-                            <option {{ $autoDownload ? 'selected' : '' }} value="1">True</option>
-                            <option {{ !$autoDownload ? 'selected' : '' }} value="0">False</option>
-                        </select>
-                        @error('configurations.exports.pdf.options.autoDownload')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">File Name</label>
                         <input 
                             name="configurations[exports][pdf][options][filename]" 
@@ -536,7 +435,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Extension</label>
                         <input 
                             name="configurations[exports][pdf][options][extension]" 
@@ -580,7 +479,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Button Text</label>
                         <input 
                             name="configurations[exports][pdf][options][text]" 
@@ -594,7 +493,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Document Title</label>
                         <input 
                             name="configurations[exports][pdf][options][title]" 
@@ -603,20 +502,6 @@
                             value="{{ old('configurations.exports.pdf.options.title') ?? $configurations['exports']['pdf']['options']['title'] }}"
                         >
                         @error('configurations.exports.pdf.options.title')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-4">
-                        <label class="fw-bold">Document Logo</label>
-                        <input 
-                            name="configurations[exports][pdf][options][logo]" 
-                            type="text" 
-                            class="form-control @error('configurations.exports.pdf.options.logo') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.pdf.options.logo') ?? $configurations['exports']['pdf']['options']['logo'] }}"
-                        >
-                        @error('configurations.exports.pdf.options.logo')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -737,7 +622,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Button Text</label>
                         <input 
                             name="configurations[exports][excel][options][text]" 
@@ -751,7 +636,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Document Title</label>
                         <input 
                             name="configurations[exports][excel][options][title]" 
@@ -760,20 +645,6 @@
                             value="{{ old('configurations.exports.excel.options.title') ?? $configurations['exports']['excel']['options']['title'] }}"
                         >
                         @error('configurations.exports.excel.options.title')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-4">
-                        <label class="fw-bold">Document Logo</label>
-                        <input 
-                            name="configurations[exports][excel][options][logo]" 
-                            type="text" 
-                            class="form-control @error('configurations.exports.excel.options.logo') is-invalid @enderror" 
-                            value="{{ old('configurations.exports.excel.options.logo') ?? $configurations['exports']['excel']['options']['logo'] }}"
-                        >
-                        @error('configurations.exports.excel.options.logo')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

@@ -1,5 +1,8 @@
+@dd(datatables_payload($id = ($attributes->get('identifier') ?? $attributes->get('id'))))
+
 {{-- Get all datatables payload, and extract them into usable variables --}}
-@php extract(datatables_payload($id = $attributes->get('id'))) @endphp
+@php extract(datatables_payload($id = ($attributes->get('identifier') ?? $attributes->get('id')))) @endphp
+
 
 {{-- Include the actual table that will be converted to a datatable --}}
 <table {{ $attributes }}> 
@@ -13,6 +16,7 @@
 			$(document).ready( function() {
 				const tableID = `#{{ $id }}`;
 				const organization = `{{ $attributes->get('organization-name') ?? config('app.name') }}`;
+				const title = `{{ $attributes->get('title') ?? null }}`;
 
 				// 	Define default parameters
 				var options = {};
@@ -22,7 +26,6 @@
 				var customTitleClass = '';
 				var filters = JSON.parse('@json($filters ?? [])');
 				var rowIndexes = false; 
-				var ajax = false;
 				var hasFilters = false;
 
 				{{-- Enable row indexes --}}
@@ -166,7 +169,7 @@
 					buttons: buttons,
 					initComplete: function () {	
 						// 	Add table numberings on the first column
-						if (rowIndexes && !ajax) addRowIndexes(this.api());
+						if (rowIndexes) addRowIndexes(this.api());
 
 						// 	Determine if filters have been defined
 						if(hasFilters) {

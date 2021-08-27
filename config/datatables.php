@@ -26,7 +26,7 @@ return [
         'ordering' => true,
         'searching' => true,
         'rowIndexes' => true,
-        'customTitle' => false,
+        'customTitle' => true,
         'columnVisibility' => false,
 
         /*
@@ -48,18 +48,67 @@ return [
             |
             */
             'print' => [
-                'enabled' => false,
+                'enabled' => true,
                 'options' => [
                     'header' => true,
                     'footer' => true,
                     'autoPrint' => true,
-                    'pageSize' => 'A4',
-                    'orientation' => 'landscape',
                     'text' => 'Print',
                     'title' => '',
                     'messageTop' => '',
                     'messageBottom' => '',
-                    'logo' => '',
+                    'exportOptions' => [
+                        'columns' => ':visible'
+                    ]
+                ]
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | PDF Configurations
+            |--------------------------------------------------------------------------
+            |
+            | These are the configurations that enable PDF datatable exports
+            |
+            */
+            'pdf' => [
+                'enabled' => false,
+                'options' => [
+                    'header' => true,
+                    'footer' => true,
+                    'pageSize' => 'A4',
+                    'orientation' => 'landscape',
+                    'text' => 'PDF',
+                    'filename' => 'Random',
+                    'extension' => '.pdf',
+                    'title' => '',
+                    'messageTop' => '',
+                    'messageBottom' => '',
+                    'exportOptions' => [
+                        'columns' => ':visible'
+                    ]
+                ]
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Excel Configurations
+            |--------------------------------------------------------------------------
+            |
+            | These are the configurations that enable Excel datatable exports
+            |
+            */
+            'excel' => [
+                'enabled' => true,
+                'options' => [
+                    'header' => true,
+                    'footer' => true,
+                    'text' => 'Excel',
+                    'filename' => '',
+                    'extension' => '.xlsx',
+                    'title' => '',
+                    'messageTop' => '',
+                    'messageBottom' => '',
                     'exportOptions' => [
                         'columns' => ':visible'
                     ]
@@ -82,61 +131,6 @@ return [
                     'text' => 'CSV',
                     'filename' => '',
                     'extension' => '.csv',
-                    'exportOptions' => [
-                        'columns' => ':visible'
-                    ]
-                ]
-            ],
-
-            /*
-            |--------------------------------------------------------------------------
-            | PDF Configurations
-            |--------------------------------------------------------------------------
-            |
-            | These are the configurations that enable PDF datatable exports
-            |
-            */
-            'pdf' => [
-                'enabled' => false,
-                'options' => [
-                    'header' => true,
-                    'footer' => true,
-                    'autoDownload' => true,
-                    'pageSize' => 'A4',
-                    'orientation' => 'landscape',
-                    'text' => 'PDF',
-                    'filename' => 'Random',
-                    'extension' => '.pdf',
-                    'title' => '',
-                    'messageTop' => '',
-                    'messageBottom' => '',
-                    'logo' => '',
-                    'exportOptions' => [
-                        'columns' => ':visible'
-                    ]
-                ]
-            ],
-
-            /*
-            |--------------------------------------------------------------------------
-            | Excel Configurations
-            |--------------------------------------------------------------------------
-            |
-            | These are the configurations that enable Excel datatable exports
-            |
-            */
-            'excel' => [
-                'enabled' => false,
-                'options' => [
-                    'header' => true,
-                    'footer' => true,
-                    'text' => 'Excel',
-                    'filename' => '',
-                    'extension' => '.xlsx',
-                    'title' => '',
-                    'messageTop' => '',
-                    'messageBottom' => '',
-                    'logo' => '',
                     'exportOptions' => [
                         'columns' => ':visible'
                     ]
@@ -215,20 +209,5 @@ return [
         |
         */
         'hiddenColumns' => [],
-
-        /*
-        |--------------------------------------------------------------------------
-        | Ajax Configurations
-        |--------------------------------------------------------------------------
-        |
-        | These are the configurations that manage ajax operations
-        |
-        */
-        'ajax' => [
-            'enabled' => false,
-            'options' => [
-                'route' => '',
-            ]
-        ]
     ]
 ];

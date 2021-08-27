@@ -2,12 +2,12 @@
 
 namespace Amprest\LaravelDatatables\Http\Controllers;
 
-use Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Amprest\LaravelDatatables\Models\Configuration;
 use Amprest\LaravelDatatables\Traits\HasAssets;
+use Illuminate\Support\Facades\Validator;
 
 class ConfigurationController extends Controller 
 {
@@ -89,9 +89,9 @@ class ConfigurationController extends Controller
             $options = $export['options'];
 
             //  Assign default title and file name values
-            $identifier = str_replace('-', ' ', Str::title($request->identifier));
-            $options['title'] = $identifier;
-            $options['filename'] = $identifier;
+            $name = str_replace('-', ' ', Str::title($request->identifier));
+            $options['title'] = $name;
+            $options['filename'] = $name;
 
             //  Assign the modifed options to the export
             $export['options'] = $options;
@@ -154,11 +154,10 @@ class ConfigurationController extends Controller
             foreach($request->columns as $column => $options) {
                 //  Push options into the filters array
                 array_push($filters, [
-                    'name' => $column = Str::slug(strtolower($column), '_'),
+                    'name' => $column = Str::slug(strtolower($title = $options['title']), '_'),
+                    'title' => $title,
                     'type' => $options['type'],
-                    'title' => $options['title'],
                     'data_type' => $options['data_type'],
-                    'server' => $options['server'],
                 ]);
     
                 //  Push filters into the sorting array
@@ -168,9 +167,7 @@ class ConfigurationController extends Controller
                 ]);
     
                 //  Push hidden columns
-                if($options['hidden']) {
-                    array_push($hidden, $column);
-                }
+                if($options['hidden']) array_push($hidden, $column);
             }
         }
 

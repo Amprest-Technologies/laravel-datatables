@@ -2,11 +2,11 @@
 
 namespace Amprest\LaravelDatatables\Http\Controllers;
 
-use Str;
-use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Amprest\LaravelDatatables\Models\Configuration;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ColumnController extends Controller 
 {
@@ -58,8 +58,7 @@ class ColumnController extends Controller
             'type' => 'input',
             'data_type' => 'string',
             'title' => ucwords(strtolower($request->name)),
-            'server' => $name = Str::slug( strtolower($request->name), '_' ),
-            'name' => $name,
+            'name' => Str::slug( strtolower($request->name), '_' ),
         ]);
 
         //  Merge the processed data items

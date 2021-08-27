@@ -80,6 +80,7 @@ const appendSelectFilter = ( column, options = null ) => {
  */
 const appendInputFilter = ( column, disabled = false ) => {
     let html =  $(`<input class="input-search" placeholder="Search..." ${ disabled ? 'disabled' : '' }>`)
+
     // Append the input fiels on the specified columns
     html.appendTo( $(column.footer()).empty() ).on( 'keyup change', function () {
         if ( column.search() !== this.value ) {
@@ -96,28 +97,6 @@ window.cloneHeader = ( tableID ) => {
     if(!$(`${tableID} tfoot`).length) $(tableID).append('<tfoot></tfoot>')
     $(`${tableID} tfoot`).insertAfter(`${tableID} thead`).html( $(`${tableID} thead tr`).clone() );
     $(`${tableID} tfoot th`).addClass('p-1').html('');
-}
-
-/* --------------------------------------------------------------
- * This function appends a thead and tr if the request is an 
- * ajax request
- * --------------------------------------------------------------
- */
-window.prepareTableForAjax = (tableID, headers = []) => {
-    // 	Get the table element
-    const table = $(`table${tableID}`)
-
-    // 	Clean the table up
-    table.html('');
-
-    // 	Append thead and tr tags
-    table.append('<thead><tr></tr></thead>')
-
-    // 	Get the thead row
-    const row = table.find('tr')
-    headers.map(() => {
-        row.append('<th></th>')
-    })
 }
 
 /* --------------------------------------------------------------
@@ -149,41 +128,6 @@ window.getHeadersFromHtml = (tableID, filters = []) => {
 
     //  Return the headers
     return headers;
-}
-
-/* --------------------------------------------------------------
- * This function creates an array of table headers from the filters
- * option, meant for AJAX
- * --------------------------------------------------------------
- */
-window.getHeadersFromFilters = (filters = [], index = false) => {
-    let headers = []
-
-     //  If row indexing is allowed
-     if (index) {
-        headers.push({
-             'data': 'dt_row_index',
-             'name': 'dt_row_index',
-             'server': '',
-             'title': '',
-             'type': '',
-         })
-     }
-
-    //  Map through the filters
-    filters.map( (filter) => {
-        let data = filter.name
-        headers.push({
-            'data': data,
-            'name': data,
-            'server': filter.server ? filter.server : data,
-            'title': filter.title ? filter.title : data,
-            'type' : filter.data_type,
-        })
-    })
-
-    //  Return the headers array
-    return headers
 }
 
 /* --------------------------------------------------------------
