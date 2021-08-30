@@ -41,6 +41,9 @@
 						buttons.push({ ...printOptions , ...{ 
 							extend: 'print',
 							title: organization,
+							exportOptions: {
+								columns : ':visible:not(th.exclude-from-export)'
+							},
 							messageTop: function() {
 								let titleElement = $(`${tableID}-title-input input`).val();
 								let messageTop = titleElement ? titleElement : (printOptions.messageTop ?? printOptions.title);
@@ -49,7 +52,7 @@
 							},
 							customize: function ( win ) {
 								printStyles( win, logo)
-							},
+							}
 						}});
 					}
 	
@@ -58,6 +61,9 @@
 						let excelOptions = exports.excel.options;
 						buttons.push({ ...excelOptions, ...{
 							extend: 'excelHtml5', 
+							exportOptions: {
+								columns : ':visible:not(th.exclude-from-export)'
+							},
 							filename: function(){
 								let filename = $(`${tableID}-title-input input`).val();
 								return filename ? filename : (excelOptions.filename ?? excelOptions.title);
@@ -74,6 +80,9 @@
 						let csvOptions = exports.csv.options;
 						buttons.push({ ...csvOptions, ...{
 							extend: 'csvHtml5',
+							exportOptions: {
+								columns : ':visible:not(th.exclude-from-export)'
+							},
 							filename: function(){
 								let filename = $(`${tableID}-title-input input`).val();
 								return filename ? filename : csvOptions.filename;
@@ -86,6 +95,9 @@
 						let pdfOptions = exports.pdf.options;
 						buttons.push( { ...pdfOptions, ...{ 
 							extend: 'pdfHtml5',
+							exportOptions: {
+								columns : ':visible:not(th.exclude-from-export)'
+							},
 							filename: function(){
 								let filename = $(`${tableID}-title-input input`).val();
 								return filename ? filename : (pdfOptions.filename ?? pdfOptions.title);
@@ -105,6 +117,9 @@
 						let copyOptions = exports.copy.options;
 						buttons.push( { ...copyOptions, ...{ 
 							extend: 'copyHtml5',
+							exportOptions: {
+								columns : ':visible:not(th.exclude-from-export)'
+							}
 						}});
 					}
 	
@@ -112,6 +127,9 @@
 					if(Number(exports.json.enabled)) {
 						let jsonOptions = exports.json.options;
 						buttons.push( { ...jsonOptions, ...{ 
+							exportOptions: {
+								columns : ':visible:not(th.exclude-from-export)'
+							},
 							action: function ( e, dt, button, config ) {
 								let data = dt.buttons.exportData( jsonOptions.exportOptions );
 								$.fn.dataTable.fileSave(

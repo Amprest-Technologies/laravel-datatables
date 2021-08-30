@@ -56,10 +56,7 @@ return [
                     'text' => 'Print',
                     'title' => '',
                     'messageTop' => '',
-                    'messageBottom' => '',
-                    'exportOptions' => [
-                        'columns' => ':visible:not(th.exclude-from-export)'
-                    ]
+                    'messageBottom' => ''
                 ]
             ],
 
@@ -83,10 +80,7 @@ return [
                     'extension' => '.pdf',
                     'title' => '',
                     'messageTop' => '',
-                    'messageBottom' => '',
-                    'exportOptions' => [
-                        'columns' => ':visible:not(th.exclude-from-export)'
-                    ]
+                    'messageBottom' => ''
                 ]
             ],
 
@@ -108,10 +102,7 @@ return [
                     'extension' => '.xlsx',
                     'title' => '',
                     'messageTop' => '',
-                    'messageBottom' => '',
-                    'exportOptions' => [
-                        'columns' => ':visible:not(th.exclude-from-export)'
-                    ]
+                    'messageBottom' => ''
                 ]
             ],
 
@@ -130,10 +121,7 @@ return [
                     'footer' => false,
                     'text' => 'CSV',
                     'filename' => '',
-                    'extension' => '.csv',
-                    'exportOptions' => [
-                        'columns' => ':visible:not(th.exclude-from-export)'
-                    ]
+                    'extension' => '.csv'
                 ]
             ],
 
@@ -147,12 +135,9 @@ return [
             |
             */
             'copy' => [
-                'enabled' => false,
+                'enabled' => true,
                 'options' => [
-                    'text' => 'Copy',
-                    'exportOptions' => [
-                        'columns' => ':visible:not(th.exclude-from-export)'
-                    ]
+                    'text' => 'Copy'
                 ]
             ],
 
@@ -168,10 +153,7 @@ return [
                 'enabled' => false,
                 'options' => [
                     'text' => 'JSON',
-                    'extension' => '.json',
-                    'exportOptions' => [
-                        'columns' => ':visible:not(th.exclude-from-export)'
-                    ]
+                    'extension' => '.json'
                 ]
             ]
         ],

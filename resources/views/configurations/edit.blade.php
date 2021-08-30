@@ -152,6 +152,19 @@
                         @enderror
                     </div>
                     <div class="mb-3 col-lg-4">
+                        <label class="fw-bold">Paging</label>
+                        @php $paging = old('configurations.paging') ?? ( $configurations['paging'] ?? '' ) @endphp
+                        <select name="configurations[paging]" class="form-control @error('configurations.paging') is-invalid @enderror">
+                            <option {{ $paging ? 'selected' : '' }} value="1">True</option>
+                            <option {{ !$paging ? 'selected' : '' }} value="0">False</option>
+                        </select>
+                        @error('configurations.paging')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Ordering</label>
                         @php $ordering = old('configurations.ordering') ?? ( $configurations['ordering'] ?? '' ) @endphp
                         <select name="configurations[ordering]" class="form-control @error('configurations.ordering') is-invalid @enderror">
@@ -204,7 +217,7 @@
                         @enderror
                     </div>
                     <div class="mb-3 col-lg-4">
-                        <label class="fw-bold">Custom Export Title  </label>
+                        <label class="fw-bold">Custom Export Title</label>
                         @php $customTitle = old('configurations.customTitle') ?? ( $configurations['customTitle'] ?? '' ) @endphp
                         <select name="configurations[customTitle]" class="form-control @error('configurations.customTitle') is-invalid @enderror">
                             <option {{ $customTitle ? 'selected' : '' }} value="1">True</option>
@@ -276,7 +289,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Button Text</label>
                         <input 
                             name="configurations[exports][print][options][text]" 
@@ -290,7 +303,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Document Title</label>
                         <input 
                             name="configurations[exports][print][options][title]" 
@@ -304,7 +317,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Message Top</label>
                         <input 
                             name="configurations[exports][print][options][messageTop]" 
@@ -327,19 +340,6 @@
                             value="{{ old('configurations.exports.print.options.messageBottom') ?? $configurations['exports']['print']['options']['messageBottom'] }}"
                         >
                         @error('configurations.exports.print.options.messageBottom')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="fw-bold">Columns To Export</label>
-                        @php $columns = old('configurations.exports.print.options.exportOptions.columns') ?? ( $configurations['exports']['print']['options']['exportOptions']['columns'] ?? '' ) @endphp
-                        <select name="configurations[exports][print][options][exportOptions][columns]" class="form-control @error('configurations.exports.print.options.exportOptions.columns') is-invalid @enderror">
-                            <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
-                            <option {{ $columns == ':visible' ? 'selected' : '' }} value=":visible">Only Visible Columns</option>
-                        </select>
-                        @error('configurations.exports.print.options.exportOptions.columns')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -477,7 +477,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Message Top</label>
                         <input 
                             name="configurations[exports][pdf][options][messageTop]" 
@@ -491,7 +491,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Message Bottom</label>
                         <input 
                             name="configurations[exports][pdf][options][messageBottom]" 
@@ -500,19 +500,6 @@
                             value="{{ old('configurations.exports.pdf.options.messageBottom') ?? $configurations['exports']['pdf']['options']['messageBottom'] }}"
                         >
                         @error('configurations.exports.pdf.options.messageBottom')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-4">
-                        <label class="fw-bold">Columns To Export</label>
-                        @php $columns = old('configurations.exports.pdf.options.exportOptions.columns') ?? ( $configurations['exports']['pdf']['options']['exportOptions']['columns'] ?? '' ) @endphp
-                        <select name="configurations[exports][pdf][options][exportOptions][columns]" class="form-control @error('configurations.exports.pdf.options.exportOptions.columns') is-invalid @enderror">
-                            <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
-                            <option {{ $columns == ':visible' ? 'selected' : '' }} value=":visible">Only Visible Columns</option>
-                        </select>
-                        @error('configurations.exports.pdf.options.exportOptions.columns')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -620,7 +607,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Message Top</label>
                         <input 
                             name="configurations[exports][excel][options][messageTop]" 
@@ -634,7 +621,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-4">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Message Bottom</label>
                         <input 
                             name="configurations[exports][excel][options][messageBottom]" 
@@ -643,19 +630,6 @@
                             value="{{ old('configurations.exports.excel.options.messageBottom') ?? $configurations['exports']['excel']['options']['messageBottom'] }}"
                         >
                         @error('configurations.exports.excel.options.messageBottom')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-4">
-                        <label class="fw-bold">Columns To Export</label>
-                        @php $columns = old('configurations.exports.excel.options.exportOptions.columns') ?? ( $configurations['exports']['excel']['options']['exportOptions']['columns'] ?? '' ) @endphp
-                        <select name="configurations[exports][excel][options][exportOptions][columns]" class="form-control @error('configurations.exports.excel.options.exportOptions.columns') is-invalid @enderror">
-                            <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
-                            <option {{ $columns == ':visible' ? 'selected' : '' }} value=":visible">Only Visible Columns</option>
-                        </select>
-                        @error('configurations.exports.excel.options.exportOptions.columns')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -749,19 +723,6 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="fw-bold">Columns To Export</label>
-                        @php $columns = old('configurations.exports.csv.options.exportOptions.columns') ?? ( $configurations['exports']['csv']['options']['exportOptions']['columns'] ?? '' ) @endphp
-                        <select name="configurations[exports][csv][options][exportOptions][columns]" class="form-control @error('configurations.exports.csv.options.exportOptions.columns') is-invalid @enderror">
-                            <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
-                            <option {{ $columns == ':visible' ? 'selected' : '' }} value=":visible">Only Visible Columns</option>
-                        </select>
-                        @error('configurations.exports.csv.options.exportOptions.columns')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
                 </div>
 
                 {{-- The Exports section - Copy --}}
@@ -769,7 +730,7 @@
                     <div class="mb-3 col-lg-12">
                         <h5 class="fw-bold">Copy</h5>
                     </div>
-                    <div class="mb-3 col-lg-12">
+                    <div class="mb-3 col-lg-6">
                         <label class="fw-bold">Enabled</label>
                         @php $enabled = old('configurations.exports.copy.enabled') ?? ( $configurations['exports']['copy']['enabled'] ?? '' ) @endphp
                         <select name="configurations[exports][copy][enabled]" class="form-control @error('configurations.exports.copy.enabled') is-invalid @enderror">
@@ -796,19 +757,6 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="fw-bold">Columns To Export</label>
-                        @php $columns = old('configurations.exports.copy.options.exportOptions.columns') ?? ( $configurations['exports']['copy']['options']['exportOptions']['columns'] ?? '' ) @endphp
-                        <select name="configurations[exports][copy][options][exportOptions][columns]" class="form-control @error('configurations.exports.copy.options.exportOptions.columns') is-invalid @enderror">
-                            <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
-                            <option {{ $columns == ':visible' ? 'selected' : '' }} value=":visible">Only Visible Columns</option>
-                        </select>
-                        @error('configurations.exports.copy.options.exportOptions.columns')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
                 </div>
 
                 {{-- The Exports section - JSON --}}
@@ -829,7 +777,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-6">
+                    <div class="mb-3 col-lg-4">
                         <label class="fw-bold">File Name</label>
                         <input 
                             name="configurations[exports][json][options][filename]" 
@@ -843,7 +791,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-6">
+                    <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Extension</label>
                         <input 
                             name="configurations[exports][json][options][extension]" 
@@ -857,7 +805,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="mb-3 col-lg-6">
+                    <div class="mb-3 col-lg-4">
                         <label class="fw-bold">Button Text</label>
                         <input 
                             name="configurations[exports][json][options][text]" 
@@ -866,19 +814,6 @@
                             value="{{ old('configurations.exports.json.options.text') ?? $configurations['exports']['json']['options']['text'] }}"
                         >
                         @error('configurations.exports.json.options.text')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="mb-3 col-lg-6">
-                        <label class="fw-bold">Columns To Export</label>
-                        @php $columns = old('configurations.exports.json.options.exportOptions.columns') ?? ( $configurations['exports']['json']['options']['exportOptions']['columns'] ?? '' ) @endphp
-                        <select name="configurations[exports][json][options][exportOptions][columns]" class="form-control @error('configurations.exports.json.options.exportOptions.columns') is-invalid @enderror">
-                            <option {{ $columns == '' ? 'selected' : '' }} value="">All Columns</option>
-                            <option {{ $columns == ':visible' ? 'selected' : '' }} value=":visible">Only Visible Columns</option>
-                        </select>
-                        @error('configurations.exports.json.options.exportOptions.columns')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

@@ -133,17 +133,17 @@ class ColumnController extends Controller
         $payload = $configuration['payload'];
 
         //  Remove any occurrence of the column in the columns
-        $payload['columns'] = collect($payload['columns'])->filter(function($option) use ($column){
+        $payload['columns'] = collect($payload['columns'] ?? [])->filter(function($option) use ($column){
             return $option['name'] != $column;
         })->toArray();
 
         //  Remove any occurrence of the column in the sorting array
-        $payload['sorting'] = collect($payload['sorting'])->filter(function($option) use ($column){
+        $payload['sorting'] = collect($payload['sorting'] ?? [])->filter(function($option) use ($column){
             return $option['column'] != $column;
         })->toArray();
 
         //  Remove any occurrence of the column in the hidden columns array
-        $payload['hiddenColumns'] = array_diff( $payload['hiddenColumns'], [ $column ] );
+        $payload['hiddenColumns'] = array_diff( $payload['hiddenColumns'] ?? [], [ $column ] );
 
         //  Merge the processed data items
         $this->configuration->update([

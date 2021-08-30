@@ -32,10 +32,7 @@ class ConfigurationController extends Controller
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
      * 
      */
-    public function __construct()
-    {
-        $this->configuration = new Configuration();
-    }
+    public function __construct(public Configuration $configuration){}
 
     /**
      * List all table configurations in the database
