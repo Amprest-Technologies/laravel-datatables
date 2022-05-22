@@ -1,3 +1,5 @@
+const { param } = require('jquery');
+
 /* --------------------------------------------------------------
 * Require datatables dependancies
 * --------------------------------------------------------------
@@ -10,17 +12,16 @@ require('./datatables-exports-styles')
  * --------------------------------------------------------------
  */
 window.addColumnSearching = function(type, row, data, start, end, display) {
+    //  Get the options
     let options = Array.prototype.slice.call(arguments)[2];
 
     // Get columns by index name
     const filtersObj = {}
     const columns = options.map(( item , index ) => {
         let key = this.api().column( `${item.name}:name` ).index()
-        filtersObj[key] = { type: item.type, format: item.js_format, options: item.options }
+        filtersObj[key] = { title: item.title, type: item.type }
         return key
-    }).filter(function (el) {
-        return el != null;
-    }) 
+    }).filter(el => el != null);
 
     //  Get the datatables instance
     const table = this.api()
@@ -32,17 +33,25 @@ window.addColumnSearching = function(type, row, data, start, end, display) {
                 let column = this;
                 let columnIndex = column.index()
                 let filter = filtersObj[columnIndex];
+                let element = null;
 
                 //  Check what kind of filter is defined for a column
-                switch ( filter.type ) {
+                switch (filter.type) {
                     case 'select':
-                        appendSelectFilter(column, filter.options)
+                        element = appendSelectFilter(column)
                         break
 
                     case 'input':
-                        appendInputFilter(column)
+                        element = appendInputFilter(column)
                         break
-                }   
+                } 
+
+                 //  Define any predefined filters and get the filter values and change the elements value
+                if(element) {
+                    let params = new URLSearchParams(window.location.search);
+                    let value = params.get(filter.title.toLowerCase());
+                    if(value) element.val(value).change();
+                }  
             }
         );
 };
@@ -51,27 +60,24 @@ window.addColumnSearching = function(type, row, data, start, end, display) {
  * Hadle appending of select filters to the datatables filter row
  * --------------------------------------------------------------
  */
-const appendSelectFilter = ( column, options = null ) => {
+const appendSelectFilter = (column) => {
     //  Append the select boxes on the specified columns
     var select = $(
         `<select class="select-search">
             <option value="">Show All</option>
         </select>`
-    )
-        .appendTo( $(column.footer()).empty() )
+    ).appendTo($(column.footer()).empty())
         .on('change', function() {
-            column
-                .search($(this).val(), true, false)
-                .draw();
+            column.search($(this).val(), true, false).draw();
         });
 
     //  For each column append options specified by the unique values of the column
-    options = options ? options : column.data().unique().sort().toArray()
-    options.map( ( option ) => {
-        select.append(
-            `<option value="${option}">${option}</option>`
-        );
-    })
+    column.data().unique().sort().toArray().map(option => {
+        select.append(`<option value="${option}">${option}</option>`);
+    });
+
+    //  Return the select
+    return select;
 }
 
 /* --------------------------------------------------------------
@@ -79,14 +85,18 @@ const appendSelectFilter = ( column, options = null ) => {
  * --------------------------------------------------------------
  */
 const appendInputFilter = ( column, disabled = false ) => {
-    let html =  $(`<input class="input-search" placeholder="Search..." ${ disabled ? 'disabled' : '' }>`)
+    //  Create the input element
+    let input =  $(`<input class="input-search" placeholder="Search..." ${ disabled ? 'disabled' : '' }>`)
 
     // Append the input fiels on the specified columns
-    html.appendTo( $(column.footer()).empty() ).on( 'keyup change', function () {
+    input.appendTo( $(column.footer()).empty() ).on( 'keyup change', function () {
         if ( column.search() !== this.value ) {
             column.search( this.value ).draw();
         }
     });
+
+    //  Return the input
+    return input;
 }
 
 /* --------------------------------------------------------------

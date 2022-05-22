@@ -183,7 +183,7 @@
 							addColumnSearching.apply(this, newArguments);
 						}
 							
-						// Check if any hidden columns have been defined, and hide them
+						//	Check if any hidden columns have been defined, and hide them
 						getHiddenColumns(columns).forEach(function(column){
 							var key = api.column(`${column}:name`).index();
 							var column = api.column(key).visible(false);
