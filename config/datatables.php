@@ -5,7 +5,7 @@
 | Datatables default configurations
 |--------------------------------------------------------------------------
 |
-| These are the default configurations for all datatables components in your 
+| These are the default configurations for all datatables components in your
 | application.
 |
 */
@@ -16,7 +16,7 @@ return [
     | General table configurations
     |--------------------------------------------------------------------------
     |
-    | These values are the default general configurations for all datatables 
+    | These values are the default general configurations for all datatables
     | components in the application.
     |
     */
@@ -34,7 +34,7 @@ return [
         | Export configurations
         |--------------------------------------------------------------------------
         |
-        | These are the default export configurations for all datatables components 
+        | These are the default export configurations for all datatables components
         | in the application.
         |
         */
@@ -56,8 +56,8 @@ return [
                     'text' => 'Print',
                     'title' => '',
                     'messageTop' => '',
-                    'messageBottom' => ''
-                ]
+                    'messageBottom' => '',
+                ],
             ],
 
             /*
@@ -80,8 +80,8 @@ return [
                     'extension' => '.pdf',
                     'title' => '',
                     'messageTop' => '',
-                    'messageBottom' => ''
-                ]
+                    'messageBottom' => '',
+                ],
             ],
 
             /*
@@ -102,8 +102,8 @@ return [
                     'extension' => '.xlsx',
                     'title' => '',
                     'messageTop' => '',
-                    'messageBottom' => ''
-                ]
+                    'messageBottom' => '',
+                ],
             ],
 
             /*
@@ -121,8 +121,8 @@ return [
                     'footer' => false,
                     'text' => 'CSV',
                     'filename' => '',
-                    'extension' => '.csv'
-                ]
+                    'extension' => '.csv',
+                ],
             ],
 
             /*
@@ -130,15 +130,15 @@ return [
             | Copy Configurations
             |--------------------------------------------------------------------------
             |
-            | These are the configurations that enable copying of datatable items into 
+            | These are the configurations that enable copying of datatable items into
             | the clipboard
             |
             */
             'copy' => [
                 'enabled' => true,
                 'options' => [
-                    'text' => 'Copy'
-                ]
+                    'text' => 'Copy',
+                ],
             ],
 
             /*
@@ -153,9 +153,9 @@ return [
                 'enabled' => false,
                 'options' => [
                     'text' => 'JSON',
-                    'extension' => '.json'
-                ]
-            ]
+                    'extension' => '.json',
+                ],
+            ],
         ],
 
         /*
@@ -168,6 +168,6 @@ return [
         | [ 'column' => 'column_name', 'type' => 'input|select' ]
         |
         */
-        'columns' => []
-    ]
+        'columns' => [],
+    ],
 ];

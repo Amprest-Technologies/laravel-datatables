@@ -6,8 +6,9 @@ use Amprest\LaravelDatatables\Facades\Datatables;
  * Generate a path to the published assets folder.
  *
  * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
- * @param String $path
- * @return String
+ *
+ * @param  string  $path
+ * @return string
  */
 function package_asset($path)
 {
@@ -18,10 +19,11 @@ function package_asset($path)
  * Generate a view name depending on the package.
  *
  * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
- * @param String $view
- * @return String
+ *
+ * @param  string  $view
+ * @return string
  */
-function package_view($view, $payload = array())
+function package_view($view, $payload = [])
 {
     return view(config('package.name').'::'.$view, $payload);
 }
@@ -30,8 +32,9 @@ function package_view($view, $payload = array())
  * Generate a package resouce view name depending on the package.
  *
  * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
- * @param String $path
- * @return String
+ *
+ * @param  string  $path
+ * @return string
  */
 function package_resource($path)
 {
@@ -42,8 +45,9 @@ function package_resource($path)
  * Generate datatables payload.
  *
  * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
- * @param String $tableID
- * @return Array 
+ *
+ * @param  string  $tableID
+ * @return array
  */
 function datatables_payload($tableID)
 {

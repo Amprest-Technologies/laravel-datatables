@@ -2,31 +2,34 @@
 
 namespace Amprest\LaravelDatatables\Http\Controllers;
 
+use Amprest\LaravelDatatables\Models\Configuration;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Amprest\LaravelDatatables\Models\Configuration;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class ColumnController extends Controller 
+class ColumnController extends Controller
 {
     /**
      * Initialize the constructor
+     *
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
-     * 
      */
-    public function __construct(public Configuration $configuration){}
+    public function __construct(public Configuration $configuration)
+    {
+    }
 
     /**
      * Update a particular table's columns
+     *
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
-     * 
-     * @param \Illuminate\Http\Request $request
-     * @param string $configuration
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $configuration
      * @return \Illuminate\Support\Facades\View
      */
     public function store(Request $request, $configuration)
-    {   
+    {
         //  Find the configuration
         $configuration = $this->configuration->find($configuration);
         $columns = collect($configuration['payload']['columns'])->pluck('name');
@@ -38,9 +41,10 @@ class ColumnController extends Controller
                 'max:30',
                 'regex:/^[a-zA-Z0-9_ ]*$/',
                 function ($attribute, $value, $fail) use ($columns) {
-                    if($columns->contains(function($column, $key) use ($value){
-                        $value = Str::slug( strtolower($value), '_' );
-                        $column = Str::slug( strtolower($column), '_' );
+                    if ($columns->contains(function ($column, $key) use ($value) {
+                        $value = Str::slug(strtolower($value), '_');
+                        $column = Str::slug(strtolower($column), '_');
+
                         return $value == $column;
                     })) {
                         $fail('The table column name should be unique');
@@ -48,7 +52,7 @@ class ColumnController extends Controller
                 },
             ],
         ], [], [
-            'name' => 'column name'
+            'name' => 'column name',
         ])->validate();
 
         //  Update the payload object
@@ -57,7 +61,7 @@ class ColumnController extends Controller
             'type' => null,
             'data_type' => 'string',
             'title' => ucwords(strtolower($request->name)),
-            'name' => Str::slug( strtolower($request->name), '_' ),
+            'name' => Str::slug(strtolower($request->name), '_'),
             'hidden' => false,
             'sorting' => null,
         ]);
@@ -71,16 +75,17 @@ class ColumnController extends Controller
 
         //  Redirect to the previous page
         return redirect()->back()->with([
-            'success' => 'Columns have been updated successfully.'
+            'success' => 'Columns have been updated successfully.',
         ]);
     }
 
     /**
      * Update each column
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @param $configuration
      * @param $column
+     *
      * @author Alvin G. Kaburu <geekaburu@amprest.co.ke>
      */
     public function update(Request $request, $configuration, $column)
@@ -88,7 +93,7 @@ class ColumnController extends Controller
         //  Get the data object
         $data = $request->merge([
             'title' => ucwords(strtolower($title = $request->title)),
-            'name' => Str::slug( strtolower($title), '_' ),
+            'name' => Str::slug(strtolower($title), '_'),
         ])->except(['_token', '_method']);
 
         //  Get the configurations
@@ -98,7 +103,7 @@ class ColumnController extends Controller
         $columns = collect($configuration['payload']['columns']);
 
         //  Get the index of the column to be updated
-        $index = $columns->search(function($col) use ($column){
+        $index = $columns->search(function ($col) use ($column) {
             return $col['name'] == $column;
         });
 
@@ -110,18 +115,19 @@ class ColumnController extends Controller
 
         //  Redirect to the configuration index page
         return redirect()->route('datatables.configurations.edit', [
-            'configuration' => $configuration['identifier']
+            'configuration' => $configuration['identifier'],
         ])->with([
-            'success' => 'The table column has been updated successfully.'
-        ]);    
+            'success' => 'The table column has been updated successfully.',
+        ]);
     }
 
     /**
      * Hard delete a tables column
+     *
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
-     * 
-     * @param string $configuration
-     * @param string $column
+     *
+     * @param  string  $configuration
+     * @param  string  $column
      * @return \Illuminate\Support\Facades\View
      */
     public function destroy($configuration, $column)
@@ -133,17 +139,17 @@ class ColumnController extends Controller
         $payload = $configuration['payload'];
 
         //  Remove any occurrence of the column in the columns
-        $payload['columns'] = collect($payload['columns'] ?? [])->filter(function($option) use ($column){
+        $payload['columns'] = collect($payload['columns'] ?? [])->filter(function ($option) use ($column) {
             return $option['name'] != $column;
         })->toArray();
 
         //  Remove any occurrence of the column in the sorting array
-        $payload['sorting'] = collect($payload['sorting'] ?? [])->filter(function($option) use ($column){
+        $payload['sorting'] = collect($payload['sorting'] ?? [])->filter(function ($option) use ($column) {
             return $option['column'] != $column;
         })->toArray();
 
         //  Remove any occurrence of the column in the hidden columns array
-        $payload['hiddenColumns'] = array_diff( $payload['hiddenColumns'] ?? [], [ $column ] );
+        $payload['hiddenColumns'] = array_diff($payload['hiddenColumns'] ?? [], [$column]);
 
         //  Merge the processed data items
         $this->configuration->update([
@@ -154,9 +160,9 @@ class ColumnController extends Controller
 
         //  Redirect to the configuration index page
         return redirect()->route('datatables.configurations.edit', [
-            'configuration' => $identifier
+            'configuration' => $identifier,
         ])->with([
-            'success' => 'The table column has been permanently deleted.'
-        ]);                
+            'success' => 'The table column has been permanently deleted.',
+        ]);
     }
 }

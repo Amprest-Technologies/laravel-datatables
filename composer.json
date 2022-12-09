@@ -32,5 +32,8 @@
 				"Amprest\\LaravelDatatables\\DatatablesServiceProvider"
 			]
 		}
+	},
+	"require-dev": {
+		"laravel/pint": "^1.2"
 	}
 }

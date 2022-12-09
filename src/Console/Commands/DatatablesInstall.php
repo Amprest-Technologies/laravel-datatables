@@ -51,7 +51,7 @@ class DatatablesInstall extends Command
             '--force' => false,
         ]);
 
-        //  Completed 
+        //  Completed
         $this->info('Success! Completed Installation. Enjoy.');
     }
 }

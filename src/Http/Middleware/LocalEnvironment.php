@@ -10,10 +10,10 @@ class LocalEnvironment
     /**
      * Handle Function
      *
-     * @param Request $request
-     * @param Closure $next
-     *
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
+     *
      * @author Paul Gitau <kinyanjuipaul34@gmail.com>
      */
     public function handle(Request $request, Closure $next)

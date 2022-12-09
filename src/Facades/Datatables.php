@@ -11,10 +11,11 @@ class Datatables extends Facade
      * Get the registered name of the component.
      *
      * @return string
+     *
      * @author Alvin G. Kaburu <geekaburu@amprest.co.ke>
      */
     protected static function getFacadeAccessor(): string
-    { 
-        return LaravelDatatable::class; 
+    {
+        return LaravelDatatable::class;
     }
 }

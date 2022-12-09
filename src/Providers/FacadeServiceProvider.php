@@ -2,8 +2,8 @@
 
 namespace Amprest\LaravelDatatables\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Amprest\LaravelDatatables\Datatables;
+use Illuminate\Support\ServiceProvider;
 
 class FacadeServiceProvider extends ServiceProvider
 {
@@ -14,7 +14,7 @@ class FacadeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // 
+        //
     }
 
     /**
@@ -24,7 +24,7 @@ class FacadeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind('Datatables', function($app) {
+        $this->app->bind('Datatables', function ($app) {
             return new Datatables();
         });
     }

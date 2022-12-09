@@ -8,7 +8,7 @@ trait HasAssets
 {
     /**
      * Load the css files
-     * 
+     *
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
      */
     public function css()
@@ -19,7 +19,7 @@ trait HasAssets
 
     /**t
      * Load the js files
-     * 
+     *
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
      */
     public function js()

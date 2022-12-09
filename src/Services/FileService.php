@@ -7,14 +7,15 @@ class FileService
     /**
      * Generate datatables payload.
      *
-     * @param string $file
-     * @param string $mimeType
+     * @param  string  $file
+     * @param  string  $mimeType
      * @return array
+     *
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
      */
     public function load($file, string $mimeType = 'application/javascript')
     {
-        //  Determine the expiry time 
+        //  Determine the expiry time
         $expires = strtotime('+1 year');
 
         //  Determine the last modified time
@@ -44,8 +45,9 @@ class FileService
      * Check if the server modifed data is similar to when the file
      * was last modified
      *
-     * @param string $lastModified
+     * @param  string  $lastModified
      * @return bool
+     *
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
      */
     protected function matchesCache($lastModified): bool
@@ -56,7 +58,8 @@ class FileService
     /**
      * Determine the http date
      *
-     * @param string $timestamp
+     * @param  string  $timestamp
+     *
      * @author Alvin Gichira Kaburu <geekaburu@amprest.co.ke>
      */
     protected function httpDate($timestamp)
