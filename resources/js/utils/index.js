@@ -17,8 +17,8 @@ window.addColumnSearching = function(type, row, data, start, end, display) {
 
     // Get columns by index name
     const filtersObj = {}
-    const columns = options.map(( item , index ) => {
-        let key = this.api().column( `${item.name}:name` ).index()
+    const columns = options.map((item, index) => {
+        let key = this.api().column(`${item.name}:name`).index()
         filtersObj[key] = { title: item.title, type: item.type }
         return key
     }).filter(el => el != null);
@@ -46,7 +46,7 @@ window.addColumnSearching = function(type, row, data, start, end, display) {
                         break
                 } 
 
-                 //  Define any predefined filters and get the filter values and change the elements value
+                //  Define any predefined filters and get the filter values and change the elements value
                 if(element) {
                     let params = new URLSearchParams(window.location.search);
                     let value = params.get(filter.title.toLowerCase());
@@ -66,7 +66,8 @@ const appendSelectFilter = (column) => {
         `<select class="select-search">
             <option value="">Show All</option>
         </select>`
-    ).appendTo($(column.footer()).empty())
+    )
+        .appendTo($(column.footer()).empty())
         .on('change', function() {
             column.search($(this).val(), true, false).draw();
         });
@@ -119,14 +120,21 @@ window.getHeadersFromHtml = (tableID, columns = []) => {
     let headers = []
 
     //  Get the table headers
-    $(`${ tableID } thead tr th`).each( function(){
-        //  Get the header name and set a default data type
-        let name = $(this).html().replace(/\s+/g, '_').toLowerCase();
+    $(`${tableID} thead tr th`).each(function () {
+        //  Get the element
+        let data = $(this).data('ds-title');
+
+        //  Get the header name
+        let name = data !== undefined
+            ? data
+            : $(this).html().replace(/\s+/g, '_').toLowerCase();
+        
+        //  Set the data type
         let type = "string";
 
         //  Define the data type
         let column = columns.find((column) => column.name == name);
-        if(column && column.hasOwnProperty('data_type')) type = column['data_type'];
+        if (column && column.hasOwnProperty('data_type')) type = column['data_type'];
 
         //  Insert into the headers array
         headers.push({

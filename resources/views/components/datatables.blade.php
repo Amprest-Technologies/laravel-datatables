@@ -10,10 +10,10 @@
 		window.addEventListener('load', function() {
 			$(document).ready( function() {
 				// 	Define constants
-				const tableID = `#{{ $id }}`;
-				const organization = `{{ $attributes->get('organization-name') ?? config('app.name') }}`;
-				const title = `{{ $attributes->get('title') ?? null }}`;
-				const logo = `{{ $attributes->get('organization-logo') }}`;
+				let tableID = @js("#{$id}");
+				let organization = @js($attributes->get('organization-name') ?? config('app.name'));
+				let title = @js($attributes->get('title') ?? null);
+				let logo = @js($attributes->get('organization-logo'));
 
 				// 	Define default parameters
 				let buttons = [];
@@ -45,7 +45,7 @@
 								columns : ':visible:not(th.exclude-from-export)'
 							},
 							messageTop: function() {
-								let titleElement = $(`${tableID}-title-input input`).val();
+								let titleElement = $(`${tableID}-title-input input`).val() || title;
 								let messageTop = titleElement ? titleElement : (printOptions.messageTop ?? printOptions.title);
 								messageTop = messageTop == undefined ? null : messageTop;
 								return `<h5 class="message-top">${messageTop}</h5>`;
@@ -57,7 +57,7 @@
 					}
 	
 					//	Excel Options
-					 if(Number(exports.excel.enabled)) {
+					if(Number(exports.excel.enabled)) {
 						let excelOptions = exports.excel.options;
 						buttons.push({ ...excelOptions, ...{
 							extend: 'excelHtml5', 
@@ -65,12 +65,12 @@
 								columns : ':visible:not(th.exclude-from-export)'
 							},
 							filename: function(){
-								let filename = $(`${tableID}-title-input input`).val();
+								let filename = $(`${tableID}-title-input input`).val() || title;
 								return filename ? filename : (excelOptions.filename ?? excelOptions.title);
 							},
 							title: function(){
-								let title = $(`${tableID}-title-input input`).val();
-								return title ? title : (excelOptions.title ?? excelOptions.filename);
+								let excelTitle = $(`${tableID}-title-input input`).val() || title;
+								return excelTitle ? excelTitle : (excelOptions.title ?? excelOptions.filename);
 							}
 						}});
 					}
@@ -84,7 +84,7 @@
 								columns : ':visible:not(th.exclude-from-export)'
 							},
 							filename: function(){
-								let filename = $(`${tableID}-title-input input`).val();
+								let filename = $(`${tableID}-title-input input`).val() || title;
 								return filename ? filename : csvOptions.filename;
 							}
 						}});
@@ -99,12 +99,12 @@
 								columns : ':visible:not(th.exclude-from-export)'
 							},
 							filename: function(){
-								let filename = $(`${tableID}-title-input input`).val();
+								let filename = $(`${tableID}-title-input input`).val() || title;
 								return filename ? filename : (pdfOptions.filename ?? pdfOptions.title);
 							},
 							title: function(){
-								let title = $(`${tableID}-title-input input`).val();
-								return title ? title : (pdfOptions.title ?? pdfOptions.filename);
+								let pdfTitle = $(`${tableID}-title-input input`).val() || title;
+								return pdfTitle ? pdfTitle : (pdfOptions.title ?? pdfOptions.filename);
 							},
 							customize: function (document) {
 								document.content[1].table.widths = Array(document.content[1].table.body[0].length + 1).join('*').split('');
@@ -132,9 +132,11 @@
 							},
 							action: function ( e, dt, button, config ) {
 								let data = dt.buttons.exportData( jsonOptions.exportOptions );
+								let filename = $(`${tableID}-title-input input`).val() || title;
+
 								$.fn.dataTable.fileSave(
 									new Blob( [ JSON.stringify( data ) ] ),
-									`${jsonOptions.filename}${jsonOptions.extension}`
+									`${filename ? filename : jsonOptions.filename}${jsonOptions.extension}`
 								);
 							},
 						}});
