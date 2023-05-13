@@ -1,16 +1,4 @@
 /*!
-
-JSZip v3.7.1 - A JavaScript class for generating and reading zip files
-<http://stuartk.com/jszip>
-
-(c) 2009-2016 Stuart Knightley <stuart [at] stuartk.com>
-Dual licenced under the MIT license or GPLv3. See https://raw.github.com/Stuk/jszip/master/LICENSE.markdown.
-
-JSZip uses the library pako released under the MIT license :
-https://github.com/nodeca/pako/blob/master/LICENSE
-*/
-
-/*!
  * Column visibility buttons for Buttons and DataTables.
  * 2016 SpryMedia Ltd - datatables.net/license
  */
@@ -26,17 +14,6 @@ https://github.com/nodeca/pako/blob/master/LICENSE
 /*!
  * Print button for Buttons and DataTables.
  * 2016 SpryMedia Ltd - datatables.net/license
- */
-
-/*!
- * Sizzle CSS Selector Engine v2.3.6
- * https://sizzlejs.com/
- *
- * Copyright JS Foundation and other contributors
- * Released under the MIT license
- * https://js.foundation/
- *
- * Date: 2021-02-16
  */
 
 /*!
@@ -61,25 +38,22 @@ https://github.com/nodeca/pako/blob/master/LICENSE
  */
 
 /*!
- * jQuery JavaScript Library v3.6.0
+ * jQuery JavaScript Library v3.7.0
  * https://jquery.com/
- *
- * Includes Sizzle.js
- * https://sizzlejs.com/
  *
  * Copyright OpenJS Foundation and other contributors
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2021-03-02T17:08Z
+ * Date: 2023-05-11T18:29Z
  */
 
-/*! Buttons for DataTables 1.7.1
- * ©2016-2021 SpryMedia Ltd - datatables.net/license
+/*! Buttons for DataTables 2.2.3
+ * ©2016-2022 SpryMedia Ltd - datatables.net/license
  */
 
-/*! DataTables 1.10.25
- * ©2008-2021 SpryMedia Ltd - datatables.net/license
+/*! DataTables 1.12.1
+ * ©2008-2022 SpryMedia Ltd - datatables.net/license
  */
 
 /*! DataTables styling integration
@@ -94,7 +68,9 @@ https://github.com/nodeca/pako/blob/master/LICENSE
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
-/*! pdfmake v0.2.2, @license MIT, @link http://pdfmake.org */
+/*! pdfmake v0.2.7, @license MIT, @link http://pdfmake.org */
+
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
 /**
  * @license
